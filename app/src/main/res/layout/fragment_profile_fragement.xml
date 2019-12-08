@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".profile">
+    tools:context=".profile_fragement">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".profile">
+
 
 
         <ImageView
@@ -21,7 +18,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.093"
-            tools:srcCompat="@drawable/profile" />
+            android:src= "@drawable/profile" />
 
         <ImageView
             android:id="@+id/verifed_imageID"
@@ -61,7 +58,7 @@
 
                     android:text="NAME : Tushar Tambi"
                     android:textColor="#000"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:id="@+id/Ecode_ID"
@@ -70,7 +67,7 @@
                     android:layout_marginTop="20dp"
                     android:text="E-Code: E-1212"
                     android:textColor="#000"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:id="@+id/Email_ID"
@@ -79,7 +76,7 @@
                     android:layout_marginTop="20dp"
                     android:text="E-Mail: tusahrtambi@gmail.com"
                     android:textColor="#000"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:id="@+id/Phone_ID"
@@ -88,7 +85,7 @@
                     android:layout_marginTop="20dp"
                     android:text="Phone No. 8426988382"
                     android:textColor="#000"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:id="@+id/Department_ID"
@@ -97,7 +94,7 @@
                     android:layout_marginTop="20dp"
                     android:text="Department: CSE"
                     android:textColor="#000"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:id="@+id/Qualification_ID"
@@ -106,7 +103,7 @@
                     android:layout_marginTop="20dp"
                     android:text="Qualification: BE In CSE"
                     android:textColor="#000"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:id="@+id/University_ID"
@@ -115,7 +112,7 @@
                     android:layout_marginTop="20dp"
                     android:text="University: Chandigarh University"
                     android:textColor="#000"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:id="@+id/DOB_ID"
@@ -125,12 +122,11 @@
                     android:layout_marginBottom="10dp"
                     android:text="DOB: 09 Oct. 2000"
                     android:textColor="#000"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20sp"/>
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

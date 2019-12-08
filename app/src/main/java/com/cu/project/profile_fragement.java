@@ -14,6 +14,11 @@ import android.view.ViewGroup;
 
 public class profile_fragement extends Fragment {
 
-
+    @Override
+    public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState)
+    {
+        setHasOptionsMenu(true);
+        return inflater.inflate(R.layout.fragment_profile_fragement,container,false);
+    }
 
 }

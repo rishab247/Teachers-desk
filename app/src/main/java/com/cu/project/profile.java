@@ -20,10 +20,9 @@ import com.google.android.material.tabs.TabLayout;
 
 public class profile extends AppCompatActivity {
 
-    Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager viewPager;
-    PagerAdapter pagerAdapter;
+    PageAdapter pagerAdapter;
     TabItem tabprofile;
     TabItem tabview;
 
