@@ -53,7 +53,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
@@ -271,6 +271,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout12"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout12"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout12" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout12"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

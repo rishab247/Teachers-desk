@@ -17,6 +17,7 @@ Button signinwelcomebtn ,registerwelcomebtn;
         setContentView(R.layout.activity_welcome);
         signinwelcomebtn = findViewById(R.id.signinwelcomebutton);
         registerwelcomebtn = findViewById(R.id.registerwelcomebutton);
+
         signinwelcomebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
