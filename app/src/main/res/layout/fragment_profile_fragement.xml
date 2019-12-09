@@ -30,7 +30,7 @@
             app:layout_constraintStart_toStartOf="@+id/profile_imageID"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.205"
-            app:srcCompat="@drawable/verified" />
+            android:background="@drawable/profile" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/information_cardViewID"

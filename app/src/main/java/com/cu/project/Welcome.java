@@ -8,6 +8,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+
+
 
 public class Welcome extends AppCompatActivity {
 Button signinwelcomebtn ,registerwelcomebtn;
@@ -32,5 +35,5 @@ Button signinwelcomebtn ,registerwelcomebtn;
                 startActivity(myIntent);
             }
         });
-    }
+     }
 }
