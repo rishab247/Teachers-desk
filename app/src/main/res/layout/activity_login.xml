@@ -89,7 +89,7 @@
                         android:text="Sign in "
                         android:textAllCaps="false"
                         android:textColor="#fff"
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/textInputLayout4"
                         app:layout_constraintStart_toStartOf="@+id/textInputLayout4"
