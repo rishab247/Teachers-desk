@@ -7,6 +7,7 @@
     tools:context=".profile">
 
 
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
@@ -18,8 +19,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:tabSelectedTextColor="#fff"
-        app:tabTextColor="#000"
+        app:tabTextColor="#fff"
         tools:layout_editor_absoluteX="0dp">
+
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/profile_tab"
