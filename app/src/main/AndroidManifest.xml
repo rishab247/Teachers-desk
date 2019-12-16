@@ -14,8 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Upload"></activity>
-        <activity android:name=".SplashActivity"
+        <activity android:name=".Setting"></activity>
+        <activity android:name=".Upload" />
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/noaction">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,14 +26,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".profile" />
-        <activity android:name=".Register"
-            android:theme="@style/noaction"/>
-        <activity android:name=".Login"
-            android:theme="@style/noaction"/>
-        <activity android:name=".Welcome"
-            android:theme="@style/noaction">
-
-        </activity>
+        <activity
+            android:name=".Register"
+            android:theme="@style/noaction" />
+        <activity
+            android:name=".Login"
+            android:theme="@style/noaction" />
+        <activity
+            android:name=".Welcome"
+            android:theme="@style/noaction"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

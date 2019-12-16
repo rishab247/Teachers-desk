@@ -51,23 +51,7 @@
             app:layout_constraintVertical_bias="0.157"/>
 
 
-        <ScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/background_id">
 
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/Details_id"
@@ -82,7 +66,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.888"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/background_id"/>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView1"
@@ -326,132 +310,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginBottom="64dp"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardView1">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/heading2_id"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Account Settings"
-                        android:textColor="#000"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.045" />
-
-                        <TextView
-                            android:id="@+id/update_email_id"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Update Email"
-                            android:textSize="18sp"
-                            android:textStyle="italic"
-                            android:textColor="#D82323"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.051"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/heading2_id"
-                            app:layout_constraintVertical_bias="0.077" />
-
-                        <TextView
-                            android:id="@+id/passwordreset_id"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Reset Password"
-                            android:textSize="18sp"
-                            android:textStyle="italic"
-                            android:textColor="#D82323"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.051"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/update_email_id"
-                            app:layout_constraintVertical_bias="0.187" />
-
-                        <TextView
-                            android:id="@+id/updatedetails_id"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Update Details"
-                            android:textSize="18sp"
-                            android:textStyle="italic"
-                            android:textColor="#D82323"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.051"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/passwordreset_id"
-                            app:layout_constraintVertical_bias="0.285" />
-
-                        <Button
-                            android:id="@+id/signoutbtn_id"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:background="@drawable/button"
-                            android:padding="10dp"
-                            android:text="Sign Out"
-                            android:textAllCaps="false"
-                            android:textColor="#fff"
-                            android:textSize="18sp"
-                            android:textStyle="italic"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.548"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/updatedetails_id"
-                            app:layout_constraintVertical_bias="0.0" />
-
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-
-        </ScrollView>
-
-
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-
-
 </FrameLayout>
 
 

@@ -27,20 +27,6 @@ public class profile_fragement extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        signoutbtn = getView().findViewById(R.id.signoutbtn_id);
-
-        signoutbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Login.class);
-                startActivity(intent);
-            }
-        });
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
