@@ -6,7 +6,7 @@
     android:elevation="4dp"
     app:title="Project"
     app:titleTextColor="#000"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimaryDark">
 
 
 

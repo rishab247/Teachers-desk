@@ -17,24 +17,21 @@
         <activity android:name=".Setting"></activity>
         <activity android:name=".Upload" />
         <activity
-            android:name=".SplashActivity"
-            android:theme="@style/noaction">
+            android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".profile" />
+        <activity android:name=".profile"
+            android:theme="@style/actionbar"/>
         <activity
-            android:name=".Register"
-            android:theme="@style/noaction" />
+            android:name=".Register"/>
         <activity
-            android:name=".Login"
-            android:theme="@style/noaction" />
+            android:name=".Login"/>
         <activity
-            android:name=".Welcome"
-            android:theme="@style/noaction"></activity>
+            android:name=".Welcome"/>
 
         <meta-data
             android:name="preloaded_fonts"

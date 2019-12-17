@@ -34,6 +34,8 @@ public class profile extends AppCompatActivity {
 
 
 
+
+
         tabLayout = findViewById(R.id.tab_layout);
         tabprofile = findViewById(R.id.profile_tab);
         tabview = findViewById(R.id.view_tab);
