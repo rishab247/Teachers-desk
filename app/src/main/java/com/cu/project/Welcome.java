@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.cu.project.ui.Register.RegisterActivity;
+import com.cu.project.ui.login.loginActivity;
 
 
 public class Welcome extends AppCompatActivity {
@@ -24,14 +26,14 @@ Button signinwelcomebtn ,registerwelcomebtn;
         signinwelcomebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(Welcome.this, Login.class);
+                Intent myIntent = new Intent(Welcome.this, loginActivity.class);
                 startActivity(myIntent);
             }
         });
         registerwelcomebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(Welcome.this, Register.class);
+                Intent myIntent = new Intent(Welcome.this, RegisterActivity.class);
                 startActivity(myIntent);
             }
         });

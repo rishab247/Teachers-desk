@@ -1,16 +1,18 @@
-package com.cu.project;
+package com.cu.project.ui.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.cu.project.R;
+import com.cu.project.ui.Profiile.ProfileActivity;
+import com.cu.project.ui.Register.RegisterActivity;
 
-public class Login extends AppCompatActivity {
+
+public class loginActivity extends Activity implements loginMvpView {
 
     Button signinloginbtn;
     TextView Notamember;
@@ -24,7 +26,7 @@ public class Login extends AppCompatActivity {
         signinloginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this , profile.class);
+                Intent intent = new Intent(loginActivity.this , ProfileActivity.class);
                 startActivity(intent);
             }
         });
@@ -32,9 +34,19 @@ public class Login extends AppCompatActivity {
         Notamember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Login.this , Register.class);
+                Intent intent = new Intent(loginActivity.this , RegisterActivity.class);
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void openMainActivity() {
+
+    }
+
+    @Override
+    public void onLoginButtonClick() {
+
     }
 }

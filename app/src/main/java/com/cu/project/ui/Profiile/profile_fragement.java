@@ -1,4 +1,4 @@
-package com.cu.project;
+package com.cu.project.ui.Profiile;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.cu.project.R;
 
 public class profile_fragement extends Fragment {
     private Button signoutbtn;

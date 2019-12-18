@@ -1,4 +1,4 @@
-package com.cu.project;
+package com.cu.project.ui.Profiile;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -22,8 +22,8 @@ public class PageAdapter extends FragmentPagerAdapter {
                 return new profile_fragement();
             case 1:
                 return new View_fragment();
-                default:
-                    return null;
+            default:
+                return null;
         }
     }
 

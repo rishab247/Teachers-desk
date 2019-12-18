@@ -1,4 +1,4 @@
-package com.cu.project;
+package com.cu.project.ui.Register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,10 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Register extends AppCompatActivity {
+import com.cu.project.R;
+import com.cu.project.ui.login.loginActivity;
+
+public class RegisterActivity extends AppCompatActivity implements RegisterMvpView{
     Button btn_register;
     TextView Alreadyamember ;
-     @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
@@ -22,19 +25,19 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Register.this , Login.class);
+                Intent intent = new Intent(RegisterActivity.this , loginActivity.class);
                 startActivity(intent);
             }
         });
-Alreadyamember = findViewById(R.id.Alreadyamembertext);
-Alreadyamember.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        Intent intent = new Intent(Register.this , Login.class);
-        startActivity(intent);
+        Alreadyamember = findViewById(R.id.Alreadyamembertext);
+        Alreadyamember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterActivity.this , loginActivity.class);
+                startActivity(intent);
 
-    }
-});
+            }
+        });
 
     }
 }

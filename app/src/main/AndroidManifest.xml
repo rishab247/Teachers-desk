@@ -14,21 +14,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Setting"></activity>
-        <activity android:name=".Upload" />
-        <activity
-            android:name=".SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".ui.Splash.SplashActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
-        <activity android:name=".profile"/>
-        <activity
-            android:name=".Register"/>
-        <activity
-            android:name=".Login"/>
+
+        <activity android:name=".ui.login.loginActivity"/>
+
+        <activity android:name=".ui.Profiile.ProfileActivity"/>
+
+        <activity android:name=".ui.Register.RegisterActivity"/>
+
+        <activity android:name=".Upload" />
         <activity
             android:name=".Welcome"/>
 

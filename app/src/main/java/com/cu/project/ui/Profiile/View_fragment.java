@@ -1,4 +1,4 @@
-package com.cu.project;
+package com.cu.project.ui.Profiile;
 
 
 import android.content.Intent;
@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.cu.project.R;
 
 import java.sql.Time;
 
@@ -42,9 +44,7 @@ public class View_fragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getActivity(), Upload.class);
-                startActivity(intent);
-                Toast.makeText(getContext() , "Button Clicked" , Toast.LENGTH_LONG).show();
+               Toast.makeText(getContext() , "Button Clicked" , Toast.LENGTH_LONG).show();
             }
         });
     }

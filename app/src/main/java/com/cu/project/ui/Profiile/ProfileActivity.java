@@ -1,25 +1,17 @@
-package com.cu.project;
+package com.cu.project.ui.Profiile;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.view.View;
-import android.widget.TableLayout;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
 
+import com.cu.project.R;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
-public class profile extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements ProfileMvpView {
 
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -52,13 +44,13 @@ public class profile extends AppCompatActivity {
                 viewPager.setCurrentItem(tab.getPosition());
 
                 if(tab.getPosition() == 0){
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(profile.this, R.color.colorAccent));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorAccent));
                 }
                 else if(tab.getPosition() == 1){
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(profile.this, R.color.colorPrimary));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorPrimary));
                 }
                 else{
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(profile.this, R.color.colorAccent));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorAccent));
                 }
             }
 
@@ -71,13 +63,8 @@ public class profile extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-
         });
-
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-
     }
-
-
 }
+
