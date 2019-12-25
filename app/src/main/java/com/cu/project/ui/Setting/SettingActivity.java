@@ -8,19 +8,28 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.view.menu.ListMenuItemView;
 import androidx.appcompat.widget.Toolbar;
 import com.cu.project.ui.login.loginActivity;
 import com.cu.project.R;
 import com.cu.project.ui.Profiile.ProfileActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SettingActivity extends AppCompatActivity {
     Toolbar toolbar;
     Button btn;
     TextView nametext;
+    ListView listView;
+    ListView listView1;
 
 
     @Override
@@ -39,18 +48,47 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-        // for opening individual settings
-        nametext = findViewById(R.id.nameid);
 
-        nametext.setOnClickListener(new View.OnClickListener() {
+        this.arrayAdapterListView();
+
+
+    }
+
+    private void arrayAdapterListView()
+    {
+        List<String> dataList = new ArrayList<>();
+        dataList.add("Name");
+        dataList.add("E-mail");
+        dataList.add("Password");
+        dataList.add("Phone No.");
+        dataList.add("Qualification and University");
+
+        ListView listView = findViewById(R.id.settinglist_id);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
+        listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext() , "Name Clicked !" , Toast.LENGTH_LONG).show();
+            public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
+                Object clickItemObj = adapterView.getAdapter().getItem(index);
+                Toast.makeText(getApplicationContext(), "You clicked " + clickItemObj.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
 
+        List<String> dataList1 = new ArrayList<>();
+        dataList1.add("Terms of Services");
+        dataList1.add("Data Policies");
+        dataList1.add("Help and Support");
+        dataList1.add("About us");
+
+        ListView listView2 = findViewById(R.id.legal_list);
+        ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<>(this , android.R.layout.simple_list_item_1 , dataList1);
+        listView2.setAdapter(arrayAdapter1);
     }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
