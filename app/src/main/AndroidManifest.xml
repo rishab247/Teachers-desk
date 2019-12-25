@@ -29,7 +29,10 @@
 
         <activity android:name=".ui.Register.RegisterActivity"/>
 
-        <activity android:name=".Upload" />
+        <activity android:name=".ui.Upload.UploadActivity" />
+
+        <activity android:name=".ui.Setting.SettingActivity"/>
+
         <activity
             android:name=".Welcome"/>
 

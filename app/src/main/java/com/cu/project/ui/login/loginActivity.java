@@ -38,6 +38,7 @@ public class loginActivity extends Activity implements loginMvpView {
                 startActivity(intent);
             }
         });
+
     }
 
     @Override

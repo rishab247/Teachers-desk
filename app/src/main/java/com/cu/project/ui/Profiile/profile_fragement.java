@@ -15,16 +15,20 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toolbar;
 
 import com.cu.project.R;
 
 public class profile_fragement extends Fragment {
     private Button signoutbtn;
+    Toolbar toolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState)
     {
         setHasOptionsMenu(true);
+
+
         return inflater.inflate(R.layout.fragment_profile_fragement,container,false);
     }
 
@@ -32,6 +36,7 @@ public class profile_fragement extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
     }
 
     @Override

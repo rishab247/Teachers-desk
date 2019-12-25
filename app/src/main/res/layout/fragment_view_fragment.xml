@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.Profiile.ProfileActivity">
 
+   <ListView
+       android:id="@+id/simplelistview"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:divider="#000"
+       android:dividerHeight="2dp"
+       android:listSelector="#57F44336"
+       android:footerDividersEnabled="true"
+       android:layout_above="@+id/uploadbtn"
+       android:layout_marginLeft="8dp"
+       android:layout_marginRight="8dp"
+       android:layout_marginBottom="18dp"
+       android:layout_marginTop="6dp"/>
 
-   <TextView
-       android:id="@+id/textView3"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="Here all the research paper and work are displayed"
-       android:textColor="#000"
-       android:textSize="20sp"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
    <Button
-       android:id="@+id/uploadbtn_ID"
-       android:layout_width="wrap_content"
+       android:id="@+id/uploadbtn"
+       android:layout_width="match_parent"
        android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentRight="true"
+       android:layout_marginLeft="16dp"
+       android:layout_marginRight="16dp"
        android:text="Upload"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintHorizontal_bias="0.95"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintVertical_bias="0.954" />
+       android:textColor="#fff"
+       android:textSize="16sp"
+       android:background="@drawable/roundbtn"
+       android:layout_marginBottom="8dp"
+       android:textStyle="italic"
+       android:alpha=".89"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</RelativeLayout>
