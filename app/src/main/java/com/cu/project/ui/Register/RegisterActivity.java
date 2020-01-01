@@ -2,6 +2,7 @@ package com.cu.project.ui.Register;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import com.cu.project.R;
 import com.cu.project.ui.Profiile.ProfileActivity;
 import com.cu.project.ui.login.loginActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 import java.util.regex.Pattern;
@@ -30,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
     Button btn_register , btn_verify;
     TextView Alreadyamember ;
     Spinner type_spinner;
+    CoordinatorLayout coordinatorLayout;
 
     private boolean initiate = false;
 

@@ -20,7 +20,7 @@ import android.widget.Toolbar;
 import com.cu.project.R;
 
 public class profile_fragement extends Fragment {
-    private Button signoutbtn;
+
     Toolbar toolbar;
 
     @Override
@@ -32,6 +32,8 @@ public class profile_fragement extends Fragment {
         return inflater.inflate(R.layout.fragment_profile_fragement,container,false);
     }
 
+    /*
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +41,13 @@ public class profile_fragement extends Fragment {
 
     }
 
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 
         inflater.inflate(R.menu.menu_main , menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
+     */
 }

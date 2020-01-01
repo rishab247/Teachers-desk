@@ -106,16 +106,17 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textInputLayout3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textInputLayout3"
-                app:layout_constraintTop_toTopOf="@+id/textInputLayout3">
+                app:layout_constraintTop_toTopOf="@+id/textInputLayout3"
+                app:layout_constraintVertical_bias="0.0">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/lnameregisteretext"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:digits="QWERTYUIOPASDFGHJKLZXCVBNM|qwertyuiopasdfghjklzxcvbnm"
                     android:hint="Last name"
                     android:inputType="textPersonName"
-                    android:maxLength="8"
-                    android:digits="QWERTYUIOPASDFGHJKLZXCVBNM|qwertyuiopasdfghjklzxcvbnm" />
+                    android:maxLength="8" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

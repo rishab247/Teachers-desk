@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.Profiile.ProfileActivity">
 
-   <ListView
-       android:id="@+id/simplelistview"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:divider="#000"
-       android:dividerHeight="2dp"
-       android:listSelector="#57F44336"
-       android:footerDividersEnabled="true"
-       android:layout_above="@+id/uploadbtn"
-       android:layout_marginLeft="8dp"
-       android:layout_marginRight="8dp"
-       android:layout_marginBottom="18dp"
-       android:layout_marginTop="6dp"/>
-
-
-
 
 
    <Button

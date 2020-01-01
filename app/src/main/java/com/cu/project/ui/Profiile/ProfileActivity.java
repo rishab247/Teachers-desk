@@ -3,8 +3,11 @@ package com.cu.project.ui.Profiile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,15 +28,18 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     TabItem tabprofile;
     TabItem tabview;
 
+    ImageView setting, power  , profile_imgupdate;
+
     Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Profile");
-        setSupportActionBar(toolbar);
+
+        //toolbar = findViewById(R.id.toolbar);
+        //toolbar.setTitle("Profile");
+        //setSupportActionBar(toolbar);
 
 
 
@@ -50,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
 
-                if(tab.getPosition() == 0){
+               /* if(tab.getPosition() == 0){
                     toolbar.setTitle("Profile");
                     tabLayout.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorAccent));
                 }
@@ -61,6 +67,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
                 else{
                     tabLayout.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorAccent));
                 }
+
+                */
             }
 
             @Override
@@ -74,24 +82,46 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
             }
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId())
-        {
-            case R.id.setting_id:
+        setting = findViewById(R.id.settings);
+        power = findViewById(R.id.signout);
+
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this , SettingActivity.class);
                 startActivity(intent);
-                break;
+            }
+        });
 
-            case R.id.Sign_Outid:
-                Intent myintent = new Intent(this , loginActivity.class);
-                startActivity(myintent);
-                break;
-        }
-        return true;
+        power.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this , loginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        profile_imgupdate = findViewById(R.id.edit_profile);
+
+        profile_imgupdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PopupMenu popup = new PopupMenu(ProfileActivity.this, v);
+                MenuInflater inflater = popup.getMenuInflater();
+                inflater.inflate(R.menu.profile_update, popup.getMenu());
+                popup.show();
+            }
+        });
+
     }
+
+
+
+
+
 }
 
