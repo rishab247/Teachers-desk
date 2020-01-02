@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,6 +34,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
     TextView Alreadyamember ;
     Spinner type_spinner;
     CoordinatorLayout coordinatorLayout;
+
+    Dialog dialog;
 
     private boolean initiate = false;
 
@@ -89,6 +92,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
 
 
         btn_verify = findViewById(R.id.verifyregisterbutton);
+        dialog = new Dialog(getApplicationContext());
+        dialog.setContentView(R.layout.dialog_box);
         btn_verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,11 +125,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
                 });
 
                 builder.show();
+         }
 
-
-
-
-            }
         });
 
 
@@ -313,6 +315,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
                 }
             }
         });
+
+
+
     }
 }
 

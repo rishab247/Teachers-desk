@@ -108,7 +108,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         });
 
 
-        profile_imgupdate = findViewById(R.id.edit_profile);
+        profile_imgupdate = findViewById(R.id.profile_img);
 
         profile_imgupdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,10 +122,5 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         });
 
     }
-
-
-
-
-
 }
 

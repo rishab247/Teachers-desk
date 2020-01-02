@@ -7,22 +7,35 @@
     tools:context=".ui.Profiile.ProfileActivity">
 
 
+  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+      android:id="@+id/swipe"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
-   <Button
-       android:id="@+id/uploadbtn"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentRight="true"
-       android:layout_marginLeft="16dp"
-       android:layout_marginRight="16dp"
-       android:text="Upload"
-       android:textColor="#fff"
-       android:textSize="16sp"
-       android:background="@drawable/roundbtn"
-       android:layout_marginBottom="8dp"
-       android:textStyle="italic"
-       android:alpha=".89"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view"
+        android:layout_marginBottom="80dp"/>
+
+
+    <Button
+        android:id="@+id/uploadbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Upload"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:background="@drawable/roundbtn"
+        android:layout_marginBottom="8dp"
+        android:textStyle="italic"
+        android:alpha=".89"/>
+
+  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 

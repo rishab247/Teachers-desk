@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".ui.Splash.SplashActivity">
+        <activity android:name=".ui.Splash.SplashActivity"
+            android:screenOrientation="portrait">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
@@ -23,18 +24,24 @@
         </intent-filter>
         </activity>
 
-        <activity android:name=".ui.login.loginActivity"/>
+        <activity android:name=".ui.login.loginActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".ui.Profiile.ProfileActivity"/>
+        <activity android:name=".ui.Profiile.ProfileActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".ui.Register.RegisterActivity"/>
+        <activity android:name=".ui.Register.RegisterActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".ui.Upload.UploadActivity" />
+        <activity android:name=".ui.Upload.UploadActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".ui.Setting.SettingActivity"/>
+        <activity android:name=".ui.Setting.SettingActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".Welcome"/>
+            android:name=".Welcome"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="preloaded_fonts"
