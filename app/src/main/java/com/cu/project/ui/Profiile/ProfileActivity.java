@@ -8,10 +8,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
@@ -27,10 +30,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     PageAdapter pagerAdapter;
     TabItem tabprofile;
     TabItem tabview;
+    ConstraintLayout constraintLayout;
+    ImageView setting, power  , profile_imgupdate ;
 
-    ImageView setting, power  , profile_imgupdate;
-
-    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -48,27 +50,29 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         tabview = findViewById(R.id.view_tab);
         viewPager = findViewById(R.id.view_pager);
 
+
         pagerAdapter = new PageAdapter(getSupportFragmentManager() , tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
+
+
+        constraintLayout = findViewById(R.id.constraintLayout2);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
 
-               /* if(tab.getPosition() == 0){
-                    toolbar.setTitle("Profile");
+                if(tab.getPosition() == 0){
+                    constraintLayout.setVisibility(View.VISIBLE);
                     tabLayout.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorAccent));
                 }
                 else if(tab.getPosition() == 1){
-                    toolbar.setTitle("Achievements");
+                    constraintLayout.setVisibility(View.GONE);
                     tabLayout.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorPrimary));
                 }
                 else{
                     tabLayout.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorAccent));
                 }
-
-                */
             }
 
             @Override
