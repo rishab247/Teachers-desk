@@ -7,8 +7,13 @@ import android.util.Log;
 import com.cu.project.R;
 import com.cu.project.Welcome;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Arrays;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class SplashActivity extends Activity implements SplashMvpView {
 
@@ -16,7 +21,7 @@ public class SplashActivity extends Activity implements SplashMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        generateHash("2dc268d0d03abaa20746b0c9fb00b8789525382d");
+        generatedhash12();
         Intent intent = new Intent(SplashActivity.this , Welcome.class);
         startActivity(intent);
 
@@ -29,25 +34,69 @@ public class SplashActivity extends Activity implements SplashMvpView {
     @Override
     public void openLoginActivity() {
     }
+//
+//    public static void generateHash1(String input) {
+//        {
+//            SecureRandom random = new SecureRandom();
+//            byte[] salt = new byte[16];
+//            random.nextBytes(salt);
+//            MessageDigest md = null;
+//            try {
+//                md = MessageDigest.getInstance("SHA-512");
+//            } catch (NoSuchAlgorithmException e) {
+//                e.printStackTrace();
+//            }
+//            md.update(salt);
+//            byte[] hashedPassword = md.digest(input.getBytes(StandardCharsets.UTF_8));
+//            String hash = Arrays.toString(hashedPassword);
+//             Log.d(TAG, "generateHash1: "+salt);
+//            Log.d(TAG, "generateHash2: "+ Arrays.toString(hashedPassword));
+//            Log.d(TAG, "generateHash3: "+new  String(hashedPassword, 0, 10, StandardCharsets.UTF_8));
+//        }}
+//    public static void generateHash(String input) {
+//        StringBuilder hash = new StringBuilder();
+//
+//        try {
+//            MessageDigest sha = MessageDigest.getInstance("SHA-512");
+//            byte[] hashedBytes = sha.digest(input.getBytes());
+//
+//            char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+//                    'a', 'b', 'c', 'd', 'e', 'f' };
+//            for (int idx = 0; idx < hashedBytes.length;   idx ++) {
+//                byte b = hashedBytes[idx];
+//                hash.append(digits[(b & 0xf0) >> 4]);
+//                hash.append(digits[b & 0x0f]);
+//            }
+//        } catch (NoSuchAlgorithmException e) {
+//            // handle error here.
+//        }
+//String str   = String.valueOf(hash);
+//       Log.v("dsd",str);
+//    }
 
 
-    public static void generateHash(String input) {
-        StringBuilder hash = new StringBuilder();
-
+    String generatedhash12(){
+        String passwordToHash = "password";
+        String generatedPassword = null;
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
         try {
-            MessageDigest sha = MessageDigest.getInstance("SHA-1");
-            byte[] hashedBytes = sha.digest(input.getBytes());
-            char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                    'a', 'b', 'c', 'd', 'e', 'f' };
-            for (int idx = 0; idx < hashedBytes.length;   idx ++) {
-                byte b = hashedBytes[idx];
-                hash.append(digits[(b & 0xf0) >> 4]);
-                hash.append(digits[b & 0x0f]);
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            md.update(salt);
+            md.update(passwordToHash.getBytes());
+            byte[] bytes = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
-        } catch (NoSuchAlgorithmException e) {
-            // handle error here.
+            generatedPassword = sb.toString();
         }
-String str   = String.valueOf(hash);
-       Log.v("dsd",str);
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        return generatedPassword;
     }
 }
