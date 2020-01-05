@@ -95,8 +95,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
         qualification = findViewById(R.id.Qualificationregisteretext);
         university = findViewById(R.id.Universityregisteretext);
         dob = findViewById(R.id.dobregisteretext);
-
-
         btn_verify = findViewById(R.id.verifyregisterbutton);
         dialog = new Dialog(getApplicationContext());
         dialog.setContentView(R.layout.dialog_box);
