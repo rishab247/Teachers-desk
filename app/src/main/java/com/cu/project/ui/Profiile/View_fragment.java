@@ -75,6 +75,16 @@ public class View_fragment extends Fragment {
         });
 
 
+        upload_btn = v.findViewById(R.id.uploadbtn);
+        upload_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext() , UploadActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
 
         return v;

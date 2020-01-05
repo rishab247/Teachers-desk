@@ -33,9 +33,13 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
     Button btn_register , btn_verify;
     TextView Alreadyamember ;
     Spinner type_spinner;
+    Dialog dialog;
     CoordinatorLayout coordinatorLayout;
 
-    Dialog dialog;
+
+
+    String BASE_URL = "https://apitims1.azurewebsites.net/";
+
 
     private boolean initiate = false;
 

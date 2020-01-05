@@ -1,11 +1,14 @@
 package com.cu.project.ui.Profiile;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -32,6 +35,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     TabItem tabview;
     ConstraintLayout constraintLayout;
     ImageView setting, power  , profile_imgupdate ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -62,16 +66,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
 
-                if(tab.getPosition() == 0){
+                if(tab.getPosition() == 0) {
                     constraintLayout.setVisibility(View.VISIBLE);
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorAccent));
+
                 }
                 else if(tab.getPosition() == 1){
-                    constraintLayout.setVisibility(View.GONE);
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorPrimary));
-                }
-                else{
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorAccent));
+                   constraintLayout.setVisibility(View.GONE);
                 }
             }
 
@@ -86,6 +86,11 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
             }
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+
+
+
+
 
 
         setting = findViewById(R.id.settings);
