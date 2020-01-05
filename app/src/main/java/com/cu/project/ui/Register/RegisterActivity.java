@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cu.project.R;
+import com.cu.project.Util.JsonEncoder;
 import com.cu.project.ui.Profiile.ProfileActivity;
 import com.cu.project.ui.login.loginActivity;
 import com.google.android.material.snackbar.Snackbar;
@@ -310,17 +312,23 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
                 }
 
 
+
+
                 if(flag == 0 && initiate == true)
                 {
                     // for going to the next screen
+                    String[] valstring = {eidtext, fnametext, emailtext, passwordtext, pnotext, departtext, dojtext, qualificationtext,
+                            universitytext, dobtext, departtext};
+                    Log.v("testing",valstring[2]);
+                                        JsonEncoder jsonEncoder = new JsonEncoder();
+                    jsonEncoder.jsonify(valstring);
+
                     Intent intent = new Intent(RegisterActivity.this , loginActivity.class);
                     startActivity(intent);
                     finish();
                 }
             }
         });
-
-
 
     }
 }
