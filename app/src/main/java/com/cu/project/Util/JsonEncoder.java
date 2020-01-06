@@ -2,6 +2,8 @@ package com.cu.project.Util;
 
 import android.util.Log;
 
+import com.cu.project.APIHelper.ApiPOST;
+
 import org.json.JSONObject;
 
 public class JsonEncoder {
@@ -25,7 +27,13 @@ public class JsonEncoder {
              jsonObject.put(keyarr[i] , valuearr[i]);
          }
 
+
+
          String information = jsonObject.toString();
+
+         ApiPOST apiPOST = new ApiPOST();
+
+         apiPOST.execute(information);
 
          Log.v("jsonarray" , information);
 

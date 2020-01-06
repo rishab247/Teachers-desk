@@ -67,11 +67,16 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
                 viewPager.setCurrentItem(tab.getPosition());
 
                 if(tab.getPosition() == 0) {
+
+                   // slideDown(constraintLayout);
+
                     constraintLayout.setVisibility(View.VISIBLE);
 
                 }
                 else if(tab.getPosition() == 1){
-                   constraintLayout.setVisibility(View.GONE);
+
+                  //slideUp(constraintLayout);
+                  constraintLayout.setVisibility(View.GONE);
                 }
             }
 
@@ -86,6 +91,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
             }
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+
 
 
 
@@ -126,6 +133,31 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
             }
         });
 
+    }
+
+    public void slideUp(View view){
+        view.setVisibility(View.GONE);
+        TranslateAnimation animate = new TranslateAnimation(
+                0,                 // fromXDelta
+                0,                 // toXDelta
+                0,  // fromYDelta
+                -view.getHeight());                // toYDelta
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+    }
+
+    // slide the view from its current position to below itself
+    public void slideDown(View view){
+        view.setVisibility(View.VISIBLE);
+        TranslateAnimation animate = new TranslateAnimation(
+                0,                 // fromXDelta
+                0,                 // toXDelta
+                0,                 // fromYDelta
+                view.getHeight()); // toYDelta
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
     }
 }
 

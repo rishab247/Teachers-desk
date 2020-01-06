@@ -22,12 +22,16 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.cu.project.APIHelper.ApiPOST;
 import com.cu.project.R;
 import com.cu.project.Util.JsonEncoder;
 import com.cu.project.ui.Profiile.ProfileActivity;
 import com.cu.project.ui.login.loginActivity;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
@@ -315,11 +319,17 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
                 if(flag == 0 && initiate == true)
                 {
                     // for going to the next screen
-                    String[] valstring = {eidtext, fnametext, emailtext, passwordtext, pnotext, departtext, dojtext, qualificationtext,
+
+                    String hashedpass = generatedhash12(generatedhash12(passwordtext));
+                    int len = hashedpass.length();
+                    Log.e("String size" , String.valueOf(len));
+                    String[] valstring = {eidtext, fnametext, emailtext, hashedpass, pnotext, departtext, dojtext, qualificationtext,
                             universitytext, dobtext, departtext};
                     Log.v("testing",valstring[2]);
                                         JsonEncoder jsonEncoder = new JsonEncoder();
                     jsonEncoder.jsonify(valstring);
+
+
 
                     Intent intent = new Intent(RegisterActivity.this , loginActivity.class);
                     startActivity(intent);
@@ -328,6 +338,30 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
             }
         });
 
+    }
+
+    String generatedhash12(String passwordToHash){
+        String generatedPassword = null;
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            md.update(salt);
+            md.update(passwordToHash.getBytes());
+            byte[] bytes = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        return generatedPassword;
     }
 }
 
