@@ -10,12 +10,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cu.project.R;
-import com.cu.project.ui.Profiile.ProfileActivity;
+import com.cu.project.Util.ApiLogin;
 import com.cu.project.ui.Register.RegisterActivity;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+
+import okhttp3.Authenticator;
+import okhttp3.Credentials;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.Route;
 
 
 public class loginActivity extends Activity implements loginMvpView {
@@ -37,27 +49,8 @@ public class loginActivity extends Activity implements loginMvpView {
             public void onClick(View v) {
 
 
-                username = findViewById(R.id.fnamelogintext);
-                password = findViewById(R.id.lnamelogintext);
+                onLoginButtonClick();
 
-
-
-                String usernametext = username.getText().toString().trim();
-                String passtext = password.getText().toString().trim();
-
-
-                String hashedpass = generatedhash12(generatedhash12(passtext));
-
-
-                Log.e("Login Credences", usernametext + hashedpass);
-
-
-
-
-
-
-                Intent intent = new Intent(loginActivity.this , ProfileActivity.class);
-                startActivity(intent);
             }
         });
         Notamember  =findViewById(R.id.Notamembertext);
@@ -78,6 +71,32 @@ public class loginActivity extends Activity implements loginMvpView {
 
     @Override
     public void onLoginButtonClick() {
+
+        username = findViewById(R.id.fnamelogintext);
+        password = findViewById(R.id.lnamelogintext);
+
+
+
+        String usernametext = username.getText().toString().trim();
+        String passtext = password.getText().toString().trim();
+
+
+        String hashedpass = generatedhash12(generatedhash12(passtext));
+
+
+        Log.e("Login Credences", usernametext + hashedpass);
+
+        ApiLogin apiLogin = new ApiLogin();
+
+        try {
+            apiLogin.execute(usernametext, passtext);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        //Intent intent = new Intent(loginActivity.this , ProfileActivity.class);
+        //startActivity(intent);
 
     }
 
@@ -105,6 +124,4 @@ public class loginActivity extends Activity implements loginMvpView {
         }
         return generatedPassword;
     }
-
-
 }
