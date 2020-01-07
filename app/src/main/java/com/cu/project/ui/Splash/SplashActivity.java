@@ -21,6 +21,7 @@ public class SplashActivity extends Activity implements SplashMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        generatedhash12();
         Intent intent = new Intent(SplashActivity.this , Welcome.class);
         startActivity(intent);
 
@@ -74,5 +75,28 @@ public class SplashActivity extends Activity implements SplashMvpView {
 //    }
 
 
-
+    String generatedhash12(){
+        String passwordToHash = "password";
+        String generatedPassword = null;
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            md.update(salt);
+            md.update(passwordToHash.getBytes());
+            byte[] bytes = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        return generatedPassword;
+    }
 }
