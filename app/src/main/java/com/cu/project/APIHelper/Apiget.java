@@ -3,18 +3,30 @@ package com.cu.project.APIHelper;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONObject;
+
 import okhttp3.*;
 import java.io.IOException;
 
-public class Apiget  extends AsyncTask<Void , Void , Void> {
+public class Apiget  extends AsyncTask<String , Void , Void> {
 
-    String urls = "https://raw.github.com/square/okhttp/master/README.md";
+    String urls = "https://apitims1.azurewebsites.net/user/data?token=";
 
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected Void doInBackground(String... voids) {
 
         OkHttpClient client = new OkHttpClient();
+
+        String token = voids[0];
+
+
+
+        urls = urls + token;
+
+
+
+        Log.e("URL" , urls);
 
         Request request = new Request.Builder()
                 .url(urls)

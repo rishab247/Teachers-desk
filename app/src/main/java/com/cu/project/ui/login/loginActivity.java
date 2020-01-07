@@ -8,9 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cu.project.APIHelper.Apiget;
 import com.cu.project.R;
 import com.cu.project.Util.ApiLogin;
+import com.cu.project.ui.Profiile.ProfileActivity;
 import com.cu.project.ui.Register.RegisterActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +23,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.concurrent.ExecutionException;
 
 import okhttp3.Authenticator;
 import okhttp3.Credentials;
@@ -53,6 +57,8 @@ public class loginActivity extends Activity implements loginMvpView {
 
             }
         });
+
+
         Notamember  =findViewById(R.id.Notamembertext);
         Notamember.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +78,8 @@ public class loginActivity extends Activity implements loginMvpView {
     @Override
     public void onLoginButtonClick() {
 
+        int flag = 0;
+
         username = findViewById(R.id.fnamelogintext);
         password = findViewById(R.id.lnamelogintext);
 
@@ -80,32 +88,68 @@ public class loginActivity extends Activity implements loginMvpView {
         String usernametext = username.getText().toString().trim();
         String passtext = password.getText().toString().trim();
 
+        if(usernametext.equals(""))
+        {
+            username.setError("Enter Euid");
+            flag = 1;
+        }
 
-        String hashedpass = generatedhash12(generatedhash12(passtext));
+        if(passtext.equals(""))
+        {
+            password.setError("Enter Password");
+            flag = 1;
+        }
+
+        if(flag == 0)
+        {
+            String str = generatedhash12(passtext);
+            Log.e("Hash1",str);
+            String hashedpass = generatedhash12(str);
+            Log.e("Hash2",hashedpass);
+
+            Log.e("Login Credences", usernametext + hashedpass);
+
+            ApiLogin apiLogin = new ApiLogin(usernametext , hashedpass);
+            String token = null;
+            try {
+                token = apiLogin.execute().get();
+                Log.e("TOKEN obtained" , token);
 
 
-        Log.e("Login Credences", usernametext + hashedpass);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-        ApiLogin apiLogin = new ApiLogin(usernametext , passtext);
-        apiLogin.execute();
+
+            if(token.length() <= 4)
+            {
+                Toast.makeText(getApplicationContext() , "Information Invalid", Toast.LENGTH_LONG).show();
+
+            }
+            else
+            {
+
+                Apiget apiget = new Apiget();
+                apiget.execute(token);
+
+                Intent intent = new Intent(loginActivity.this , ProfileActivity.class);
+                startActivity(intent);
+            }
+
+        }
 
 
-
-        //Intent intent = new Intent(loginActivity.this , ProfileActivity.class);
-        //startActivity(intent);
 
     }
 
 
     String generatedhash12(String passwordToHash){
         String generatedPassword = null;
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
-        try {
+          try {
             MessageDigest md = MessageDigest.getInstance("SHA-512");
-            md.update(salt);
-            md.update(passwordToHash.getBytes());
+             md.update(passwordToHash.getBytes());
             byte[] bytes = md.digest();
             StringBuilder sb = new StringBuilder();
             for(int i=0; i< bytes.length ;i++)
