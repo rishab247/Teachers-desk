@@ -86,13 +86,9 @@ public class loginActivity extends Activity implements loginMvpView {
 
         Log.e("Login Credences", usernametext + hashedpass);
 
-        ApiLogin apiLogin = new ApiLogin();
+        ApiLogin apiLogin = new ApiLogin(usernametext , passtext);
+        apiLogin.execute();
 
-        try {
-            apiLogin.execute(usernametext, passtext);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
 
         //Intent intent = new Intent(loginActivity.this , ProfileActivity.class);
