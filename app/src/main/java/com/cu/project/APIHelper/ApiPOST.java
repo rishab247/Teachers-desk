@@ -4,17 +4,20 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONObject;
+import org.jetbrains.annotations.Nullable;
+
 
 import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSink;
 
 public class ApiPOST  extends AsyncTask<String , Void , Void> {
 
@@ -26,20 +29,20 @@ public class ApiPOST  extends AsyncTask<String , Void , Void> {
 
         Log.v("INFO" , str);
 
-        String url = "http://apitims1.azurewebsites.net/register";;
+        String url = "https://apitims1.azurewebsites.net/register";
 
         OkHttpClient client = new OkHttpClient();
 
 
-            RequestBody body = RequestBody.create(MEDIA_TYPE, str);
-            Request request = new Request.Builder()
+        RequestBody body = RequestBody.create(MEDIA_TYPE, str);
+        Request request = new Request.Builder()
                     .url(url).post(body).build();
 
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-                    String mMessage = e.getMessage().toString();
+                    String mMessage = e.getMessage();
                     Log.v("failure Response", mMessage);
 
                 }
@@ -51,6 +54,7 @@ public class ApiPOST  extends AsyncTask<String , Void , Void> {
                     Log.e("responce", mMessage);
                 }
             });
+
 
         return null;
     }

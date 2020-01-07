@@ -44,8 +44,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
 
 
 
-    String BASE_URL = "https://apitims1.azurewebsites.net/";
-
 
     private boolean initiate = false;
 
@@ -326,7 +324,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
                     String[] valstring = {eidtext, fnametext, emailtext, hashedpass, pnotext, departtext, dojtext, qualificationtext,
                             universitytext, dobtext, departtext};
                     Log.v("testing",valstring[2]);
-                                        JsonEncoder jsonEncoder = new JsonEncoder();
+
+
+                    JsonEncoder jsonEncoder = new JsonEncoder();
                     jsonEncoder.jsonify(valstring);
 
 
