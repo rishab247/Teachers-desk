@@ -32,22 +32,5 @@ public class profile_fragement extends Fragment {
         return inflater.inflate(R.layout.fragment_profile_fragement,container,false);
     }
 
-    /*
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-
-    }
-
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-
-        inflater.inflate(R.menu.menu_main , menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-     */
 }

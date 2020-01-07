@@ -3,9 +3,8 @@ package com.cu.project.Util;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.viewpager.widget.PagerAdapter;
 
-import org.jetbrains.annotations.TestOnly;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -16,9 +15,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.Route;
 
-public class ApiLogin  extends AsyncTask<Void, Void ,Void> {
+public class ApiLogin  extends AsyncTask<Void, Void ,String> {
 
     String username , password;
+    String res = "";
 
 
     public ApiLogin(String username , String password)
@@ -28,14 +28,17 @@ public class ApiLogin  extends AsyncTask<Void, Void ,Void> {
     }
 
     @Override
-    protected Void doInBackground(Void... strings) {
+        protected String doInBackground(Void... strings) {
 
         try {
-            testFetchOK();
+            res = testFetchOK();
+
+            Log.v("RES" , res);
         } catch (Exception e) {
+            Log.e("EXCEPTION" , "class not found");
             e.printStackTrace();
         }
-        return null;
+        return res;
     }
 
     private static OkHttpClient createAuthenticatedClient(final String username,
@@ -53,33 +56,45 @@ public class ApiLogin  extends AsyncTask<Void, Void ,Void> {
         return httpClient;
     }
 
-    private static Response doRequest(OkHttpClient httpClient, String anyURL) throws Exception {
+    private static String doRequest(OkHttpClient httpClient, String anyURL) throws Exception {
         Request request = new Request.Builder().url(anyURL).build();
         Response response = httpClient.newCall(request).execute();
 
+        String token;
         if (!response.isSuccessful()) {
-            throw new IOException("Unexpected code " + response);
+            token = String.valueOf(response.code());
         }
-        System.out.println(response.body().string());
-        return response;
+        //System.out.println(response.body().string());
+        else
+        {
+            JSONObject jsonObject = new JSONObject(response.body().string());
+
+            token = jsonObject.getString("token");
+            Log.v("TOKEN GENERATED" , token);
+        }
+
+        return token;
     }
 
 
-    public static Response fetch(String url, String username, String password) throws Exception {
+    public static String fetch(String url, String username, String password) throws Exception {
 
         OkHttpClient httpClient = createAuthenticatedClient(username, password);
 
-        return doRequest(httpClient, url);
+        String st = doRequest(httpClient , url);
+
+        return st;
 
     }
 
-    public void testFetchOK() throws Exception {
+    public String testFetchOK() throws Exception {
         String url = "https://apitims1.azurewebsites.net/login";
 
         Log.e("Printhelper",username + password);
 
 
-        ApiLogin.fetch(url, username, password);
+        String token = ApiLogin.fetch(url, username, password);
+        return token;
     }
 
     private static int responseCount(Response response) {
@@ -89,4 +104,5 @@ public class ApiLogin  extends AsyncTask<Void, Void ,Void> {
         }
         return result;
     }
+
 }

@@ -342,12 +342,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
 
     String generatedhash12(String passwordToHash){
         String generatedPassword = null;
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-512");
-            md.update(salt);
             md.update(passwordToHash.getBytes());
             byte[] bytes = md.digest();
             StringBuilder sb = new StringBuilder();
