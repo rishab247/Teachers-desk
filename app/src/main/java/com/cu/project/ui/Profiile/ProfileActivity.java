@@ -36,11 +36,22 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     ConstraintLayout constraintLayout;
     ImageView setting, power  , profile_imgupdate ;
 
+    TextView usertext;
+
+    Bundle bundle = new Bundle();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        Bundle bundle = getIntent().getExtras();
+        String name = bundle.getString("name_");
+
+        usertext = findViewById(R.id.textView4);
+
+        usertext.setText(name);
 
 
         //toolbar = findViewById(R.id.toolbar);
@@ -133,6 +144,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
             }
         });
 
+
+
+
     }
 
     public void slideUp(View view){
@@ -159,5 +173,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         animate.setFillAfter(true);
         view.startAnimation(animate);
     }
+
+
 }
 

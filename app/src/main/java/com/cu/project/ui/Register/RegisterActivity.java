@@ -32,7 +32,10 @@ import com.google.android.material.snackbar.Snackbar;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterMvpView{
@@ -143,6 +146,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
             public void onClick(View v) {
                 int mYear, mMonth, mDay;
                 final Calendar c = Calendar.getInstance();
+//                c.get(Calendar.MILLISECOND);
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -156,6 +160,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
                 datePickerDialog.show();
             }
         });
+
+
 
         dob.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -175,6 +181,10 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
                 datePickerDialog.show();
             }
         });
+
+
+
+
 
 
 
@@ -318,15 +328,51 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
                 {
                     // for going to the next screen
 
+                    SimpleDateFormat date1 = new SimpleDateFormat("yyyy/MM/dd");
+
+                    Date dojdate = null;
+
+                    try {
+                        dojdate = date1.parse(doj.getText().toString().trim());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    long time1 = dojdate.getTime();
+
+                    String dateofjoin = String.valueOf(time1);
+
+
+
+                    SimpleDateFormat date2 = new SimpleDateFormat("yyyy/MM/dd");
+
+                    Date dobdate = null;
+
+                    try {
+                        dobdate = date2.parse(dob.getText().toString().trim());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    long time2 = dobdate.getTime();
+
+                    final String dateofbirth = String.valueOf(time2);
+
+
+
+
+
+
                     String hashedpass = generatedhash12(generatedhash12(passwordtext));
                     int len = hashedpass.length();
                     Log.e("String size" , String.valueOf(len));
-                    String[] valstring = {eidtext, fnametext, emailtext, hashedpass, pnotext, departtext, dojtext, qualificationtext,
-                            universitytext, dobtext, departtext};
-                    Log.v("testing",valstring[2]);
+                    String[] valstring = {eidtext, fnametext, emailtext, hashedpass, pnotext, departtext, dateofjoin, qualificationtext,
+                            universitytext, dateofbirth, departtext};
+                    Log.v("testing",eidtext + fnametext + emailtext + hashedpass + pnotext + departtext + dojtext + qualificationtext +
+                            universitytext + dobtext + departtext);
 
 
-                    JsonEncoder jsonEncoder = new JsonEncoder();
+                    JsonEncoder jsonEncoder = new JsonEncoder(getApplicationContext());
                     jsonEncoder.jsonify(valstring);
 
 

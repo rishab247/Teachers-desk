@@ -28,18 +28,18 @@ import java.util.ArrayList;
 
 import com.cu.project.ui.login.loginActivity;
 
-public class Apiget  extends AsyncTask<String , Void , String[]> {
+public class ApigetPaper  extends AsyncTask<String , Void , String[]> {
 
     private static Context sContext;
     ProgressDialog dialog;
 
 
-    public Apiget(Context context)
+    public ApigetPaper(Context context)
     {
         sContext = context;
     }
 
-    String urls = "https://apitims1.azurewebsites.net/userdata?token=";
+    String urls = "https://apitims1.azurewebsites.net/user/paperlist/?token=";
     String jsonData = null;
 
     String ecode="";
@@ -100,15 +100,15 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
             Log.e("JSON ARRAY" , String.valueOf(arrObj));
 
 
-             ecode = arrObj.get(0).toString().trim();
-             name = arrObj.get(1).toString().trim();
-             email = arrObj.get(2).toString().trim();
-             pno = arrObj.get(3).toString().trim();
-             depart = arrObj.get(4).toString().trim();
-             doj = arrObj.get(5).toString().trim();
-             quali = arrObj.get(6).toString().trim();
-             uni = arrObj.get(7).toString().trim();
-             dob = arrObj.get(8).toString().trim();
+            ecode = arrObj.get(0).toString().trim();
+            name = arrObj.get(1).toString().trim();
+            email = arrObj.get(2).toString().trim();
+            pno = arrObj.get(3).toString().trim();
+            depart = arrObj.get(4).toString().trim();
+            doj = arrObj.get(5).toString().trim();
+            quali = arrObj.get(6).toString().trim();
+            uni = arrObj.get(7).toString().trim();
+            dob = arrObj.get(8).toString().trim();
 
             Log.e("VALUES" ,ecode + name + email + pno + depart + doj + quali + uni + dob );
 

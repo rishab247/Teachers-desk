@@ -1,6 +1,9 @@
 package com.cu.project.Util;
 
+import android.content.Context;
+import android.util.JsonReader;
 import android.util.Log;
+import android.view.View;
 
 import com.cu.project.APIHelper.ApiPOST;
 
@@ -9,6 +12,12 @@ import org.json.JSONObject;
 public class JsonEncoder {
 
     private String[] keyarr = util.keyarr;
+    Context scontext;
+
+    public JsonEncoder(Context context)
+    {
+        scontext = context;
+    }
 
  public void jsonify(String[] valuearr){
 

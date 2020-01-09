@@ -1,5 +1,6 @@
 package com.cu.project.APIHelper;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -19,7 +20,19 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okio.BufferedSink;
 
-public class ApiPOST  extends AsyncTask<String , Void , Void> {
+public class ApiPOST  extends AsyncTask<String , String , Void> {
+    private ProgressDialog dialog;
+
+//    @Override
+//    protected void onPreExecute() {
+//        super.onPreExecute();
+//
+//        dialog = new ProgressDialog();
+//        dialog.setMessage("Please wait...");
+//        dialog.setIndeterminate(true);
+//        dialog.show();
+//    }
+
 
     @Override
     protected Void doInBackground(String... voids) {
