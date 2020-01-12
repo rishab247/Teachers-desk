@@ -2,44 +2,23 @@ package com.cu.project.ui.login;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cu.project.APIHelper.Apiget;
 import com.cu.project.R;
 import com.cu.project.Util.ApiLogin;
-import com.cu.project.ui.Profiile.ProfileActivity;
 import com.cu.project.ui.Register.RegisterActivity;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
-
-import okhttp3.Authenticator;
-import okhttp3.Credentials;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.Route;
 
 
 public class loginActivity extends Activity implements loginMvpView {
@@ -48,6 +27,8 @@ public class loginActivity extends Activity implements loginMvpView {
     TextView Notamember;
     EditText username , password;
     ProgressDialog dialog;
+
+    static String token = null;
 
 
     @Override
@@ -139,7 +120,7 @@ public class loginActivity extends Activity implements loginMvpView {
             Log.e("Login Credences", usernametext + hashedpass);
 
             ApiLogin apiLogin = new ApiLogin(this,usernametext , hashedpass);
-            String token = null;
+
             try {
 
                 token = apiLogin.execute().get();
@@ -164,6 +145,8 @@ public class loginActivity extends Activity implements loginMvpView {
                 Apiget apiget = new Apiget(this);
 
                 apiget.execute(token);
+
+
             }
 
         }
@@ -191,5 +174,11 @@ public class loginActivity extends Activity implements loginMvpView {
             e.printStackTrace();
         }
         return generatedPassword;
+    }
+
+
+    public static String gettoken()
+    {
+        return token;
     }
 }
