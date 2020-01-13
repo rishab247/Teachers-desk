@@ -15,14 +15,21 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.cu.project.APIHelper.Apiget;
 import com.cu.project.R;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class profile_fragement extends Fragment {
 
@@ -38,6 +45,8 @@ public class profile_fragement extends Fragment {
     static TextView dob;
     static TextView doj;
 
+
+    String text1 , text2 , text3, text4;
 
 
 
@@ -62,6 +71,12 @@ public class profile_fragement extends Fragment {
         String uni_ = extras.getString("uni_").trim();
         String dob_ = extras.getString("dob_").trim();
         String doj_ = extras.getString("doj_").trim();
+
+        text1 = e_code;
+        text2 = userName;
+        text3 = email_;
+        text4 = p_no;
+
 
 
         Log.e("uSERNAME" , userName);
@@ -88,8 +103,18 @@ public class profile_fragement extends Fragment {
 
 
 
+
+
+
         return v;
     }
+
+
+
+
+
+
+
 
 
 

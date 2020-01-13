@@ -36,7 +36,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     ConstraintLayout constraintLayout;
     ImageView setting, power  , profile_imgupdate ;
 
-    TextView usertext;
+    TextView usertext , emailtext , pnotext , eidtext;
 
     Bundle bundle = new Bundle();
 
@@ -49,9 +49,22 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         Bundle bundle = getIntent().getExtras();
         String name = bundle.getString("name_");
 
-        usertext = findViewById(R.id.textView4);
+        String email = bundle.getString("email_");
 
-        usertext.setText(name);
+        String pno = bundle.getString("p_no");
+
+        String eid = bundle.getString("e_code");
+
+//        usertext = findViewById(R.id.textView4);
+//        emailtext = findViewById(R.id.textView8);
+//        pnotext = findViewById(R.id.textView10);
+        eidtext = findViewById(R.id.textView11);
+
+
+//        usertext.setText(name);
+//        emailtext.setText(email);
+//        pnotext.setText(pno);
+        eidtext.setText(eid);
 
 
         //toolbar = findViewById(R.id.toolbar);
@@ -130,19 +143,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
             }
         });
 
-
-        profile_imgupdate = findViewById(R.id.profile_img);
-
-        profile_imgupdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                PopupMenu popup = new PopupMenu(ProfileActivity.this, v);
-                MenuInflater inflater = popup.getMenuInflater();
-                inflater.inflate(R.menu.profile_update, popup.getMenu());
-                popup.show();
-            }
-        });
 
 
 

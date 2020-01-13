@@ -48,6 +48,9 @@
             android:name=".Welcome"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.AddWork.AddPublication"
+            android:screenOrientation="portrait"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
