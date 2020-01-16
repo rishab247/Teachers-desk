@@ -5,7 +5,7 @@ import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 
-import com.cu.project.APIHelper.ApiPOST;
+import com.cu.project.APIHelper.RegisterAPIHelper;
 
 import org.json.JSONObject;
 
@@ -40,9 +40,9 @@ public class JsonEncoder {
 
          String information = jsonObject.toString();
 
-         ApiPOST apiPOST = new ApiPOST();
+         RegisterAPIHelper apiHelper = new RegisterAPIHelper();
 
-         apiPOST.execute(information);
+         apiHelper.execute(information , util.url);
 
          Log.v("jsonarray" , information);
 

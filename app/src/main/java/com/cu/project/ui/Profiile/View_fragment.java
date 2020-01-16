@@ -112,26 +112,24 @@ public class View_fragment extends Fragment {
 
 
         lachievements = new ArrayList<>();
-        lachievements.add(new Achievements("Paper1","Auth 1","date1"));
-        lachievements.add(new Achievements("Paper2","Auth 2","date2"));
-        lachievements.add(new Achievements("Paper3","Auth 3","date3"));
-        lachievements.add(new Achievements("Paper4","Auth 4","date4"));
-        lachievements.add(new Achievements("Paper5","Auth 5","date5"));
-        lachievements.add(new Achievements("Paper6","Auth 6","date6"));
-        lachievements.add(new Achievements("Paper7","Auth 7","date7"));
-        lachievements.add(new Achievements("Paper8","Auth 8","date8"));
-        lachievements.add(new Achievements("Paper9","Auth 9","date9"));
-        lachievements.add(new Achievements("Paper10","Auth 10","date10"));
-        lachievements.add(new Achievements("Paper11","Auth 11","date11"));
-        lachievements.add(new Achievements("Paper12","Auth 12","date12"));
-        lachievements.add(new Achievements("Paper13","Auth 13","date13"));
-        lachievements.add(new Achievements("Paper14","Auth 14","date14"));
-        lachievements.add(new Achievements("Paper15","Auth 15","date15"));
-        lachievements.add(new Achievements("Paper16","Auth 16","date16"));
-        lachievements.add(new Achievements("Paper17","Auth 17","date17"));
-        lachievements.add(new Achievements("Paper18","Auth 18","date18"));
-        lachievements.add(new Achievements("Paper19","Auth 19","date19"));
-        lachievements.add(new Achievements("Paper20","Auth 20","date20"));
+        lachievements.add(new Achievements("Paper1","date1"));
+        lachievements.add(new Achievements("Paper2","date2"));
+        lachievements.add(new Achievements("Paper3","date3"));
+        lachievements.add(new Achievements("Paper4","date4"));
+        lachievements.add(new Achievements("Paper5","date5"));
+        lachievements.add(new Achievements("Paper6","date6"));
+        lachievements.add(new Achievements("Paper7","date7"));
+        lachievements.add(new Achievements("Paper8","date8"));
+        lachievements.add(new Achievements("Paper9","date9"));
+        lachievements.add(new Achievements("Paper10","date10"));
+        lachievements.add(new Achievements("Paper11","date11"));
+        lachievements.add(new Achievements("Paper12","date12"));
+        lachievements.add(new Achievements("Paper13","date13"));
+        lachievements.add(new Achievements("Paper14","date14"));
+        lachievements.add(new Achievements("Paper15","date15"));
+        lachievements.add(new Achievements("Paper16","date16"));
+        lachievements.add(new Achievements("Paper17","date17"));
+        lachievements.add(new Achievements("Paper18","date18"));
 
 
 

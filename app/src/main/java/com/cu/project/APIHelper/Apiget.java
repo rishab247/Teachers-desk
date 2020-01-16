@@ -39,7 +39,7 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
         sContext = context;
     }
 
-    String urls = "https://apitims1.azurewebsites.net/userdata?token=";
+    String urls = "https://apitims1.azurewebsites.net/user/Profile?token=";
     String jsonData = null;
 
     String ecode="";

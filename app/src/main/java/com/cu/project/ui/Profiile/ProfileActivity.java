@@ -3,14 +3,20 @@ package com.cu.project.ui.Profiile;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +28,7 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.cu.project.R;
+import com.cu.project.ui.Authorclass;
 import com.cu.project.ui.Setting.SettingActivity;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -34,7 +41,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     TabItem tabprofile;
     TabItem tabview;
     ConstraintLayout constraintLayout;
-    ImageView setting, power  , profile_imgupdate ;
+    Spinner setting;
 
     TextView usertext , emailtext , pnotext , eidtext;
 
@@ -122,31 +129,36 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
 
 
+    }
+
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.setting_menu, popup.getMenu());
+        popup.show();
 
 
-        setting = findViewById(R.id.settings);
-        power = findViewById(R.id.signout);
-
-        setting.setOnClickListener(new View.OnClickListener() {
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this , SettingActivity.class);
-                startActivity(intent);
+            public boolean onMenuItemClick(MenuItem item) {
+
+                switch (item.getItemId())
+                {
+                    case R.id.aboutus:
+                        Intent intent = new Intent(ProfileActivity.this , Authorclass.class);
+                        startActivity(intent);
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                }
+
+                return false;
             }
         });
-
-        power.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this , loginActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-
-
-
     }
 
     public void slideUp(View view){

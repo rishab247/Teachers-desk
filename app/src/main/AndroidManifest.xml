@@ -51,6 +51,23 @@
         <activity android:name=".ui.AddWork.AddPublication"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ui.AddWork.AddHonor"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.AddWork.AddPatent"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.AddWork.AddProject"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.Authorclass" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/search"/>
+        </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

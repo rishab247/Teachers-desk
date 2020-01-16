@@ -23,6 +23,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cu.project.R;
+import com.cu.project.ui.AddWork.AddHonor;
+import com.cu.project.ui.AddWork.AddPatent;
+import com.cu.project.ui.AddWork.AddProject;
 import com.cu.project.ui.AddWork.AddPublication;
 import com.cu.project.ui.Profiile.ProfileActivity;
 
@@ -108,10 +111,16 @@ public class UploadActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case 1:
+                        Intent intent1 = new Intent(UploadActivity.this , AddPatent.class);
+                        startActivity(intent1);
                         break;
                     case 2:
+                        Intent intent2 = new Intent(UploadActivity.this , AddProject.class);
+                        startActivity(intent2);
                         break;
                     case 3:
+                        Intent intent3 = new Intent(UploadActivity.this , AddHonor.class);
+                        startActivity(intent3);
                         break;
                 }
                 Object clickItemObj = adapterView.getAdapter().getItem(index);

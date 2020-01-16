@@ -9,10 +9,9 @@ public class Achievements  {
     public Achievements()
     {}
 
-    public Achievements(String maintitle , String auth_name , String Date)
+    public Achievements(String maintitle  , String Date)
     {
         MainTitle = maintitle;
-        Auth_name = auth_name;
         date = Date;
     }
 
@@ -22,14 +21,6 @@ public class Achievements  {
 
     public void setMainTitle(String mainTitle) {
         MainTitle = mainTitle;
-    }
-
-    public String getAuth_name() {
-        return Auth_name;
-    }
-
-    public void setAuth_name(String auth_name) {
-        Auth_name = auth_name;
     }
 
     public String getDate() {

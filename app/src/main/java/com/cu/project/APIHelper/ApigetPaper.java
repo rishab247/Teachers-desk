@@ -12,7 +12,7 @@ import okhttp3.Response;
 
 public class ApigetPaper extends AsyncTask<String , Void , Void> {
 
-    String urls = "https://apitims1.azurewebsites.net/user/List?token=";
+    String urls = "https://apitims1.azurewebsites.net/user/Accomplishment?token=";
 
 
 
