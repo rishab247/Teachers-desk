@@ -20,8 +20,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cu.project.APIHelper.ApigetPaper;
 import com.cu.project.R;
 import com.cu.project.ui.AddWork.AddHonor;
 import com.cu.project.ui.AddWork.AddPatent;
@@ -43,6 +45,8 @@ public class UploadActivity extends AppCompatActivity {
     Spinner spinner , spinner1;
     EditText txtDate;
 
+    TextView text1 , text2 , text3, text4 , totaltext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,17 +62,21 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
 
-//        spinner = findViewById(R.id.Catagory);
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.country_arrays, android.R.layout.simple_spinner_item);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner.setAdapter(adapter);
-//
-//        spinner1 = findViewById(R.id.type_id);
-//        spinner1.setAdapter(adapter);
-//
-//
-//        btndatepicker = findViewById(R.id.btn_date);
-//        txtDate = findViewById(R.id.in_date);
+        text1 = findViewById(R.id.textView4);
+        text2 = findViewById(R.id.textView5);
+        text3 = findViewById(R.id.textView6);
+        text4 = findViewById(R.id.textView7);
+        totaltext = findViewById(R.id.total);
+
+        text1.setText("PUBLICATION \n" + ApigetPaper.countpub);
+        text2.setText("PATENT \n" + ApigetPaper.countpatent);
+        text3.setText("PROJECT \n" + ApigetPaper.countproject);
+        text4.setText("HONOR \n And \n Rewards \n" + ApigetPaper.counthonor);
+
+        int totalcount =  ApigetPaper.counthonor+ ApigetPaper.countproject + ApigetPaper.countpatent + ApigetPaper.countpub;
+
+        totaltext.setText("TOTAL COUNT = " + totalcount);
+
 
         this.arrayAdapterListView();
 

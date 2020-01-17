@@ -54,6 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.main.setText(mData.get(position).getMainTitle());
         holder.date.setText(mData.get(position).getDate());
+        holder.auth.setText(mData.get(position).getType());
 
     }
 
@@ -72,6 +73,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             main = itemView.findViewById(R.id.maintextview_id);
             date = itemView.findViewById(R.id.datetextview_id);
+            auth = itemView.findViewById(R.id.type_id);
 
 
         }

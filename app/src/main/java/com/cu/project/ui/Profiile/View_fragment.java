@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.cu.project.ui.Upload.UploadActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class View_fragment extends Fragment {
@@ -34,6 +36,7 @@ public class View_fragment extends Fragment {
     Toolbar toolbar;
 
     String token = loginActivity.gettoken();
+
 
 
     loginActivity activity;
@@ -53,11 +56,6 @@ public class View_fragment extends Fragment {
 
         v = inflater.inflate(R.layout.fragment_view_fragment, container, false);
 
-        recyclerView = v.findViewById(R.id.recycler_view);
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(getContext() , lachievements);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(recyclerViewAdapter);
 
         swipeRefreshLayout = v.findViewById(R.id.swipe);
 
@@ -74,9 +72,22 @@ public class View_fragment extends Fragment {
 
                         ApigetPaper apigetPaper = new ApigetPaper();
 
+                        try {
+                            Log.e("TOKEN  GENE" , token);
+                            lachievements = apigetPaper.execute(token).get();
+
+                            recyclerView = v.findViewById(R.id.recycler_view);
+                            RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(getContext() , lachievements);
+
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            recyclerView.setAdapter(recyclerViewAdapter);
 
 
-                        apigetPaper.execute(token);
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
 
 
                         swipeRefreshLayout.setRefreshing(false);
@@ -105,33 +116,6 @@ public class View_fragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
-
-
-        lachievements = new ArrayList<>();
-        lachievements.add(new Achievements("Paper1","date1"));
-        lachievements.add(new Achievements("Paper2","date2"));
-        lachievements.add(new Achievements("Paper3","date3"));
-        lachievements.add(new Achievements("Paper4","date4"));
-        lachievements.add(new Achievements("Paper5","date5"));
-        lachievements.add(new Achievements("Paper6","date6"));
-        lachievements.add(new Achievements("Paper7","date7"));
-        lachievements.add(new Achievements("Paper8","date8"));
-        lachievements.add(new Achievements("Paper9","date9"));
-        lachievements.add(new Achievements("Paper10","date10"));
-        lachievements.add(new Achievements("Paper11","date11"));
-        lachievements.add(new Achievements("Paper12","date12"));
-        lachievements.add(new Achievements("Paper13","date13"));
-        lachievements.add(new Achievements("Paper14","date14"));
-        lachievements.add(new Achievements("Paper15","date15"));
-        lachievements.add(new Achievements("Paper16","date16"));
-        lachievements.add(new Achievements("Paper17","date17"));
-        lachievements.add(new Achievements("Paper18","date18"));
-
-
 
     }
 

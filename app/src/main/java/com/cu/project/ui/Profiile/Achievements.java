@@ -3,16 +3,17 @@ package com.cu.project.ui.Profiile;
 public class Achievements  {
 
     String MainTitle;
-    String Auth_name;
+    String type;
     String date;
 
     public Achievements()
     {}
 
-    public Achievements(String maintitle  , String Date)
+    public Achievements(String maintitle  , String Date , String type)
     {
         MainTitle = maintitle;
         date = Date;
+        this.type = type;
     }
 
     public String getMainTitle() {
@@ -29,5 +30,13 @@ public class Achievements  {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

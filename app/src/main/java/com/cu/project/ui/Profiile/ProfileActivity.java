@@ -18,6 +18,7 @@ import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.cu.project.ProfileEdit;
 import com.cu.project.R;
 import com.cu.project.ui.Authorclass;
 import com.cu.project.ui.Setting.SettingActivity;
@@ -43,6 +45,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     ConstraintLayout constraintLayout;
     Spinner setting;
 
+    ImageView edit;
     TextView usertext , emailtext , pnotext , eidtext;
 
     Bundle bundle = new Bundle();
@@ -123,6 +126,18 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+        edit = findViewById(R.id.edit_profile);
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(ProfileActivity.this , ProfileEdit.class);
+                startActivity(intent);
+
+
+            }
+        });
 
 
 
@@ -142,19 +157,21 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                switch (item.getItemId())
-                {
-                    case R.id.aboutus:
-                        Intent intent = new Intent(ProfileActivity.this , Authorclass.class);
-                        startActivity(intent);
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                }
+                Toast.makeText(getApplicationContext()  , "TBA" , Toast.LENGTH_SHORT).show();
+
+//                switch (item.getItemId())
+//                {
+//                    case R.id.aboutus:
+//                        Toast.makeText(getApplicationContext()  , "TBA" , Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case R.id.terms_id:
+//                        Toast.makeText(getApplicationContext()  , "TBA" , Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case 2:
+//                        break;
+//                    case 3:
+//                        break;
+//                }
 
                 return false;
             }
