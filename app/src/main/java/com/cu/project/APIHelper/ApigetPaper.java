@@ -69,47 +69,47 @@ public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
             Log.e("Rcords " , honorarry +  " " + patentarry + " " + projectarry + " " + pubarry);
 
 
-            for(int i= 0;i < pubarry.length() ;i ++)
-            {
-                JSONArray jsonObject1 = pubarry.getJSONArray(i);
-                countpub++;
-
-                Log.e("1st" , jsonObject1.get(1).toString() + " " + jsonObject1.get(2).toString());
-
-
-                listitems.add(new Achievements(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), "PUBLICATION"));
-
-            }
-
-            for(int i= 0;i < patentarry.length() ;i ++)
-            {
-                JSONArray jsonObject1 = pubarry.getJSONArray(i);
-                countpatent++;
-
-
-                listitems.add(new Achievements(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), "PATENT"));
-
-            }
-
-
-            for(int i= 0;i < projectarry.length() ;i ++)
-            {
-                JSONArray jsonObject1 = pubarry.getJSONArray(i);
-
-                countproject++;
-                listitems.add(new Achievements(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim() , "PROJECT"));
-
-            }
-
-
-            for(int i= 0;i < honorarry.length() ;i ++)
-            {
-                JSONArray jsonObject1 = pubarry.getJSONArray(i);
-                counthonor++;
-
-                listitems.add(new Achievements(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), "HONOR AND AWARD"));
-
-            }
+//            for(int i= 0;i < pubarry.length() ;i ++)
+//            {
+//                JSONArray jsonObject1 = pubarry.getJSONArray(i);
+//                countpub++;
+//
+//                Log.e("1st" , jsonObject1.get(1).toString() + " " + jsonObject1.get(2).toString());
+//
+//
+//                listitems.add(new Achievements(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), "PUBLICATION"));
+//
+//            }
+//
+//            for(int i= 0;i < patentarry.length() ;i ++)
+//            {
+//                JSONArray jsonObject1 = pubarry.getJSONArray(i);
+//                countpatent++;
+//
+//
+//                listitems.add(new Achievements(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), "PATENT"));
+//
+//            }
+//
+//
+//            for(int i= 0;i < projectarry.length() ;i ++)
+//            {
+//                JSONArray jsonObject1 = pubarry.getJSONArray(i);
+//
+//                countproject++;
+//                listitems.add(new Achievements(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim() , "PROJECT"));
+//
+//            }
+//
+//
+//            for(int i= 0;i < honorarry.length() ;i ++)
+//            {
+//                JSONArray jsonObject1 = pubarry.getJSONArray(i);
+//                counthonor++;
+//
+//                listitems.add(new Achievements(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), "HONOR AND AWARD"));
+//
+//            }
 
 
 

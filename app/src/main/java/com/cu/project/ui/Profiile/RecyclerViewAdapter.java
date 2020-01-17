@@ -73,7 +73,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             main = itemView.findViewById(R.id.maintextview_id);
             date = itemView.findViewById(R.id.datetextview_id);
-            auth = itemView.findViewById(R.id.type_id);
+         //   auth = itemView.findViewById(R.id.type_id);
 
 
         }
