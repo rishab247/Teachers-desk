@@ -21,8 +21,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:title="Add honors and awards"
-        app:navigationIcon="@drawable/ic_navigate_before_black_24dp"/>
+        app:title="add honors and awards"
+        app:titleTextColor="#fff"/>
 
 
     <ScrollView
@@ -56,7 +56,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/title_id"
+                    android:id="@+id/htitle_id"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Title"
@@ -64,25 +64,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/Ocuupationid"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Occupation"
-                    android:inputType="textPersonName"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
 
 
 
@@ -98,11 +79,13 @@
                 android:layout_marginEnd="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner">
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/Publicationdate_id"
+                    android:id="@+id/honordate_id"
                     android:layout_width="match_parent"
+                    android:editable="false"
+                    android:focusable="false"
                     android:layout_height="match_parent"
                     android:hint="Honor Date"
                     android:inputType="textPersonName"/>
@@ -123,7 +106,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/Author_id"
+                    android:id="@+id/issuer_id"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Issuer"
@@ -145,7 +128,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/Description_id"
+                    android:id="@+id/Des_id"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Description"
@@ -161,6 +144,7 @@
 
 
     <Button
+        android:id="@+id/hsavebtn_id"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Save"

@@ -32,6 +32,8 @@ import com.cu.project.ProfileEdit;
 import com.cu.project.R;
 import com.cu.project.ui.Authorclass;
 import com.cu.project.ui.Setting.SettingActivity;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.cu.project.ui.login.loginActivity;
@@ -39,16 +41,20 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
     TabLayout tabLayout;
     ViewPager viewPager;
+    FloatingActionsMenu menu;
     PageAdapter pagerAdapter;
     TabItem tabprofile;
     TabItem tabview;
     ConstraintLayout constraintLayout;
     Spinner setting;
 
-    ImageView edit;
+    ImageView signout;
+
     TextView usertext , emailtext , pnotext , eidtext;
 
     Bundle bundle = new Bundle();
+
+    FloatingActionButton btn1 , btn2;
 
 
     @Override
@@ -94,6 +100,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
 
         constraintLayout = findViewById(R.id.constraintLayout2);
+        menu = findViewById(R.id.f_btn);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -105,12 +112,14 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
                    // slideDown(constraintLayout);
 
                     constraintLayout.setVisibility(View.VISIBLE);
+                    menu.setVisibility(View.VISIBLE);
 
                 }
                 else if(tab.getPosition() == 1){
 
                   //slideUp(constraintLayout);
                   constraintLayout.setVisibility(View.GONE);
+                  menu.setVisibility(View.GONE);
                 }
             }
 
@@ -126,18 +135,32 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        edit = findViewById(R.id.edit_profile);
+        btn1 = findViewById(R.id.edit_profile);
+        btn2 = findViewById(R.id.down_id);
 
-        edit.setOnClickListener(new View.OnClickListener() {
+        btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(ProfileActivity.this , ProfileEdit.class);
                 startActivity(intent);
-
-
             }
         });
+
+
+
+        signout = findViewById(R.id.signout);
+
+        signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this , loginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
 
 
 

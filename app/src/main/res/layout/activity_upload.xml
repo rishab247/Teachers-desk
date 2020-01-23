@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationContentDescription="return"
-        app:navigationIcon="@drawable/ic_navigate_before_black_24dp"
+
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:title="Add Your Work"

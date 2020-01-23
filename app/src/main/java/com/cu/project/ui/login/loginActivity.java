@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,8 @@ public class loginActivity extends Activity implements loginMvpView {
 
     static String token = null;
 
+    public ProgressBar bar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,8 @@ public class loginActivity extends Activity implements loginMvpView {
             }
         });
 
+
+        bar = findViewById(R.id.pbar);
 
 
 

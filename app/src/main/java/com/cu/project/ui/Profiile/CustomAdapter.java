@@ -1,22 +1,28 @@
 package com.cu.project.ui.Profiile;
-
 import android.content.Context;
+import android.content.Intent;
 import android.database.DataSetObserver;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cu.project.APIHelper.ApigetPaper;
+import com.cu.project.APIHelper.Apigetdetails;
 import com.cu.project.R;
+import com.cu.project.ui.detailclass;
 
 import java.util.ArrayList;
-
+import java.util.List;
 class CustomAdapter implements ListAdapter {
-
     ArrayList<SubjectData> arrayList;
     Context context;
+
 
     public CustomAdapter(Context context, ArrayList<SubjectData> arrayList) {
         this.arrayList=arrayList;
@@ -53,8 +59,7 @@ class CustomAdapter implements ListAdapter {
         return false;
     }
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
+    public View getView(final int position, View convertView, ViewGroup parent) {
         SubjectData subjectData=arrayList.get(position);
         if(convertView==null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -62,11 +67,21 @@ class CustomAdapter implements ListAdapter {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int id = ApigetPaper.listitems.get(position).id;
+                    Log.e("ID OD", String.valueOf(id));
+
+
+                    Apigetdetails apigetdetails = new Apigetdetails(context);
+                    apigetdetails.execute(String.valueOf(id) , "Publication");
+
+//                    Intent intent = new Intent(context , detailclass.class);
+//                    intent.putExtra("ID", id);
+//                    intent.putExtra("TYPE" , "Publication");
+//                    context.startActivity(intent);
                 }
             });
             TextView tittle=convertView.findViewById(R.id.maintextview_id);
             TextView date = convertView.findViewById(R.id.datetextview_id);
-
             tittle.setText(subjectData.title);
             date.setText(subjectData.date);
         }

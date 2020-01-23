@@ -21,8 +21,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:title="Add Project"
-        app:navigationIcon="@drawable/ic_navigate_before_black_24dp"/>
+        app:title="add project"
+        app:titleTextColor="#fff"/>
 
 
     <ScrollView
@@ -56,7 +56,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/title_id"
+                    android:id="@+id/protitle_id"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Project Title"
@@ -64,27 +64,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/Ocuupationid"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Occupation"
-                    android:inputType="textPersonName"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
 
 
 
@@ -99,13 +78,14 @@
                 android:layout_marginEnd="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner">
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/Publicationdate_id"
+                    android:id="@+id/Projectdate_id"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Date"
+                    android:focusable="false"
                     android:inputType="textPersonName"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -127,7 +107,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/Publicationurl_id"
+                    android:id="@+id/Projecturl_id"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Project URL"
@@ -148,7 +128,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/Description_id"
+                    android:id="@+id/PRODescription_id"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Description"
@@ -202,6 +182,7 @@
 
 
     <Button
+        android:id="@+id/prosavebtn_id"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Save"

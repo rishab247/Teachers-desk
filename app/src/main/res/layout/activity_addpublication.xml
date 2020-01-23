@@ -20,8 +20,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:title="Add Publication"
-        app:navigationIcon="@drawable/ic_navigate_before_black_24dp"/>
+        app:title="add publication"
+        app:titleTextColor="#fff"/>
 
 
     <ScrollView
@@ -99,6 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Publication Date"
+                    android:focusable="false"
                     android:inputType="textPersonName"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -198,6 +199,7 @@
 
 
     <Button
+        android:id="@+id/pubsave_id"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Save"

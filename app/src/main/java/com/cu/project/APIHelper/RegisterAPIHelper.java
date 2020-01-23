@@ -6,6 +6,8 @@ import android.util.Log;
 import com.cu.project.Util.util;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -19,6 +21,9 @@ import okhttp3.Response;
 import okhttp3.internal.Util;
 
 public class RegisterAPIHelper  extends AsyncTask<String , String , Void> {
+    String mMessage;
+    int flag = 0;
+
 
     @Override
     protected Void doInBackground(String... voids) {
@@ -46,16 +51,19 @@ public class RegisterAPIHelper  extends AsyncTask<String , String , Void> {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-                String mMessage = e.getMessage();
+                mMessage = e.getMessage();
                 Log.v("failure Response", mMessage);
+
 
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
 
-                String mMessage = response.body().string();
+                mMessage = response.body().string();
                 Log.e("responce", mMessage);
+
+
             }
         });
 

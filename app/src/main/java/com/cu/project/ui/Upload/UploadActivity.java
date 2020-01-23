@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cu.project.APIHelper.Apiget;
 import com.cu.project.APIHelper.ApigetPaper;
 import com.cu.project.R;
 import com.cu.project.ui.AddWork.AddHonor;
@@ -54,13 +55,7 @@ public class UploadActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_upload);
         setSupportActionBar(toolbar);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UploadActivity.this, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         text1 = findViewById(R.id.textView4);
         text2 = findViewById(R.id.textView5);
@@ -68,14 +63,24 @@ public class UploadActivity extends AppCompatActivity {
         text4 = findViewById(R.id.textView7);
         totaltext = findViewById(R.id.total);
 
-        text1.setText("PUBLICATION \n" + ApigetPaper.countpub);
-        text2.setText("PATENT \n" + ApigetPaper.countpatent);
-        text3.setText("PROJECT \n" + ApigetPaper.countproject);
-        text4.setText("HONOR \n And \n Rewards \n" + ApigetPaper.counthonor);
+        int c1 = 0;
+        int c2 = 0;
+        int c3 = 0;
+        int c4 = 0;
 
-        int totalcount =  ApigetPaper.counthonor+ ApigetPaper.countproject + ApigetPaper.countpatent + ApigetPaper.countpub;
-
-        totaltext.setText("TOTAL COUNT = " + totalcount);
+//        c1 = ApigetPaper.countpub;
+//        c2 = ApigetPaper.countpatent;
+//        c3 = ApigetPaper.countproject;
+//        c4 = ApigetPaper.counthonor;
+//
+//        text1.setText("PUBLICATION \n" + c1);
+//        text2.setText("PATENT \n" + c2);
+//        text3.setText("PROJECT \n" + c3);
+//        text4.setText("HONOR \n And \n Rewards \n" + c4);
+//
+//        int totalcount =  c1 + c2 + c3 + c4;
+//
+//        totaltext.setText("TOTAL COUNT = " + totalcount);
 
 
         this.arrayAdapterListView();

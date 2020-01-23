@@ -3,7 +3,7 @@ import com.cu.project.APIHelper.ApigetPaper;
 import com.cu.project.ui.login.loginActivity;
 
 
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -18,9 +18,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 
@@ -29,8 +31,11 @@ import com.cu.project.Util.ApiLogin;
 import com.cu.project.ui.Upload.UploadActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.concurrent.ExecutionException;
+import com.cu.project.ui.detailclass;
 
 
 public class View_fragment extends Fragment {
@@ -39,23 +44,28 @@ public class View_fragment extends Fragment {
 
     String token = loginActivity.gettoken();
 
-
-
-    loginActivity activity;
     View v;
 
-    ListView ls1 , ls2 ,ls3 , ls4;
+
+    ListView list , list1 , list2 , list3;
 
 
 
-    private RecyclerView recyclerView;
-    List<Achievements> lachievements;
+
+//    private RecyclerView recyclerView;
+//    List<Achievements> lachievements;
+
 
     SwipeRefreshLayout swipeRefreshLayout;
 
+    static int count1 =0;
+    int count2 =0;
+    int count3 = 0;
+    int count4 = 0;
+
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
         v = inflater.inflate(R.layout.fragment_view_fragment, container, false);
@@ -63,48 +73,22 @@ public class View_fragment extends Fragment {
 
         swipeRefreshLayout = v.findViewById(R.id.swipe);
 
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//
-//
-//
-//
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        ApigetPaper apigetPaper = new ApigetPaper();
-//
-//                        try {
-//                            Log.e("TOKEN  GENE" , token);
-//                            lachievements = apigetPaper.execute(token).get();
-//
-//                            recyclerView = v.findViewById(R.id.recycler_view);
-//                            RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(getContext() , lachievements);
-//
-//                            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//                            recyclerView.setAdapter(recyclerViewAdapter);
-//
-//
-//                        } catch (ExecutionException e) {
-//                            e.printStackTrace();
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//
-//                        swipeRefreshLayout.setRefreshing(false);
-//                    }
-//                }, 2000);
-//            }
-//        });
+
+        list = v.findViewById(R.id.listView1);
+        list1 = v.findViewById(R.id.listView2);
+
+        list3 = v.findViewById(R.id.listView4);
+
+        list2 = v.findViewById(R.id.listView3);
 
 
-        //ls1 = v.findViewById(R.id.pub_list);
-//        ls2 = v.findViewById(R.id.patent_list);
-//        ls3 = v.findViewById(R.id.project_list);
-//        ls4 = v.findViewById(R.id.honors_list);
+        list.setAdapter(null);
+        list1.setAdapter(null);
+        list2.setAdapter(null);
+        list3.setAdapter(null);
+
+
+
 
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -117,9 +101,71 @@ public class View_fragment extends Fragment {
                         ApigetPaper apigetPaper = new ApigetPaper();
 
                         try {
-                            lachievements = apigetPaper.execute(token).get();
+                            apigetPaper.execute(token).get();
+
+                            if(ApigetPaper.listitems.size() == 0)
+                            {
+
+                            }
+                            else
+                            {
+                                list.setAdapter(null);
+                                CustomAdapter customAdapter = new CustomAdapter(getContext(), ApigetPaper.listitems);
+                                list.setAdapter(customAdapter);
+                                count1 = list.getCount();
+                                ListUtils.setDynamicHeight(list);
+                            }
 
 
+
+
+                            // for the list of patents
+
+                            if(ApigetPaper.listitems1.size() == 0)
+                            {
+
+                            }
+                            else
+                            {
+                                CustomAdapter1 customAdapter1 = new CustomAdapter1(getContext(), ApigetPaper.listitems1);
+                                list1.setAdapter(customAdapter1);
+                                ListUtils.setDynamicHeight(list1);
+                                count2 = list1.getCount();
+                                list1.invalidateViews();
+                            }
+
+
+
+
+                            // for the list of projects
+
+                            if(ApigetPaper.listitems2.size() == 0)
+                            {
+
+                            }
+                            else {
+                                CustomAdapter2 customAdapter2 = new CustomAdapter2(getContext(), ApigetPaper.listitems2);
+                                list2.setAdapter(customAdapter2);
+                                ListUtils.setDynamicHeight(list2);
+                                count3 = list2.getCount();
+                                list2.invalidateViews();
+                            }
+
+
+                            // for the list of patents
+
+                            if(ApigetPaper.listitems3.size() == 0)
+                            {
+
+                            }
+                            else {
+                                CustomAdapter3 customAdapter3 = new CustomAdapter3(getContext(), ApigetPaper.listitems3);
+                                list3.setAdapter(customAdapter3);
+                                ListUtils.setDynamicHeight(list3);
+                                list3.invalidateViews();
+                                count4 = list3.getCount();
+                                list3.deferNotifyDataSetChanged();
+                            }
 
 
                         } catch (ExecutionException e) {
@@ -136,19 +182,8 @@ public class View_fragment extends Fragment {
             }
         });
 
-        final ListView list = v.findViewById(R.id.listView1);
-        ArrayList<SubjectData> arrayList = new ArrayList<>();
-        arrayList.add(new SubjectData("JAVA", "20/10/12",1));
-        arrayList.add(new SubjectData("Python", "20/10/12", 2));
-        arrayList.add(new SubjectData("Javascript", "20/10/12", 3));
-        arrayList.add(new SubjectData("Cprograsfsafdsfsdfsfsdfsdfdsfsfdsfmming", "20/10/12", 4));
-        arrayList.add(new SubjectData("Cplusplus", "20/10/12", 5));
-        arrayList.add(new SubjectData("Android", "20/10/12", 6));
-        arrayList.add(new SubjectData("Android", "20/10/12", 7));
-        arrayList.add(new SubjectData("Android", "20/10/12", 8));
 
-        CustomAdapter customAdapter = new CustomAdapter(getContext(), arrayList);
-        list.setAdapter(customAdapter);
+
 
 
         upload_btn = v.findViewById(R.id.uploadbtn);
@@ -160,7 +195,7 @@ public class View_fragment extends Fragment {
             }
         });
 
-        ListUtils.setDynamicHeight(list);
+
 
 
 
@@ -194,6 +229,9 @@ public class View_fragment extends Fragment {
             mListView.requestLayout();
         }
     }
+
+
+
 
 
 

@@ -19,6 +19,9 @@ import okhttp3.Route;
 
 public class ApiLogin  extends AsyncTask<Void, Void ,String> {
 
+
+
+
     String username , password;
     String res = "";
     ProgressDialog d;
@@ -29,6 +32,8 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
     {
         this.username = username;
         this.password = password;
+//        scontext = context;
+
         scontext = context;
     }
 

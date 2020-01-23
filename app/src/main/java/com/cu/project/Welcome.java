@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -26,6 +27,8 @@ Button signinwelcomebtn ,registerwelcomebtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         if (!isConnected(Welcome.this)) buildDialog(Welcome.this).show();
         else {
