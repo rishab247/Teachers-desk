@@ -1,37 +1,25 @@
 package com.cu.project.ui.login;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cu.project.APIHelper.Apiget;
 import com.cu.project.R;
 import com.cu.project.Util.ApiLogin;
-import com.cu.project.ui.Profiile.ProfileActivity;
 import com.cu.project.ui.Register.RegisterActivity;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.concurrent.ExecutionException;
-
-import okhttp3.Authenticator;
-import okhttp3.Credentials;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.Route;
 
 
 public class loginActivity extends Activity implements loginMvpView {
@@ -39,6 +27,12 @@ public class loginActivity extends Activity implements loginMvpView {
     Button signinloginbtn;
     TextView Notamember;
     EditText username , password;
+    ProgressDialog dialog;
+
+    static String token = null;
+
+    public ProgressBar bar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +53,10 @@ public class loginActivity extends Activity implements loginMvpView {
         });
 
 
+        bar = findViewById(R.id.pbar);
+
+
+
         Notamember  =findViewById(R.id.Notamembertext);
         Notamember.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,15 +66,28 @@ public class loginActivity extends Activity implements loginMvpView {
             }
         });
 
+
+
+
     }
+
 
     @Override
     public void openMainActivity() {
 
     }
 
+
+
     @Override
     public void onLoginButtonClick() {
+
+
+        signinloginbtn.setClickable(false);
+
+
+
+
 
         int flag = 0;
 
@@ -88,10 +99,14 @@ public class loginActivity extends Activity implements loginMvpView {
         String usernametext = username.getText().toString().trim();
         String passtext = password.getText().toString().trim();
 
+
+
         if(usernametext.equals(""))
         {
             username.setError("Enter Euid");
             flag = 1;
+
+
         }
 
         if(passtext.equals(""))
@@ -100,7 +115,7 @@ public class loginActivity extends Activity implements loginMvpView {
             flag = 1;
         }
 
-        if(flag == 0)
+        if(flag == 0 )
         {
             String str = generatedhash12(passtext);
             Log.e("Hash1",str);
@@ -109,9 +124,14 @@ public class loginActivity extends Activity implements loginMvpView {
 
             Log.e("Login Credences", usernametext + hashedpass);
 
-            ApiLogin apiLogin = new ApiLogin(usernametext , hashedpass);
-            String token = null;
+
+
+            // logic for login
+
+            ApiLogin apiLogin = new ApiLogin(this,usernametext , hashedpass);
+
             try {
+
                 token = apiLogin.execute().get();
                 Log.e("TOKEN obtained" , token);
 
@@ -131,11 +151,11 @@ public class loginActivity extends Activity implements loginMvpView {
             else
             {
 
-                Apiget apiget = new Apiget();
+                Apiget apiget = new Apiget(this);
+
                 apiget.execute(token);
 
-                Intent intent = new Intent(loginActivity.this , ProfileActivity.class);
-                startActivity(intent);
+
             }
 
         }
@@ -163,5 +183,11 @@ public class loginActivity extends Activity implements loginMvpView {
             e.printStackTrace();
         }
         return generatedPassword;
+    }
+
+
+    public static String gettoken()
+    {
+        return token;
     }
 }

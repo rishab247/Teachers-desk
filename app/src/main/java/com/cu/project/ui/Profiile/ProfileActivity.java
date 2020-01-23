@@ -3,15 +3,22 @@ package com.cu.project.ui.Profiile;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,8 +28,12 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.cu.project.ProfileEdit;
 import com.cu.project.R;
+import com.cu.project.ui.Authorclass;
 import com.cu.project.ui.Setting.SettingActivity;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.cu.project.ui.login.loginActivity;
@@ -30,17 +41,46 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
     TabLayout tabLayout;
     ViewPager viewPager;
+    FloatingActionsMenu menu;
     PageAdapter pagerAdapter;
     TabItem tabprofile;
     TabItem tabview;
     ConstraintLayout constraintLayout;
-    ImageView setting, power  , profile_imgupdate ;
+    Spinner setting;
+
+    ImageView signout;
+
+    TextView usertext , emailtext , pnotext , eidtext;
+
+    Bundle bundle = new Bundle();
+
+    FloatingActionButton btn1 , btn2;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        Bundle bundle = getIntent().getExtras();
+        String name = bundle.getString("name_");
+
+        String email = bundle.getString("email_");
+
+        String pno = bundle.getString("p_no");
+
+        String eid = bundle.getString("e_code");
+
+//        usertext = findViewById(R.id.textView4);
+//        emailtext = findViewById(R.id.textView8);
+//        pnotext = findViewById(R.id.textView10);
+        eidtext = findViewById(R.id.textView11);
+
+
+//        usertext.setText(name);
+//        emailtext.setText(email);
+//        pnotext.setText(pno);
+        eidtext.setText(eid);
 
 
         //toolbar = findViewById(R.id.toolbar);
@@ -60,6 +100,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
 
         constraintLayout = findViewById(R.id.constraintLayout2);
+        menu = findViewById(R.id.f_btn);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -71,12 +112,14 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
                    // slideDown(constraintLayout);
 
                     constraintLayout.setVisibility(View.VISIBLE);
+                    menu.setVisibility(View.VISIBLE);
 
                 }
                 else if(tab.getPosition() == 1){
 
                   //slideUp(constraintLayout);
                   constraintLayout.setVisibility(View.GONE);
+                  menu.setVisibility(View.GONE);
                 }
             }
 
@@ -92,26 +135,22 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+        btn1 = findViewById(R.id.edit_profile);
+        btn2 = findViewById(R.id.down_id);
 
-
-
-
-
-
-
-
-        setting = findViewById(R.id.settings);
-        power = findViewById(R.id.signout);
-
-        setting.setOnClickListener(new View.OnClickListener() {
+        btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this , SettingActivity.class);
+                Intent intent = new Intent(ProfileActivity.this , ProfileEdit.class);
                 startActivity(intent);
             }
         });
 
-        power.setOnClickListener(new View.OnClickListener() {
+
+
+        signout = findViewById(R.id.signout);
+
+        signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this , loginActivity.class);
@@ -120,19 +159,46 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         });
 
 
-        profile_imgupdate = findViewById(R.id.profile_img);
 
-        profile_imgupdate.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+
+
+
+    }
+
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.setting_menu, popup.getMenu());
+        popup.show();
+
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onMenuItemClick(MenuItem item) {
 
-                PopupMenu popup = new PopupMenu(ProfileActivity.this, v);
-                MenuInflater inflater = popup.getMenuInflater();
-                inflater.inflate(R.menu.profile_update, popup.getMenu());
-                popup.show();
+                Toast.makeText(getApplicationContext()  , "TBA" , Toast.LENGTH_SHORT).show();
+
+//                switch (item.getItemId())
+//                {
+//                    case R.id.aboutus:
+//                        Toast.makeText(getApplicationContext()  , "TBA" , Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case R.id.terms_id:
+//                        Toast.makeText(getApplicationContext()  , "TBA" , Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case 2:
+//                        break;
+//                    case 3:
+//                        break;
+//                }
+
+                return false;
             }
         });
-
     }
 
     public void slideUp(View view){
@@ -159,5 +225,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         animate.setFillAfter(true);
         view.startAnimation(animate);
     }
+
+
 }
 

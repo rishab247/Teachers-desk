@@ -53,8 +53,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         holder.main.setText(mData.get(position).getMainTitle());
-        holder.auth.setText(mData.get(position).getAuth_name());
         holder.date.setText(mData.get(position).getDate());
+        holder.auth.setText(mData.get(position).getType());
 
     }
 
@@ -72,8 +72,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
             main = itemView.findViewById(R.id.maintextview_id);
-            auth = itemView.findViewById(R.id.authortextview_id);
             date = itemView.findViewById(R.id.datetextview_id);
+         //   auth = itemView.findViewById(R.id.type_id);
 
 
         }

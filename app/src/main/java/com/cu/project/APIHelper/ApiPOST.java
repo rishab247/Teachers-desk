@@ -1,7 +1,14 @@
 package com.cu.project.APIHelper;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+
+import com.cu.project.Util.JsonEncoder;
+import com.cu.project.ui.AddWork.AddHonor;
+import com.cu.project.ui.login.loginActivity;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,7 +26,26 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okio.BufferedSink;
 
-public class ApiPOST  extends AsyncTask<String , Void , Void> {
+public class ApiPOST  extends AsyncTask<String , Context, Void> {
+    private ProgressDialog dialog;
+    String token = loginActivity.gettoken();
+    Context scontext;
+
+    public ApiPOST(Context context)
+    {
+        scontext = context;
+    }
+
+//    @Override
+//    protected void onPreExecute() {
+//        super.onPreExecute();
+//
+//        dialog = new ProgressDialog(scontext);
+//        dialog.setMessage("Please wait...");
+//        dialog.setIndeterminate(true);
+//        dialog.show();
+//    }
+
 
     @Override
     protected Void doInBackground(String... voids) {
@@ -29,7 +55,13 @@ public class ApiPOST  extends AsyncTask<String , Void , Void> {
 
         Log.v("INFO" , str);
 
-        String url = "https://apitims1.azurewebsites.net/register";
+        String url = "https://apitims1.azurewebsites.net/user/upload/Honors_and_Award?token=";
+        url = url + token;
+        Log.e("honor_url" , url);
+
+
+
+
 
         OkHttpClient client = new OkHttpClient();
 
@@ -43,7 +75,7 @@ public class ApiPOST  extends AsyncTask<String , Void , Void> {
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
                     String mMessage = e.getMessage();
-                    Log.v("failure Response", mMessage);
+                    Log.v("honor failure Response", mMessage);
 
                 }
 
@@ -51,7 +83,7 @@ public class ApiPOST  extends AsyncTask<String , Void , Void> {
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
 
                     String mMessage = response.body().string();
-                    Log.e("responce", mMessage);
+                    Log.e("honor_responce", mMessage);
                 }
             });
 
@@ -59,7 +91,10 @@ public class ApiPOST  extends AsyncTask<String , Void , Void> {
         return null;
     }
 
-
-
+//    @Override
+//    protected void onPostExecute(Void aVoid) {
+//        super.onPostExecute(aVoid);
+//        dialog.hide();
+//    }
 }
 

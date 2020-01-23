@@ -4,9 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.Setting.SettingActivity">
 
-    <item android:id="@+id/signoutbtn_id"
-        android:title="Sign out"
-        app:showAsAction="ifRoom|withText"
-        android:icon="@drawable/ic_power_settings_new_black_24dp"/>
+        <item android:id="@+id/aboutus"
+            android:title="About Us"
+            app:showAsAction="never"/>
+
+        <item android:id="@+id/terms_id"
+            android:title="Terms of Services"/>
+
+        <item
+            android:id="@+id/dataid"
+            android:title="Data Policies"/>
+
+        <item
+            android:id="@+id/helpid"
+            android:title="Help and Support"/>
+
+
 
 </menu>

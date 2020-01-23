@@ -1,5 +1,7 @@
 package com.cu.project.Util;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -17,14 +19,33 @@ import okhttp3.Route;
 
 public class ApiLogin  extends AsyncTask<Void, Void ,String> {
 
+
+
+
     String username , password;
     String res = "";
+    ProgressDialog d;
+    Context scontext;
 
 
-    public ApiLogin(String username , String password)
+    public ApiLogin(Context context , String username , String password)
     {
         this.username = username;
         this.password = password;
+//        scontext = context;
+
+        scontext = context;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        d = new ProgressDialog(this.scontext);
+        d.setMessage("Please wait...");
+        d.setIndeterminate(true);
+        d.show();
+
     }
 
     @Override
