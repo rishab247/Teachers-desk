@@ -51,7 +51,6 @@ public class View_fragment extends Fragment {
 
 
 
-
 //    private RecyclerView recyclerView;
 //    List<Achievements> lachievements;
 

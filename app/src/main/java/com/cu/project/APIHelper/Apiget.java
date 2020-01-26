@@ -136,6 +136,7 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
         super.onPostExecute(strings);
 
 
+        dialog.hide();
         long date1 = Long.parseLong(strings[5]);
 
         DateFormat simple = new SimpleDateFormat("dd MM yyyy");
@@ -168,5 +169,7 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
         sContext.startActivity(intent_name);
 
     }
+
+
 
 }
