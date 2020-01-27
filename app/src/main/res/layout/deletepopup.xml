@@ -19,30 +19,16 @@ android:paddingTop="20dp">
         android:text="Password" />
 
     <EditText
+        android:layout_marginLeft="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/pass1"
-        android:hint="Input user name"
+        android:hint="Password"
         android:inputType="textPassword" />
 
 </TableRow>
 
-<TableRow
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="horizontal">
 
-    <TextView
-        android:gravity="end"
-        android:text="Confirm Password : " />
-
-    <EditText
-        android:id="@+id/pass2"
-        android:hint="Input password"
-        android:inputType="textPassword" />
-
-</TableRow>
 
 
 <TableRow android:gravity="center_horizontal">

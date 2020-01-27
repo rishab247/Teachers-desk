@@ -24,6 +24,10 @@ import okhttp3.Response;
 
 public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
 
+    public static int counthonor = 0 ;
+    public static int countpatent = 0;
+    public static int countpub = 0 ;
+    public static int countproject = 0;
     String urls = "https://apitims1.azurewebsites.net/user/Accomplishment?token=";
 
     public static ArrayList<SubjectData> listitems =  new ArrayList<>();
@@ -41,10 +45,7 @@ public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
 
         String jsonData;
 
-         int counthonor = 0 ;
-         int countpatent = 0;
-         int countpub = 0 ;
-         int countproject = 0;
+
 
 
         OkHttpClient client = new OkHttpClient();
@@ -85,6 +86,11 @@ public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
             listitems2.clear();
             listitems3.clear();
 
+            countpatent = 0;
+            countproject = 0;
+            counthonor = 0;
+            countpub = 0;
+
 
             for(int i= 0;i < pubarry.length() ;i ++)
             {
@@ -92,6 +98,8 @@ public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
                 countpub++;
                 listitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), (Integer) jsonObject1.get(0)));
                 listofitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), (Integer) jsonObject1.get(0)));
+
+//                countpub += 1;
             }
 
 
@@ -105,6 +113,8 @@ public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
 
                 listitems1.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), (Integer) jsonObject1.get(0)));
                 listofitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), (Integer) jsonObject1.get(0)));
+
+//                countpatent += 1;
             }
 
 
@@ -115,6 +125,8 @@ public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
                 countproject++;
                 listitems2.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim() , (Integer) jsonObject1.get(0)));
                 listofitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim() , (Integer) jsonObject1.get(0)));
+//
+//                countproject += 1;
             }
 
 
@@ -134,8 +146,14 @@ public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
                 listitems3.add(new SubjectData(jsonObject1.get(1).toString().trim() , hdate, (Integer)jsonObject1.get(0)));
                 listofitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , hdate, (Integer)jsonObject1.get(0)));
 
+//                counthonor += 1;
+
             }
 
+            countpub = pubarry.length();
+            counthonor = honorarry.length();
+            countpatent = patentarry.length();
+            countproject = projectarry.length();
 
 
         }catch (IOException | JSONException e) {

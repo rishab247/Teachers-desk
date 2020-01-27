@@ -73,11 +73,6 @@ class CustomAdapter implements ListAdapter {
 
                     Apigetdetails apigetdetails = new Apigetdetails(context);
                     apigetdetails.execute(String.valueOf(id) , "Publication");
-
-//                    Intent intent = new Intent(context , detailclass.class);
-//                    intent.putExtra("ID", id);
-//                    intent.putExtra("TYPE" , "Publication");
-//                    context.startActivity(intent);
                 }
             });
             TextView tittle=convertView.findViewById(R.id.maintextview_id);
