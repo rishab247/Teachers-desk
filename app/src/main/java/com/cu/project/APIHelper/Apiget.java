@@ -136,8 +136,8 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
     protected void onPostExecute(String[] strings) {
         super.onPostExecute(strings);
 
-
-        dialog.hide();
+        if(dialog.isShowing())
+            dialog.hide();
         long date1 = Long.parseLong(strings[5]);
 
         DateFormat simple = new SimpleDateFormat("dd MM yyyy");

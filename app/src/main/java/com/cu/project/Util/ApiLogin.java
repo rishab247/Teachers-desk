@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 
+import com.cu.project.AsyncResponse;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -17,7 +19,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.Route;
 
+import static android.content.ContentValues.TAG;
+
 public class ApiLogin  extends AsyncTask<Void, Void ,String> {
+    public AsyncResponse asyncResponse = null;
 
 
 
@@ -44,7 +49,6 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
         d = new ProgressDialog(this.scontext);
         d.setMessage("Please wait...");
         d.setIndeterminate(true);
-        d.setCancelable(false);
         d.show();
 
     }
@@ -61,6 +65,16 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
             e.printStackTrace();
         }
         return res;
+    }
+
+
+    @Override
+    protected void onPostExecute(String s) {
+        if(d.isShowing()){
+            d.cancel();
+        }
+        asyncResponse.processFinish(s);
+        Log.e("onposteecute", "onPostExecute: "+s );
     }
 
     private static OkHttpClient createAuthenticatedClient(final String username,
@@ -127,9 +141,4 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
         return result;
     }
 
-    @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        d.hide();
-    }
 }

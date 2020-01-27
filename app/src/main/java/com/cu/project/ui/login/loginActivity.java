@@ -2,7 +2,9 @@ package com.cu.project.ui.login;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cu.project.APIHelper.Apiget;
+import com.cu.project.AsyncResponse;
 import com.cu.project.R;
 import com.cu.project.Util.ApiLogin;
 import com.cu.project.ui.Register.RegisterActivity;
@@ -21,8 +24,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class loginActivity extends Activity implements loginMvpView {
+
+public class loginActivity extends Activity implements loginMvpView , AsyncResponse{
 
     Button signinloginbtn;
     TextView Notamember;
@@ -32,12 +37,15 @@ public class loginActivity extends Activity implements loginMvpView {
     static String token = null;
 
     public ProgressBar bar;
-
+    private static SharedPreferences sharedpreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sharedpreferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
+          editor = sharedpreferences.edit();
 
 
         signinloginbtn = findViewById(R.id.signinloginbutton);
@@ -131,34 +139,15 @@ public class loginActivity extends Activity implements loginMvpView {
             ApiLogin apiLogin = new ApiLogin(this,usernametext , hashedpass);
 
             try {
+                apiLogin.asyncResponse=  this;
+                  apiLogin.execute();
 
-                token = apiLogin.execute().get();
-                Log.e("TOKEN obtained" , token);
 
-
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
 
-            if(token.length() <= 4)
-            {
-                Toast.makeText(getApplicationContext() , "Information Invalid", Toast.LENGTH_LONG).show();
-
-            }
-            else
-            {
-
-                Apiget apiget = new Apiget(this);
-
-                apiget.execute(token);
-
-
-
-
-            }
 
         }
 
@@ -166,7 +155,28 @@ public class loginActivity extends Activity implements loginMvpView {
 
     }
 
+    @Override
+    public void processFinish(Object output) {
+        String str = output.toString();
+        editor.putString("Token", str);
+editor.commit();
+        Log.e("processFinish", "processFinish: "+str);
 
+        if(str.length() <= 4)
+        {
+            Toast.makeText(getApplicationContext() , "Information Invalid", Toast.LENGTH_LONG).show();
+
+        }
+        else
+        {
+
+            Apiget apiget = new Apiget(this);
+
+            apiget.execute(str);
+
+
+        }
+    }
     public static String generatedhash12(String passwordToHash){
         String generatedPassword = null;
           try {
@@ -190,6 +200,10 @@ public class loginActivity extends Activity implements loginMvpView {
 
     public static String gettoken()
     {
-        return token;
+        String token1 = sharedpreferences.getString("Token", "");
+        Log.e(TAG, "gettoken: "+token1 );
+        return token1;
     }
+
+
 }
