@@ -63,13 +63,40 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         setContentView(R.layout.activity_profile);
 
         Bundle bundle = getIntent().getExtras();
+
+
+                /*
+                        intent_name.setClass(sContext,ProfileActivity.class);
+        intent_name.putExtra("e_code" , strings[0]);
+        intent_name.putExtra("name_" , strings[1]);
+        intent_name.putExtra("email_" , strings[2]);
+        intent_name.putExtra("p_no" , strings[3]);
+        intent_name.putExtra("depart_" , strings[4]);
+        intent_name.putExtra("doj_" , dojdate);
+        intent_name.putExtra("quali_" , strings[6]);
+        intent_name.putExtra("uni_" , strings[7]);
+        intent_name.putExtra("dob_" , dobdate);
+                 */
+
         String name = bundle.getString("name_");
 
         String email = bundle.getString("email_");
 
         String pno = bundle.getString("p_no");
 
+        String depart = bundle.getString("depart_");
+
+        String doj = bundle.getString("doj_");
+
+        String quali = bundle.getString("quali_");
+
+        String uni = bundle.getString("uni_");
+
+        String dob = bundle.getString("dob_");
+
         String eid = bundle.getString("e_code");
+
+        final String[] datarray = new String[]{name , email , pno , depart , doj , quali , uni , dob , eid};
 
 //        usertext = findViewById(R.id.textView4);
 //        emailtext = findViewById(R.id.textView8);
@@ -142,6 +169,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this , ProfileEdit.class);
+
+                intent.putExtra("data" , datarray);
+
                 startActivity(intent);
             }
         });
@@ -155,6 +185,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this , loginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

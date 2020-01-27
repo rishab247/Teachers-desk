@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cu.project.APIHelper.ApiDelete;
 import com.cu.project.APIHelper.ApigetPaper;
 import com.cu.project.APIHelper.Apigetdetails;
 import com.cu.project.R;
@@ -40,11 +41,10 @@ public class detailclass  extends AppCompatActivity {
     EditText des;
 
     private View popupInputDialogView = null;
-    private EditText userNameEditText;
-    private EditText passwordEditText;
-    private EditText confirmpassedittext;
+    EditText passwordEditText;
     private TextView cancelUserDataButton;
     private TextView saveUserDataButton;
+    String id = null , type = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,7 +78,8 @@ public class detailclass  extends AppCompatActivity {
 
         int last = information.length;
 
-        String type = information[last - 1];
+        type = information[last - 2];
+        id = information[last - 1];
 
         typetext.setText(type);
 
@@ -213,10 +214,30 @@ public class detailclass  extends AppCompatActivity {
                 final AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
 
+
+
                 saveUserDataButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(getApplicationContext() , "Your Data will be removed prmanently" , Toast.LENGTH_SHORT).show();
+
+                        if(passwordEditText.getText().toString().trim().equals(""))
+                        {
+                            passwordEditText.setError("Field cannot be empty");
+                        }
+                        else
+                        {
+                            String pass =  passwordEditText.getText().toString().trim();
+                            alertDialog.cancel();
+                            if(type.equals("Honors_and_Award"))
+                                type = "HonorsandAward";
+
+                            ApiDelete apiDelete = new ApiDelete(getApplicationContext() , id, type , pass);
+                            apiDelete.execute();
+                        }
+
+
+
                     }
                 });
 
@@ -240,7 +261,6 @@ public class detailclass  extends AppCompatActivity {
         popupInputDialogView = layoutInflater.inflate(R.layout.deletepopup, null);
 
         passwordEditText =  popupInputDialogView.findViewById(R.id.pass1);
-        confirmpassedittext =  popupInputDialogView.findViewById(R.id.pass2);
         saveUserDataButton = popupInputDialogView.findViewById(R.id.button_save_user_data);
         cancelUserDataButton = popupInputDialogView.findViewById(R.id.button_cancel_user_data);
 

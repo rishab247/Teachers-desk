@@ -33,7 +33,6 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
 
     String token = loginActivity.gettoken();
 
-    ArrayList<String> listitems = new ArrayList<>();
 
     String url = "https://apitims1.azurewebsites.net/user/Accomplishmen/Details?token=";
 
@@ -106,6 +105,9 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
 
                 jsonArray = jsonObject1.getJSONArray("data");
 
+//                JSONArray jsonArray1 = jsonObject1.getJSONArray("author");
+//                Log.e("AUTHORS" , jsonArray1.toString());
+
 
             }
             for (int i = 0; i < jsonArray.length(); i++)
@@ -121,7 +123,7 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
                 issuer = jsonArray.get(3).toString();
                 date = jsonArray.get(4).toString();
                 des = jsonArray.get(5).toString();
-                infoarray = new String[]{title, issuer, date, des, type};
+                infoarray = new String[]{title, issuer, date, des, type, id};
 
 
                 Log.e("PRINT", title + issuer + date + des);
@@ -134,7 +136,7 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
                     date = jsonArray.get(4).toString();
                     des = jsonArray.get(5).toString();
                     url = jsonArray.get(6).toString();
-                    infoarray = new String[]{title, poffice, appno, date, des, url, type};
+                    infoarray = new String[]{title, poffice, appno, date, des, url, type, id};
 
 
                 } else if (type.equals("Publication")) {
@@ -144,14 +146,14 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
                     date = jsonArray.get(3).toString();
                     des = jsonArray.get(4).toString();
                     url = jsonArray.get(5).toString();
-                    infoarray = new String[]{title, publisher, date, des, url, type};
+                    infoarray = new String[]{title, publisher, date, des, url, type, id};
 
                 } else {
                     title = jsonArray.get(1).toString();
                     date = jsonArray.get(2).toString();
                     des = jsonArray.get(3).toString();
                     url = jsonArray.get(4).toString();
-                    infoarray = new String[]{title, date, des, url, type};
+                    infoarray = new String[]{title, date, des, url, type, id};
                 }
             }
         } catch (JSONException e) {
@@ -166,6 +168,8 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
             System.out.println(infoarray[i]);
 
         }
+
+
         return infoarray;
     }
 

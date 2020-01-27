@@ -156,6 +156,8 @@ public class loginActivity extends Activity implements loginMvpView {
                 apiget.execute(token);
 
 
+
+
             }
 
         }
@@ -165,7 +167,7 @@ public class loginActivity extends Activity implements loginMvpView {
     }
 
 
-    String generatedhash12(String passwordToHash){
+    public static String generatedhash12(String passwordToHash){
         String generatedPassword = null;
           try {
             MessageDigest md = MessageDigest.getInstance("SHA-512");

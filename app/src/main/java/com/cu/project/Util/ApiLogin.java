@@ -44,6 +44,7 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
         d = new ProgressDialog(this.scontext);
         d.setMessage("Please wait...");
         d.setIndeterminate(true);
+        d.setCancelable(false);
         d.show();
 
     }
@@ -126,4 +127,9 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
         return result;
     }
 
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        d.hide();
+    }
 }

@@ -1,52 +1,40 @@
 package com.cu.project.ui.Upload;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
+
 import android.content.Intent;
 
 import android.os.Bundle;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
+
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cu.project.APIHelper.Apiget;
 import com.cu.project.APIHelper.ApigetPaper;
 import com.cu.project.R;
 import com.cu.project.ui.AddWork.AddHonor;
 import com.cu.project.ui.AddWork.AddPatent;
 import com.cu.project.ui.AddWork.AddProject;
 import com.cu.project.ui.AddWork.AddPublication;
-import com.cu.project.ui.Profiile.ProfileActivity;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class UploadActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    Button savebtn;
-    Button btndatepicker;
-    private int mYear, mMonth, mDay;
-    Spinner spinner , spinner1;
-    EditText txtDate;
-
     TextView text1 , text2 , text3, text4 , totaltext;
+
+    int c1 = 0;
+    int c2 = 0;
+    int c3 = 0;
+    int c4 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,24 +51,21 @@ public class UploadActivity extends AppCompatActivity {
         text4 = findViewById(R.id.textView7);
         totaltext = findViewById(R.id.total);
 
-        int c1 = 0;
-        int c2 = 0;
-        int c3 = 0;
-        int c4 = 0;
 
-//        c1 = ApigetPaper.countpub;
-//        c2 = ApigetPaper.countpatent;
-//        c3 = ApigetPaper.countproject;
-//        c4 = ApigetPaper.counthonor;
-//
-//        text1.setText("PUBLICATION \n" + c1);
-//        text2.setText("PATENT \n" + c2);
-//        text3.setText("PROJECT \n" + c3);
-//        text4.setText("HONOR \n And \n Rewards \n" + c4);
-//
-//        int totalcount =  c1 + c2 + c3 + c4;
-//
-//        totaltext.setText("TOTAL COUNT = " + totalcount);
+
+        c1 = ApigetPaper.countpub;
+        c2 = ApigetPaper.countpatent;
+        c3 = ApigetPaper.countproject;
+        c4 = ApigetPaper.counthonor;
+
+        text1.setText("PUBLICATION \n" + c1);
+        text2.setText("PATENT \n" + c2);
+        text3.setText("PROJECT \n" + c3);
+        text4.setText("HONOR \n And \n Rewards \n" + c4);
+
+        int totalcount =  c1 + c2 + c3 + c4;
+
+        totaltext.setText("TOTAL COUNT = " + totalcount);
 
 
         this.arrayAdapterListView();
