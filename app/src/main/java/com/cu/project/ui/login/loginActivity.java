@@ -15,30 +15,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cu.project.APIHelper.Apiget;
-import com.cu.project.AsyncResponse;
+import com.cu.project.APIHelper.AsyncLoginResponse;
+import com.cu.project.APIHelper.AsyncResponse;
 import com.cu.project.R;
-import com.cu.project.Util.ApiLogin;
+import com.cu.project.APIHelper.ApiLogin;
+import com.cu.project.ui.Profiile.ProfileActivity;
 import com.cu.project.ui.Register.RegisterActivity;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.ExecutionException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
-public class loginActivity extends Activity implements loginMvpView , AsyncResponse{
+public class loginActivity extends Activity implements loginMvpView , AsyncLoginResponse, AsyncResponse {
 
     Button signinloginbtn;
     TextView Notamember;
     EditText username , password;
-    ProgressDialog dialog;
 
-    static String token = null;
 
     public ProgressBar bar;
     private static SharedPreferences sharedpreferences;
-    SharedPreferences.Editor editor;
+    static SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,14 +92,6 @@ public class loginActivity extends Activity implements loginMvpView , AsyncRespo
 
     @Override
     public void onLoginButtonClick() {
-
-
-        signinloginbtn.setClickable(false);
-
-
-
-
-
         int flag = 0;
 
         username = findViewById(R.id.fnamelogintext);
@@ -139,7 +134,7 @@ public class loginActivity extends Activity implements loginMvpView , AsyncRespo
             ApiLogin apiLogin = new ApiLogin(this,usernametext , hashedpass);
 
             try {
-                apiLogin.asyncResponse=  this;
+                apiLogin.asyncLoginResponse =  this;
                   apiLogin.execute();
 
 
@@ -156,11 +151,12 @@ public class loginActivity extends Activity implements loginMvpView , AsyncRespo
     }
 
     @Override
-    public void processFinish(Object output) {
+    public void processLoginFinish(Object output) {
         String str = output.toString();
         editor.putString("Token", str);
-editor.commit();
-        Log.e("processFinish", "processFinish: "+str);
+        editor.putLong("Exp_time",System.currentTimeMillis()+ TimeUnit.MINUTES.toMillis(50));
+        editor.commit();
+        Log.e("processLoginFinish", "processLoginFinish: "+str);
 
         if(str.length() <= 4)
         {
@@ -171,7 +167,7 @@ editor.commit();
         {
 
             Apiget apiget = new Apiget(this);
-
+            apiget.asyncResponse = this;
             apiget.execute(str);
 
 
@@ -199,11 +195,50 @@ editor.commit();
 
 
     public static String gettoken()
-    {
+    {   if(sharedpreferences.getLong("Exp_time", 0)<System.currentTimeMillis())
+            editor.clear();
         String token1 = sharedpreferences.getString("Token", "");
+        if(token1.equals("")){
+            //token doesnot exists or expired
+            Log.e(TAG, "gettoken: token doesnot exists or expired " );
+
+        }
         Log.e(TAG, "gettoken: "+token1 );
         return token1;
     }
 
 
+    @Override
+    public void processFinish(Object output) {
+        String[] strings = (String[]) output;
+        long date1 = Long.parseLong(strings[5]);
+
+        DateFormat simple = new SimpleDateFormat("dd MM yyyy");
+
+        Date result1 = new Date(date1);
+
+        String dojdate = simple.format(result1);
+
+
+
+        long date2 = Long.parseLong(strings[8]);
+
+
+        Date result2 = new Date(date2);
+
+        String dobdate = simple.format(result2);
+
+        Intent intent_name = new Intent();
+        intent_name.setClass(this, ProfileActivity.class);
+        intent_name.putExtra("e_code" , strings[0]);
+        intent_name.putExtra("name_" , strings[1]);
+        intent_name.putExtra("email_" , strings[2]);
+        intent_name.putExtra("p_no" , strings[3]);
+        intent_name.putExtra("depart_" , strings[4]);
+        intent_name.putExtra("doj_" , dojdate);
+        intent_name.putExtra("quali_" , strings[6]);
+        intent_name.putExtra("uni_" , strings[7]);
+        intent_name.putExtra("dob_" , dobdate);
+        startActivity(intent_name);
+    }
 }

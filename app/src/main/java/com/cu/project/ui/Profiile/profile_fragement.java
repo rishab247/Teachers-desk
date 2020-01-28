@@ -11,25 +11,14 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
+
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
+
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
+ import android.widget.Toolbar;
 
-import com.cu.project.APIHelper.Apiget;
-import com.cu.project.R;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
+ import com.cu.project.R;
 
 public class profile_fragement extends Fragment {
 

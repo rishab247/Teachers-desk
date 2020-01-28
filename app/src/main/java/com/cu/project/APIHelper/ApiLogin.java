@@ -1,12 +1,10 @@
-package com.cu.project.Util;
+package com.cu.project.APIHelper;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-
-import com.cu.project.AsyncResponse;
 
 import org.json.JSONObject;
 
@@ -19,10 +17,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.Route;
 
-import static android.content.ContentValues.TAG;
-
 public class ApiLogin  extends AsyncTask<Void, Void ,String> {
-    public AsyncResponse asyncResponse = null;
+    public AsyncLoginResponse asyncLoginResponse = null;
 
 
 
@@ -49,6 +45,7 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
         d = new ProgressDialog(this.scontext);
         d.setMessage("Please wait...");
         d.setIndeterminate(true);
+        d.setCancelable(false);
         d.show();
 
     }
@@ -73,7 +70,7 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
         if(d.isShowing()){
             d.cancel();
         }
-        asyncResponse.processFinish(s);
+        asyncLoginResponse.processLoginFinish(s);
         Log.e("onposteecute", "onPostExecute: "+s );
     }
 
@@ -95,7 +92,6 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
     private static String doRequest(OkHttpClient httpClient, String anyURL) throws Exception {
         Request request = new Request.Builder().url(anyURL).build();
         Response response = httpClient.newCall(request).execute();
-
         String token;
         if (!response.isSuccessful()) {
             token = String.valueOf(response.code());

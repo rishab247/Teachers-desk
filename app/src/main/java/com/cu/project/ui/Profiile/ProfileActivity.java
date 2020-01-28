@@ -4,7 +4,9 @@ package com.cu.project.ui.Profiile;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -38,6 +40,8 @@ import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.cu.project.ui.login.loginActivity;
 public class ProfileActivity extends AppCompatActivity implements ProfileMvpView {
+    private static SharedPreferences sharedpreferences;
+    SharedPreferences.Editor editor;
 
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -63,7 +67,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         setContentView(R.layout.activity_profile);
 
         Bundle bundle = getIntent().getExtras();
+        sharedpreferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
+        editor = sharedpreferences.edit();
 
                 /*
                         intent_name.setClass(sContext,ProfileActivity.class);
@@ -179,10 +185,11 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
 
         signout = findViewById(R.id.signout);
+                signout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        editor.clear();
 
-        signout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this , loginActivity.class);
                 startActivity(intent);
                 finish();

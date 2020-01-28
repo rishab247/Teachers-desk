@@ -36,6 +36,7 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
 
     private static Context sContext;
     ProgressDialog dialog;
+    public AsyncResponse asyncResponse= null;
 
 
 
@@ -138,36 +139,12 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
 
         if(dialog.isShowing())
             dialog.hide();
-        long date1 = Long.parseLong(strings[5]);
 
-        DateFormat simple = new SimpleDateFormat("dd MM yyyy");
 
-        Date result1 = new Date(date1);
-
-        String dojdate = simple.format(result1);
+        asyncResponse.processFinish(strings);
 
 
 
-        long date2 = Long.parseLong(strings[8]);
-
-        DateFormat simple1 = new SimpleDateFormat("dd/MM/yyyy");
-
-        Date result2 = new Date(date2);
-
-        String dobdate = simple.format(result2);
-
-        Intent intent_name = new Intent();
-        intent_name.setClass(sContext,ProfileActivity.class);
-        intent_name.putExtra("e_code" , strings[0]);
-        intent_name.putExtra("name_" , strings[1]);
-        intent_name.putExtra("email_" , strings[2]);
-        intent_name.putExtra("p_no" , strings[3]);
-        intent_name.putExtra("depart_" , strings[4]);
-        intent_name.putExtra("doj_" , dojdate);
-        intent_name.putExtra("quali_" , strings[6]);
-        intent_name.putExtra("uni_" , strings[7]);
-        intent_name.putExtra("dob_" , dobdate);
-        sContext.startActivity(intent_name);
 
     }
 

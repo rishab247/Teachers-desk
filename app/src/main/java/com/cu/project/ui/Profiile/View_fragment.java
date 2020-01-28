@@ -3,39 +3,27 @@ import com.cu.project.APIHelper.ApigetPaper;
 import com.cu.project.ui.login.loginActivity;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 
 import com.cu.project.R;
-import com.cu.project.Util.ApiLogin;
 import com.cu.project.ui.Upload.UploadActivity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.concurrent.ExecutionException;
-import com.cu.project.ui.detailclass;
 
 
 public class View_fragment extends Fragment {
