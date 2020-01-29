@@ -44,7 +44,6 @@ public class AddHonor extends AppCompatActivity {
             public void onClick(View v) {
                 int mYear, mMonth, mDay;
                 final Calendar c = Calendar.getInstance();
-//                c.get(Calendar.MILLISECOND);
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -113,13 +112,9 @@ public class AddHonor extends AppCompatActivity {
                     String dateofhonor = String.valueOf(time1);
 
                     String[] valstr ={titletext , "honor" , issuertext , dateofhonor , destext};
-                    JsonEncoder jsonEncoder = new JsonEncoder(getApplicationContext());
+                    JsonEncoder jsonEncoder = new JsonEncoder(AddHonor.this);
                     jsonEncoder.jsonify_honor(valstr);
-
-
-
-//                    Intent intent = new Intent(AddHonor.this , UploadActivity.class);
-//                    startActivity(intent);
+                    finish();
                 }
 
 
@@ -135,15 +130,3 @@ public class AddHonor extends AppCompatActivity {
         finish();
     }
 }
-
-/*
-{
-
-	"Title":"Tmfghjm1tle",
-	"type":"project",
-	"Issuer":"321",
- 	"Date":"231321231",
-	"Description":" gfhjkgfhhjk"
-
-}
- */

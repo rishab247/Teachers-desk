@@ -33,8 +33,6 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
     {
         this.username = username;
         this.password = password;
-//        scontext = context;
-
         scontext = context;
     }
 
@@ -55,11 +53,8 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
 
         try {
             res = testFetchOK();
-
-            Log.v("RES" , res);
         } catch (Exception e) {
             Log.e("EXCEPTION" , "class not found");
-            e.printStackTrace();
         }
         return res;
     }
@@ -71,7 +66,6 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
             d.cancel();
         }
         asyncLoginResponse.processLoginFinish(s);
-        Log.e("onposteecute", "onPostExecute: "+s );
     }
 
     private static OkHttpClient createAuthenticatedClient(final String username,
@@ -96,13 +90,11 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
         if (!response.isSuccessful()) {
             token = String.valueOf(response.code());
         }
-        //System.out.println(response.body().string());
         else
         {
             JSONObject jsonObject = new JSONObject(response.body().string());
 
             token = jsonObject.getString("token");
-            Log.v("TOKEN GENERATED" , token);
         }
 
         return token;

@@ -2,12 +2,14 @@ package com.cu.project.APIHelper;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 
 import com.cu.project.Util.JsonEncoder;
 import com.cu.project.ui.AddWork.AddHonor;
+import com.cu.project.ui.Upload.UploadActivity;
 import com.cu.project.ui.login.loginActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -36,15 +38,15 @@ public class ApiPOST  extends AsyncTask<String , Context, Void> {
         scontext = context;
     }
 
-//    @Override
-//    protected void onPreExecute() {
-//        super.onPreExecute();
-//
-//        dialog = new ProgressDialog(scontext);
-//        dialog.setMessage("Please wait...");
-//        dialog.setIndeterminate(true);
-//        dialog.show();
-//    }
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        dialog = new ProgressDialog(scontext);
+        dialog.setMessage("Please wait...");
+        dialog.setIndeterminate(true);
+        dialog.show();
+    }
 
 
     @Override
@@ -53,15 +55,8 @@ public class ApiPOST  extends AsyncTask<String , Context, Void> {
         String str = voids[0];
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
 
-        Log.v("INFO" , str);
-
         String url = "https://apitims1.azurewebsites.net/user/upload/Honors_and_Award?token=";
         url = url + token;
-        Log.e("honor_url" , url);
-
-
-
-
 
         OkHttpClient client = new OkHttpClient();
 
@@ -91,10 +86,14 @@ public class ApiPOST  extends AsyncTask<String , Context, Void> {
         return null;
     }
 
-//    @Override
-//    protected void onPostExecute(Void aVoid) {
-//        super.onPostExecute(aVoid);
-//        dialog.hide();
-//    }
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        dialog.hide();
+
+        Intent intent = new Intent(scontext , UploadActivity.class);
+        scontext.startActivity(intent);
+
+    }
 }
 

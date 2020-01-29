@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 
-import com.cu.project.ui.Profiile.Achievements;
 import com.cu.project.ui.Profiile.SubjectData;
 
 import org.json.JSONArray;
@@ -22,7 +21,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
+public class ApigetPaper extends AsyncTask<String , Void , Void> {
 
     public static int counthonor = 0 ;
     public static int countpatent = 0;
@@ -39,14 +38,9 @@ public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
 
 
     @Override
-    protected List<Achievements> doInBackground(String... voids) {
-
-
+    protected Void doInBackground(String... voids) {
 
         String jsonData;
-
-
-
 
         OkHttpClient client = new OkHttpClient();
 
@@ -70,8 +64,6 @@ public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
 
             jsonData = responses.body().string();
 
-            Log.v("Jsondata" , jsonData);
-
             JSONObject jsonObject = new JSONObject(jsonData);
 
             JSONArray honorarry = jsonObject.getJSONArray("Honors_and_Award");
@@ -79,7 +71,6 @@ public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
             JSONArray projectarry = jsonObject.getJSONArray("Project");
             JSONArray pubarry = jsonObject.getJSONArray("Publication");
 
-            Log.e("Rcords " , honorarry +  " " + patentarry + " " + projectarry + " " + pubarry);
 
             listitems.clear();
             listitems1.clear();
@@ -99,7 +90,6 @@ public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
                 listitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), (Integer) jsonObject1.get(0)));
                 listofitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), (Integer) jsonObject1.get(0)));
 
-//                countpub += 1;
             }
 
 
@@ -114,7 +104,6 @@ public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
                 listitems1.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), (Integer) jsonObject1.get(0)));
                 listofitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), (Integer) jsonObject1.get(0)));
 
-//                countpatent += 1;
             }
 
 
@@ -125,8 +114,7 @@ public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
                 countproject++;
                 listitems2.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim() , (Integer) jsonObject1.get(0)));
                 listofitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim() , (Integer) jsonObject1.get(0)));
-//
-//                countproject += 1;
+
             }
 
 
@@ -145,8 +133,6 @@ public class ApigetPaper extends AsyncTask<String , Void , List<Achievements>> {
 
                 listitems3.add(new SubjectData(jsonObject1.get(1).toString().trim() , hdate, (Integer)jsonObject1.get(0)));
                 listofitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , hdate, (Integer)jsonObject1.get(0)));
-
-//                counthonor += 1;
 
             }
 

@@ -28,8 +28,6 @@ public class ApiPostPatent extends AsyncTask<String , Void , Void> {
 
         String urlpost = "https://apitims1.azurewebsites.net/user/upload/Patent?token=";
         urlpost = urlpost + token;
-        Log.e("TOKEN PUB" , urlpost);
-
 
         OkHttpClient client = new OkHttpClient();
 

@@ -76,16 +76,10 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
             jsonObject.put("id", id);
             jsonObject.put("Type", type);
 
-            Log.e("JSON STRING", jsonObject.toString());
-
 
             RequestBody body = RequestBody.create(MEDIA_TYPE, jsonObject.toString());
             Request request = new Request.Builder()
                     .url(url).post(body).build();
-
-//            String responce = client.newCall(request).execute().toString();
-//            String mssage = responce.string();
-
 
             Response response = client.newCall(request).execute();
 
@@ -97,18 +91,11 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
             if (!response.isSuccessful()) {
                 res = String.valueOf(response.code());
             }
-            //System.out.println(response.body().string());
-
 
             else {
                 JSONObject jsonObject1 = new JSONObject(response.body().string());
 
                 jsonArray = jsonObject1.getJSONArray("data");
-
-//                JSONArray jsonArray1 = jsonObject1.getJSONArray("author");
-//                Log.e("AUTHORS" , jsonArray1.toString());
-
-
             }
             for (int i = 0; i < jsonArray.length(); i++)
                 System.out.println(jsonArray.get(i));
@@ -160,13 +147,6 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-
-        for(int i =0;i < infoarray.length; i ++)
-        {
-            System.out.println(infoarray[i]);
-
         }
 
 

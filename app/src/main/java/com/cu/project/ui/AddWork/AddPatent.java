@@ -86,7 +86,6 @@ public class AddPatent extends AppCompatActivity {
             public void onClick(View v) {
                 int mYear, mMonth, mDay;
                 final Calendar c = Calendar.getInstance();
-//                c.get(Calendar.MILLISECOND);
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -184,18 +183,14 @@ public class AddPatent extends AppCompatActivity {
                 String authemail = data.getStringExtra("authemail");
                 String authpno = data.getStringExtra("authpno");
 
-                Log.e("INFO" , authname + " " + authemail + " " + authpno);
-
 
                 String add = authname;
 
                 final String[] authnames = new String[]{authname};
                 final List<String> fruits_list = new ArrayList<>(Arrays.asList(authnames));
 
-                // Create an ArrayAdapter from List
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, fruits_list);
 
-                // DataBind ListView with items from ArrayAdapter
                 listView.setAdapter(arrayAdapter);
 
             }

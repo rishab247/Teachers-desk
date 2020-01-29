@@ -47,7 +47,6 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
         url = url + token;
         String message = null;
 
-        Log.e("URL DELETE" , url);
 
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
 
@@ -62,8 +61,6 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
             jsonObject.put("password", doublehash);
             jsonObject.put("id", id);
             jsonObject.put("Type", type);
-
-            Log.e("JSON DELTE BODY ", jsonObject.toString());
 
 
             RequestBody body = RequestBody.create(MEDIA_TYPE ,jsonObject.toString());
@@ -85,7 +82,6 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
 
                 message = jsonObject1.getString("msg");
 
-                Log.e("PRINT RESPONSE ", message);
             }
 
 
@@ -104,38 +100,5 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
     @Override
     protected void onPostExecute(String string) {
         super.onPostExecute(string);
-//
-//        Honors_and_Award");
-//        JSONArray patentarry = jsonObject.getJSONArray("Patent");
-//        JSONArray projectarry = jsonObject.getJSONArray("Project");
-//        JSONArray pubarry = jsonObject.getJSONArray("Publication");
-//
-//        if(string.equals("Deleted"))
-//        {
-//            Intent intent = new Intent(scontext , detailclass.class);
-////            if(type.equals("Publication"))
-////            {
-////                ApigetPaper.listitems.remove(id);
-////            }
-////            else if(type.equals("Patent"))
-////            {
-////                ApigetPaper.listitems1.remove(id);
-////            }
-////            else if(type.equals("Project"))
-////            {
-////                ApigetPaper.listitems2.remove(id);
-////            }
-////            else
-////            {
-////                ApigetPaper.listitems3.remove(id);
-////            }
-//
-//            Log.e("DSFSFSD"  , type);
-//            scontext.startActivity(intent);
-//        }
-//
-//
-//        else
-            Toast.makeText(scontext , "Password invalid" , Toast.LENGTH_SHORT).show();
     }
 }

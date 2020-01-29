@@ -28,8 +28,6 @@ public class ApiPostProject  extends AsyncTask<String , Void , Void> {
 
         String urlpost = "https://apitims1.azurewebsites.net/user/upload/Project?token=";
         urlpost = urlpost + token;
-        Log.e("TOKEN PRO" , urlpost);
-
 
         OkHttpClient client = new OkHttpClient();
 

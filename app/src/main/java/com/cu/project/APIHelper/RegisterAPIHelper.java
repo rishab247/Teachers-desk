@@ -31,14 +31,8 @@ public class RegisterAPIHelper  extends AsyncTask<String , String , Void> {
         String str = voids[0];
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
 
-        Log.v("INFO" , str);
-
 
         String url = util.url + "/register";
-
-        Log.e("URLS" , url);
-
-
 
         OkHttpClient client = new OkHttpClient();
 

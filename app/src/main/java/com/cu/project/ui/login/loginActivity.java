@@ -121,15 +121,7 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         if(flag == 0 )
         {
             String str = generatedhash12(passtext);
-            Log.e("Hash1",str);
             String hashedpass = generatedhash12(str);
-            Log.e("Hash2",hashedpass);
-
-            Log.e("Login Credences", usernametext + hashedpass);
-
-
-
-            // logic for login
 
             ApiLogin apiLogin = new ApiLogin(this,usernametext , hashedpass);
 
@@ -156,7 +148,6 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         editor.putString("Token", str);
         editor.putLong("Exp_time",System.currentTimeMillis()+ TimeUnit.MINUTES.toMillis(50));
         editor.commit();
-        Log.e("processLoginFinish", "processLoginFinish: "+str);
 
         if(str.length() <= 4)
         {
@@ -169,7 +160,6 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
             Apiget apiget = new Apiget(this);
             apiget.asyncResponse = this;
             apiget.execute(str);
-
 
         }
     }
@@ -199,11 +189,9 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
             editor.clear();
         String token1 = sharedpreferences.getString("Token", "");
         if(token1.equals("")){
-            //token doesnot exists or expired
             Log.e(TAG, "gettoken: token doesnot exists or expired " );
 
         }
-        Log.e(TAG, "gettoken: "+token1 );
         return token1;
     }
 

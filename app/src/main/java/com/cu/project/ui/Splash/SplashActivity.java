@@ -19,7 +19,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class SplashActivity extends Activity implements SplashMvpView {
 
-    private static int SPLASH_SCREEN_TIME_OUT=2000;
+    private static int SPLASH_SCREEN_TIME_OUT=1500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

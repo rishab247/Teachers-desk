@@ -60,9 +60,6 @@ public class ApiEditProfile extends AsyncTask<String, Void , Void> {
         OkHttpClient client = new OkHttpClient();
 
 
-
-        Log.e("URL UPDATE" , url);
-
         JSONObject jsonObject = new JSONObject();
 
         try {
@@ -71,8 +68,6 @@ public class ApiEditProfile extends AsyncTask<String, Void , Void> {
             jsonObject.put("Qualification", quali);
             jsonObject.put("University" , uni);
             jsonObject.put("Department_Name" , depart);
-
-            Log.e("JSON OBJECT" , jsonObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -85,16 +80,10 @@ public class ApiEditProfile extends AsyncTask<String, Void , Void> {
         try {
             response = client.newCall(request).execute();
 
-            Log.e("RESPONSE PASS" , response.body().string());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
-
 
         return null;
     }

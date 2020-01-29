@@ -75,7 +75,6 @@ public class AddPublication extends AppCompatActivity {
             public void onClick(View v) {
                 int mYear, mMonth, mDay;
                 final Calendar c = Calendar.getInstance();
-//                c.get(Calendar.MILLISECOND);
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -139,8 +138,6 @@ public class AddPublication extends AppCompatActivity {
                     JsonEncoder jsonEncoder = new JsonEncoder(getApplicationContext());
                     jsonEncoder.jsonify_pub(info);
 
-
-                    Log.e("AUTHOR DATA" , names.toString() + " " + emails.toString() + " " + pnos.toString());
                 }
 
             }
@@ -187,7 +184,6 @@ public class AddPublication extends AppCompatActivity {
                             names.add(name);
                             emails.add(email);
                             pnos.add(pno);
-                            Log.e("PRINT", names.toString() + emails.toString() + pnos.toString());
                             Toast.makeText(getApplicationContext(), "CLICKED!", Toast.LENGTH_SHORT).show();
 
                             alertDialog.cancel();
@@ -250,9 +246,6 @@ public class AddPublication extends AppCompatActivity {
                         listView.setAdapter(adapter);
                         ListUtils.setDynamicHeight(listView);
 
-
-
-                        Log.e("PRINT AFTER" , names.toString() + emails.toString() + pnos.toString());
                         alertDialog.cancel();
 
 

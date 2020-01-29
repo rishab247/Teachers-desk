@@ -154,18 +154,13 @@ public class AddProject extends AppCompatActivity {
                 String authemail = data.getStringExtra("authemail");
                 String authpno = data.getStringExtra("authpno");
 
-                Log.e("INFO" , authname + " " + authemail + " " + authpno);
-
-
                 String add = authname;
 
                 final String[] authnames = new String[]{authname};
                 final List<String> fruits_list = new ArrayList<>(Arrays.asList(authnames));
 
-                // Create an ArrayAdapter from List
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, fruits_list);
 
-                // DataBind ListView with items from ArrayAdapter
                 listView.setAdapter(arrayAdapter);
 
             }

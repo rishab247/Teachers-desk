@@ -82,8 +82,6 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
         urls = urls + token;
 
 
-        Log.e("URL" , urls);
-
         Request request = new Request.Builder()
                 .url(urls)
                 .build();
@@ -97,14 +95,10 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
 
             jsonData = responses.body().string();
 
-            Log.v("Jsondata" , jsonData);
-
 
             JSONObject jsonObject = new JSONObject(jsonData);
 
             JSONArray arrObj = jsonObject.getJSONArray("Status");
-
-            Log.e("JSON ARRAY" , String.valueOf(arrObj));
 
 
              ecode = arrObj.get(0).toString().trim();
@@ -116,8 +110,6 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
              quali = arrObj.get(6).toString().trim();
              uni = arrObj.get(7).toString().trim();
              dob = arrObj.get(8).toString().trim();
-
-            Log.e("VALUES" ,ecode + name + email + pno + depart + doj + quali + uni + dob );
 
 
             infoarr = new String[]{ecode , name , email , pno , depart , doj , quali , uni ,dob};

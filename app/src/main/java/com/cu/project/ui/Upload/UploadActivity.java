@@ -72,22 +72,6 @@ public class UploadActivity extends AppCompatActivity {
 
 
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//
-//        getMenuInflater().inflate(R.menu.upload_menu , menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//
-//        Toast.makeText(getApplicationContext() , "Saved", Toast.LENGTH_LONG).show();
-//        return true;
-//    }
-
-
     private void arrayAdapterListView() {
         List<String> dataList = new ArrayList<>();
         dataList.add("Add a Publication");
@@ -107,22 +91,24 @@ public class UploadActivity extends AppCompatActivity {
                     case 0:
                         Intent intent = new Intent(UploadActivity.this , AddPublication.class);
                         startActivity(intent);
+                        finish();
                         break;
                     case 1:
                         Intent intent1 = new Intent(UploadActivity.this , AddPatent.class);
                         startActivity(intent1);
+                        finish();
                         break;
                     case 2:
                         Intent intent2 = new Intent(UploadActivity.this , AddProject.class);
                         startActivity(intent2);
+                        finish();
                         break;
                     case 3:
                         Intent intent3 = new Intent(UploadActivity.this , AddHonor.class);
                         startActivity(intent3);
+                        finish();
                         break;
                 }
-                Object clickItemObj = adapterView.getAdapter().getItem(index);
-                Toast.makeText(getApplicationContext(), "You clicked " + clickItemObj.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }

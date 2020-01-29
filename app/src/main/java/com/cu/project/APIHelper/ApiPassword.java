@@ -55,8 +55,6 @@ public class ApiPassword extends AsyncTask<String , Void , Integer> {
         OkHttpClient client = new OkHttpClient();
 
         url = url + token;
-        Log.e("URL PASSWORD CHANGE" , url);
-
         oldpass = voids[0];
         newpass = voids[1];
 
@@ -81,19 +79,12 @@ public class ApiPassword extends AsyncTask<String , Void , Integer> {
         try {
             Response response = client.newCall(request).execute();
 
-            Log.e("RESPONSE PASS" , response.body().string());
-
             code = response.code();
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        Log.e("CODE ", String.valueOf(code));
-
-
-
 
         return code;
     }
