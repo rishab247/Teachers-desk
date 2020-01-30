@@ -46,7 +46,7 @@ import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
-public class RegisterActivity extends AppCompatActivity implements RegisterMvpView{
+public class RegisterActivity extends AppCompatActivity{
     Button btn_register , btn_verify;
     TextView Alreadyamember ;
     Spinner type_spinner;
@@ -423,46 +423,12 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
 
                     String information = jsonEncoder.jsonify(valstring);
 
-                    if(information.equals(null))
-                    {
-                        Log.e("ERROR OCCURED" , "Error code");
-                    }
 
-                    else
-                    {
-                        RegisterAPIHelper apiHelper = new RegisterAPIHelper(RegisterActivity.this);
-                        pbar.setVisibility(View.VISIBLE);
-                        try {
-                            apiHelper.asynctask = this;
-                            String length = apiHelper.execute(information , util.url).get();
-                            pbar.setVisibility(View.GONE);
-
-                            if(length.equals("421"))
-                            {
-                                eid.setError("Ecode Already Registered");
-                            }
-                            else if(length.equals("485"))
-                            {
-                                email.setError("Email Already Registered");
-                            }
-                            else
-                            {
-                                Intent intent = new Intent(RegisterActivity.this , loginActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-
-                            Log.e("LENGTH" , length);
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
 
                     }
 
                 }
-            }
+
         });
 
     }

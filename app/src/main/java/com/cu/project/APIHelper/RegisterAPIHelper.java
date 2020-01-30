@@ -26,8 +26,6 @@ import okhttp3.internal.Util;
 
 public class RegisterAPIHelper  extends AsyncTask<String , String , String> {
 
-    public RegisterMvpView asynctask = null;
-
     Context scontext;
     ProgressDialog dialog;
 
@@ -68,13 +66,6 @@ public class RegisterAPIHelper  extends AsyncTask<String , String , String> {
         try {
             Response response = client.newCall(request).execute();
 
-          //  mMessage = String.valueOf(response.code());
-
-            length = String.valueOf(response.body().string().length());
-
-
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -84,7 +75,7 @@ public class RegisterAPIHelper  extends AsyncTask<String , String , String> {
 
     @Override
     protected void onPostExecute(String result) {
-        asynctask.processRegisterFinish(result);
+        super.onPostExecute(result);
         dialog.cancel();
     }
 }
