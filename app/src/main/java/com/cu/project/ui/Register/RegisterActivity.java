@@ -139,13 +139,11 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
 
 
 
-        // datepicker
         doj.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 int mYear, mMonth, mDay;
                 final Calendar c = Calendar.getInstance();
-//                c.get(Calendar.MILLISECOND);
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -181,15 +179,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
             }
         });
 
-
-
-
-
-
-
-
-
-        // button for register and going to login screen
 
         btn_register = findViewById(R.id.Registerregisterbutton);
 
@@ -361,14 +350,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
 
                     final String dateofbirth = String.valueOf(time2);
 
-
-
                     String cap1 = fnametext.substring(0, 1).toUpperCase() + fnametext.substring(1);
                     String cap2 = lnametext.substring(0, 1).toUpperCase() + lnametext.substring(1);
-
-
-
-
 
 
                     String hashedpass = generatedhash12(generatedhash12(passwordtext));
@@ -377,12 +360,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
                     String finalstring1 = cap1 + " " + cap2;
                     String finalstring2 = eidtext.substring(0, 1).toUpperCase() + eidtext.substring(1);
 
-                    Log.e("String size" , String.valueOf(len));
                     String[] valstring = {finalstring2, finalstring1, emailtext, hashedpass, pnotext, departtext, dateofjoin, qualificationtext,
-                            universitytext, dateofbirth, departtext};
-                    Log.v("testing",eidtext + fnametext + emailtext + hashedpass + pnotext + departtext + dojtext + qualificationtext +
-                            universitytext + dobtext + departtext);
-
+                            universitytext, dateofbirth, departtext , type_spinner.getSelectedItem().toString()};
 
                     JsonEncoder jsonEncoder = new JsonEncoder(getApplicationContext());
                     jsonEncoder.jsonify(valstring);

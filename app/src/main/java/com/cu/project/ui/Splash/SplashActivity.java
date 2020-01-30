@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.WindowManager;
 
+import com.cu.project.APIHelper.ApiAlert;
 import com.cu.project.R;
 import com.cu.project.Welcome;
 
@@ -31,6 +32,8 @@ public class SplashActivity extends Activity implements SplashMvpView {
 
         setContentView(R.layout.activity_splash);
 
+        ApiAlert apiAlert = new ApiAlert();
+        apiAlert.execute();
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -53,6 +56,9 @@ public class SplashActivity extends Activity implements SplashMvpView {
     @Override
     public void openLoginActivity() {
     }
+
+
+
 
 
 }

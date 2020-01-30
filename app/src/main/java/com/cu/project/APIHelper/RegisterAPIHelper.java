@@ -22,7 +22,6 @@ import okhttp3.internal.Util;
 
 public class RegisterAPIHelper  extends AsyncTask<String , String , Void> {
     String mMessage;
-    int flag = 0;
 
 
     @Override

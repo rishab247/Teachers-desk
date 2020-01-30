@@ -62,7 +62,7 @@
                 style="@style/TextAppearance.AppCompat.Button"
                 android:layout_width="85dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/transparentbutton"
                 android:fontFamily="@font/roboto"
                 android:padding="5dp"
@@ -91,7 +91,6 @@
                     android:layout_height="match_parent"
                     android:hint="First name"
                     android:inputType="textPersonName"
-                    android:maxLength="8"
                     android:digits="QWERTYUIOPASDFGHJKLZXCVBNM|qwertyuiopasdfghjklzxcvbnm"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -101,7 +100,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textInputLayout3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textInputLayout3"
@@ -114,8 +113,7 @@
                     android:layout_height="match_parent"
                     android:digits="QWERTYUIOPASDFGHJKLZXCVBNM|qwertyuiopasdfghjklzxcvbnm"
                     android:hint="Last name"
-                    android:inputType="textPersonName"
-                    android:maxLength="8" />
+                    android:inputType="textPersonName"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
@@ -147,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -169,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="16dp"
                 app:counterEnabled="true"
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -193,7 +191,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="16dp"
                 app:counterEnabled="true"
                 app:passwordToggleEnabled="true"
                 app:errorEnabled="true"
@@ -229,7 +227,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
                     android:hint="Phone No."
-                    android:inputType="numberSigned" />
+                    android:maxLength="10"
+                    android:inputType="phone" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -286,7 +285,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textInputLayout8"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textInputLayout8"
@@ -326,7 +325,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textInputLayout10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textInputLayout10"

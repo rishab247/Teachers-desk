@@ -44,10 +44,6 @@ public class JsonEncoder {
 
      try{
 
-         if (keyarr.length != valuearr.length) {
-             throw new Exception();
-         }
-
 
          JSONObject jsonObject = new JSONObject();
 
@@ -56,18 +52,26 @@ public class JsonEncoder {
              jsonObject.put(keyarr[i] , valuearr[i]);
          }
 
+         jsonObject.put("type" , valuearr[valuearr.length - 1]);
 
+         String type;
+
+         if(valuearr[valuearr.length - 1].equals("Faculty"))
+         {
+             type = "0";
+         }
+         else
+         {
+             type = "1";
+         }
+
+         jsonObject.put("type" , type);
 
          String information = jsonObject.toString();
 
          RegisterAPIHelper apiHelper = new RegisterAPIHelper();
 
          apiHelper.execute(information , util.url);
-
-
-         Log.v("jsonarray" , information);
-
-
 
      }catch (Exception e)
      {
@@ -102,8 +106,6 @@ public class JsonEncoder {
          apiHelper.execute(information);
 
 
-         Log.v("jsonarray_honor" , information);
-
 
 
      }catch (Exception e)
@@ -128,12 +130,6 @@ public class JsonEncoder {
                 jsonArray.put(list1.get(i));
 
             JSONArray jsonArray2 = new JSONArray();
-//
-//            List<Integer> list2 = new ArrayList<>();
-//            list2.add(1);
-//
-//            for(int i =0;i < list2.size() ; i ++)
-//                jsonArray2.put(list2.get(i));
 
             JSONArray jsonArray3 = new JSONArray();
 
