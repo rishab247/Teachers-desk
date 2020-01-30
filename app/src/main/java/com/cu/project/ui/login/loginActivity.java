@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
-public class loginActivity extends Activity implements loginMvpView , AsyncLoginResponse, AsyncResponse {
+public class loginActivity extends Activity implements loginMvpView , AsyncLoginResponse , AsyncResponse {
 
     Button signinloginbtn;
     TextView Notamember;
@@ -56,7 +56,6 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         signinloginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 onLoginButtonClick();
 
@@ -152,7 +151,6 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         if(str.length() <= 4)
         {
             Toast.makeText(getApplicationContext() , "Information Invalid", Toast.LENGTH_LONG).show();
-
         }
         else
         {

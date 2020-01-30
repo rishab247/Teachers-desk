@@ -37,10 +37,9 @@ public class JsonEncoder {
         scontext = context;
     }
 
- public void jsonify(String[] valuearr){
+ public String jsonify(String[] valuearr){
 
-
-
+     String information = null;
 
      try{
 
@@ -67,16 +66,17 @@ public class JsonEncoder {
 
          jsonObject.put("type" , type);
 
-         String information = jsonObject.toString();
+         information = jsonObject.toString();
 
-         RegisterAPIHelper apiHelper = new RegisterAPIHelper();
 
-         apiHelper.execute(information , util.url);
+
 
      }catch (Exception e)
      {
          System.out.println(e);
      }
+
+     return information;
  }
 
  public void jsonify_honor(String[] str)

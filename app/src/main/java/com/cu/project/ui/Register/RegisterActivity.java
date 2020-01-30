@@ -9,9 +9,12 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,12 +22,17 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.cu.project.APIHelper.RegisterAPIHelper;
 import com.cu.project.R;
 import com.cu.project.Util.JsonEncoder;
+import com.cu.project.Util.util;
 import com.cu.project.ui.Profiile.ProfileActivity;
+import com.cu.project.ui.detailclass;
 import com.cu.project.ui.login.loginActivity;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -35,6 +43,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterMvpView{
@@ -42,12 +51,20 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
     TextView Alreadyamember ;
     Spinner type_spinner;
     Dialog dialog;
-    CoordinatorLayout coordinatorLayout;
+
+    ProgressBar pbar;
+
+    View popupdialog;
+    Button verifybtn , canclebtn;
+    EditText otpedittext;
+    TextView resendtext;
 
 
 
 
     private boolean initiate = false;
+
+
 
     EditText fname , lname , eid , email , pass , confirmpass , pno , department , doj , qualification , university , dob;
 
@@ -66,6 +83,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+
        Alreadyamember = findViewById(R.id.Alreadyamembertext);
         Alreadyamember.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,8 +101,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
         type_spinner.setAdapter(adapter);
 
 
-
-
+        pbar = findViewById(R.id.pbar_);
 
 
         fname = findViewById(R.id.fnameregisteretext);
@@ -102,40 +119,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
         btn_verify = findViewById(R.id.verifyregisterbutton);
         dialog = new Dialog(getApplicationContext());
         dialog.setContentView(R.layout.dialog_box);
-        btn_verify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                builder.setTitle("Enter OTP");
-
-                final EditText input = new EditText(RegisterActivity.this);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                input.setLayoutParams(lp);
-                builder.setView(input);
-                builder.setCancelable(false);
-
-
-                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        initiate = true;
-
-                    }
-                });
-
-                builder.setNegativeButton("Resend OTP", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-
-                builder.show();
-         }
-
-        });
 
 
 
@@ -180,6 +164,76 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
         });
 
 
+
+            btn_verify.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    if (pno.getText().toString().trim().equals("")) {
+                        pno.setError("Please enter a Phone number");
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                        builder.setCancelable(false);
+                        initializedialog();
+
+                        builder.setView(popupdialog);
+
+                        final AlertDialog alertDialog = builder.create();
+
+                        alertDialog.show();
+
+                        final int randomNumber = generateRandomNumber();
+
+
+                        resendtext.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                initiate = false;
+
+                                Toast.makeText(RegisterActivity.this , "OTP is resend to your device", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+
+                        Log.e("OTP" , String.valueOf(randomNumber));
+
+                        final String value = String.valueOf(randomNumber);
+
+
+
+                        verifybtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(otpedittext.getText().toString().trim().equals(value)){
+                                    alertDialog.cancel();
+                                    Toast.makeText(getApplicationContext() , "Phone number Verified", Toast.LENGTH_SHORT).show();
+                                    initiate = true;
+
+                                }
+                                else
+                                {
+                                    Toast.makeText(RegisterActivity.this , "OTP NOT VALID" , Toast.LENGTH_SHORT).show();
+                                    initiate = false;
+                                }
+                            }
+                        });
+
+                        canclebtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                initiate = false;
+                                alertDialog.cancel();
+                            }
+                        });
+                    }
+                }
+
+            });
+
+
+
         btn_register = findViewById(R.id.Registerregisterbutton);
 
         btn_register.setOnClickListener(new View.OnClickListener() {
@@ -216,15 +270,17 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
 
 
 
+
+
                 int flag = 0;
 
-                if(fnametext.equals(""))
+                if(fnametext.equals("") || fnametext.equals("None"))
                 {
                     fname.setError("Enter FirstName");
                     flag = 1;
                 }
 
-                if(lnametext.equals(""))
+                if(lnametext.equals("") || lnametext.equals("None"))
                 {
                     lname.setError("Enter LastName");
                     flag = 1;
@@ -308,6 +364,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
                     flag = 1;
                 }
 
+
                 if(initiate == false)
                 {
                     pno.setError("Verify Your Phone number");
@@ -318,7 +375,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
 
                 if(flag == 0 && initiate == true)
                 {
-                    // for going to the next screen
 
                     SimpleDateFormat date1 = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -364,19 +420,69 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
                             universitytext, dateofbirth, departtext , type_spinner.getSelectedItem().toString()};
 
                     JsonEncoder jsonEncoder = new JsonEncoder(getApplicationContext());
-                    jsonEncoder.jsonify(valstring);
 
+                    String information = jsonEncoder.jsonify(valstring);
 
+                    if(information.equals(null))
+                    {
+                        Log.e("ERROR OCCURED" , "Error code");
+                    }
 
-                    Intent intent = new Intent(RegisterActivity.this , loginActivity.class);
-                    startActivity(intent);
-                    finish();
+                    else
+                    {
+                        RegisterAPIHelper apiHelper = new RegisterAPIHelper(RegisterActivity.this);
+                        pbar.setVisibility(View.VISIBLE);
+                        try {
+                            apiHelper.asynctask = this;
+                            String length = apiHelper.execute(information , util.url).get();
+                            pbar.setVisibility(View.GONE);
+
+                            if(length.equals("421"))
+                            {
+                                eid.setError("Ecode Already Registered");
+                            }
+                            else if(length.equals("485"))
+                            {
+                                email.setError("Email Already Registered");
+                            }
+                            else
+                            {
+                                Intent intent = new Intent(RegisterActivity.this , loginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+
+                            Log.e("LENGTH" , length);
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
                 }
             }
         });
 
     }
 
+
+
+    public void initializedialog()
+    {
+        LayoutInflater layoutInflater = LayoutInflater.from(RegisterActivity.this);
+
+        popupdialog = layoutInflater.inflate(R.layout.otp, null);
+
+
+        otpedittext = popupdialog.findViewById(R.id.editText2);
+        verifybtn = popupdialog.findViewById(R.id.btnverfy);
+        canclebtn = popupdialog.findViewById(R.id.btncancle);
+        resendtext = popupdialog.findViewById(R.id.resendtextid);
+
+
+    }
     String generatedhash12(String passwordToHash){
         String generatedPassword = null;
         try {
@@ -396,5 +502,30 @@ public class RegisterActivity extends AppCompatActivity implements RegisterMvpVi
         }
         return generatedPassword;
     }
+
+
+    int range = 9;
+    int length = 4;
+
+    public int generateRandomNumber() {
+        int randomNumber;
+
+        SecureRandom secureRandom = new SecureRandom();
+        String s = "";
+        for (int i = 0; i < length; i++) {
+            int number = secureRandom.nextInt(range);
+            if (number == 0 && i == 0)
+            {
+                i = -1;
+                continue;
+            }
+            s = s + number;
+        }
+
+        randomNumber = Integer.parseInt(s);
+
+        return randomNumber;
+    }
+
 }
 

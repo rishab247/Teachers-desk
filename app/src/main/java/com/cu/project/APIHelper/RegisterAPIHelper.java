@@ -1,9 +1,12 @@
 package com.cu.project.APIHelper;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.cu.project.Util.util;
+import com.cu.project.ui.Register.RegisterMvpView;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -11,6 +14,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import kotlin.Result;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -20,12 +24,32 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.internal.Util;
 
-public class RegisterAPIHelper  extends AsyncTask<String , String , Void> {
-    String mMessage;
+public class RegisterAPIHelper  extends AsyncTask<String , String , String> {
 
+    public RegisterMvpView asynctask = null;
+
+    Context scontext;
+    ProgressDialog dialog;
+
+    String length = null;
+
+    public RegisterAPIHelper(Context context) {
+        scontext = context;
+    }
 
     @Override
-    protected Void doInBackground(String... voids) {
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        dialog = new ProgressDialog(scontext);
+        dialog.setMessage("Please wait...");
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+    @Override
+    protected String doInBackground(String... voids) {
 
         String str = voids[0];
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
@@ -40,27 +64,27 @@ public class RegisterAPIHelper  extends AsyncTask<String , String , Void> {
         Request request = new Request.Builder()
                 .url(url).post(body).build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-                mMessage = e.getMessage();
-                Log.v("failure Response", mMessage);
+        try {
+            Response response = client.newCall(request).execute();
 
+          //  mMessage = String.valueOf(response.code());
 
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
-                mMessage = response.body().string();
-                Log.e("responce", mMessage);
+            length = String.valueOf(response.body().string().length());
 
 
-            }
-        });
 
 
-        return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return length;
+    }
+
+
+    @Override
+    protected void onPostExecute(String result) {
+        asynctask.processRegisterFinish(result);
+        dialog.cancel();
     }
 }
