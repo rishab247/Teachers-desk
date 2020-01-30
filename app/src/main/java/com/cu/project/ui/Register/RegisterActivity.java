@@ -167,7 +167,12 @@ public class RegisterActivity extends AppCompatActivity{
 
                     if (pno.getText().toString().trim().equals("")) {
                         pno.setError("Please enter a Phone number");
-                    } else {
+                    }
+                    if(pno.getText().toString().trim().length() < 10)
+                    {
+                        pno.setError("Phone Number not valid");
+                    }
+                    else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                         builder.setCancelable(false);
                         initializedialog();
