@@ -52,8 +52,6 @@ public class RegisterActivity extends AppCompatActivity{
     Spinner type_spinner;
     Dialog dialog;
 
-    ProgressBar pbar;
-
     View popupdialog;
     Button verifybtn , canclebtn;
     EditText otpedittext;
@@ -99,9 +97,6 @@ public class RegisterActivity extends AppCompatActivity{
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_of_account, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         type_spinner.setAdapter(adapter);
-
-
-        pbar = findViewById(R.id.pbar_);
 
 
         fname = findViewById(R.id.fnameregisteretext);
