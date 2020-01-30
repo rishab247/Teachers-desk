@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity{
 
 
         type_spinner = findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_of_account, android.R.layout.simple_spinner_item);
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_of_account, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         type_spinner.setAdapter(adapter);
 
@@ -423,7 +423,11 @@ public class RegisterActivity extends AppCompatActivity{
 
                     String information = jsonEncoder.jsonify(valstring);
 
+                    RegisterAPIHelper apiHelper = new RegisterAPIHelper(RegisterActivity.this);
+                    apiHelper.execute(information);
 
+                    Intent intent = new Intent(RegisterActivity.this , loginActivity.class);
+                    startActivity(intent);
 
                     }
 
