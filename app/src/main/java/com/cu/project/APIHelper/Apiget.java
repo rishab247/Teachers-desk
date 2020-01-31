@@ -92,7 +92,6 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
 
             responses = client.newCall(request).execute();
 
-
             jsonData = responses.body().string();
 
 

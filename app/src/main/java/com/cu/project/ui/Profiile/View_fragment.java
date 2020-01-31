@@ -11,12 +11,14 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 
@@ -28,7 +30,7 @@ import java.util.concurrent.ExecutionException;
 
 public class View_fragment extends Fragment {
     Button upload_btn;
-    Toolbar toolbar;
+    TextView txt;
 
     String token = loginActivity.gettoken();
 
@@ -37,10 +39,6 @@ public class View_fragment extends Fragment {
 
     ListView list , list1 , list2 , list3;
 
-
-
-//    private RecyclerView recyclerView;
-//    List<Achievements> lachievements;
 
 
     SwipeRefreshLayout swipeRefreshLayout;
@@ -68,13 +66,10 @@ public class View_fragment extends Fragment {
 
         list2 = v.findViewById(R.id.listView3);
 
-
         list.setAdapter(null);
         list1.setAdapter(null);
         list2.setAdapter(null);
         list3.setAdapter(null);
-
-
 
 
 
@@ -85,87 +80,79 @@ public class View_fragment extends Fragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+
                         ApigetPaper apigetPaper = new ApigetPaper();
 
                         try {
                             apigetPaper.execute(token).get();
 
-                            if(ApigetPaper.listitems.size() == 0)
-                            {
-
-                            }
-                            else
-                            {
+                            if (ApigetPaper.listitems.size() == 0) {
+                                txt = v.findViewById(R.id.noitems1id);
+                                txt.setVisibility(View.VISIBLE);
+                            } else {
                                 list.setAdapter(null);
                                 CustomAdapter customAdapter = new CustomAdapter(getContext(), ApigetPaper.listitems);
                                 list.setAdapter(customAdapter);
                                 count1 = list.getCount();
+                                list.invalidateViews();
+                                txt = v.findViewById(R.id.noitems1id);
+                                txt.setVisibility(View.INVISIBLE);
                                 ListUtils.setDynamicHeight(list);
                             }
-
-
-
-
-                            // for the list of patents
-
-                            if(ApigetPaper.listitems1.size() == 0)
-                            {
-
-                            }
-                            else
-                            {
+                            if (ApigetPaper.listitems1.size() == 0) {
+                                txt = v.findViewById(R.id.noitems1id1);
+                                txt.setVisibility(View.VISIBLE);
+                            } else {
                                 CustomAdapter1 customAdapter1 = new CustomAdapter1(getContext(), ApigetPaper.listitems1);
                                 list1.setAdapter(customAdapter1);
                                 ListUtils.setDynamicHeight(list1);
+                                list1.invalidateViews();
                                 count2 = list1.getCount();
+
+                                txt = v.findViewById(R.id.noitems1id1);
+                                txt.setVisibility(View.INVISIBLE);
                                 list1.invalidateViews();
                             }
 
 
-
-
-                            // for the list of projects
-
-                            if(ApigetPaper.listitems2.size() == 0)
-                            {
-
-                            }
-                            else {
+                            if (ApigetPaper.listitems2.size() == 0) {
+                                txt = v.findViewById(R.id.noitems1id2);
+                                txt.setVisibility(View.VISIBLE);
+                            } else {
                                 CustomAdapter2 customAdapter2 = new CustomAdapter2(getContext(), ApigetPaper.listitems2);
                                 list2.setAdapter(customAdapter2);
                                 ListUtils.setDynamicHeight(list2);
                                 count3 = list2.getCount();
+                                txt = v.findViewById(R.id.noitems1id2);
+                                txt.setVisibility(View.INVISIBLE);
                                 list2.invalidateViews();
                             }
 
 
                             // for the list of patents
 
-                            if(ApigetPaper.listitems3.size() == 0)
-                            {
-
-                            }
-                            else {
+                            if (ApigetPaper.listitems3.size() == 0) {
+                                txt = v.findViewById(R.id.noitems1id3);
+                                txt.setVisibility(View.VISIBLE);
+                            } else {
                                 CustomAdapter3 customAdapter3 = new CustomAdapter3(getContext(), ApigetPaper.listitems3);
                                 list3.setAdapter(customAdapter3);
+                                list3.invalidateViews();
                                 ListUtils.setDynamicHeight(list3);
                                 list3.invalidateViews();
+                                txt = v.findViewById(R.id.noitems1id3);
+                                txt.setVisibility(View.INVISIBLE);
                                 count4 = list3.getCount();
-                                list3.deferNotifyDataSetChanged();
                             }
 
 
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            swipeRefreshLayout.setRefreshing(false);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
                         }
-
-
-                        swipeRefreshLayout.setRefreshing(false);
                     }
-                }, 2000);
 
+                }, 2000);
             }
         });
 
@@ -193,6 +180,8 @@ public class View_fragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
     }
 

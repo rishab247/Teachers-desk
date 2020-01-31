@@ -22,6 +22,7 @@ import com.cu.project.ui.AddWork.AddHonor;
 import com.cu.project.ui.AddWork.AddPatent;
 import com.cu.project.ui.AddWork.AddProject;
 import com.cu.project.ui.AddWork.AddPublication;
+import com.cu.project.ui.login.loginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,17 +59,16 @@ public class UploadActivity extends AppCompatActivity {
         c3 = ApigetPaper.countproject;
         c4 = ApigetPaper.counthonor;
 
-        text1.setText("PUBLICATION \n" + c1);
-        text2.setText("PATENT \n" + c2);
-        text3.setText("PROJECT \n" + c3);
-        text4.setText("HONOR \n And \n Rewards \n" + c4);
+        text1.setText("Publications \n" + c1);
+        text2.setText("Patents \n" + c2);
+        text3.setText("Projects \n" + c3);
+        text4.setText("Honors \n And \n Awards \n" + c4);
 
         int totalcount =  c1 + c2 + c3 + c4;
 
         totaltext.setText("TOTAL COUNT = " + totalcount);
-
-
         this.arrayAdapterListView();
+
 
 
     }
@@ -113,5 +113,9 @@ public class UploadActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

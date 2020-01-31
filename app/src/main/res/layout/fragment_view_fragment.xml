@@ -37,19 +37,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
         android:text="Publications" />
 
     <ListView
         android:id="@+id/listView1"
         android:clickable="true"
         android:divider="#000"
-        android:dividerHeight="1.5dp"
+        android:dividerHeight="1dp"
         android:layout_width="match_parent"
+        android:theme="@style/Widget.AppCompat.ListView.Menu"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dip">
     </ListView>
 
+
     <TextView
+        android:id="@+id/noitems1id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="No Items Added"/>
+
+    <TextView
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dip"
@@ -61,11 +74,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="#000"
-        android:dividerHeight="1.5dp"
+        android:dividerHeight="1dp"
         android:layout_marginTop="10dip">
     </ListView>
 
     <TextView
+        android:id="@+id/noitems1id1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="No Items Added"/>
+    <TextView
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dip"
@@ -77,11 +98,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="#000"
-        android:dividerHeight="1.5dp"
+        android:dividerHeight="1dp"
         android:layout_marginTop="10dip">
     </ListView>
+    <TextView
+        android:id="@+id/noitems1id2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="No Items Added"/>
 
     <TextView
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dip"
@@ -93,9 +122,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="#000"
-        android:dividerHeight="1.5dp"
+        android:dividerHeight="1dp"
         android:layout_marginTop="10dip">
     </ListView>
+
+    <TextView
+        android:id="@+id/noitems1id3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="No Items Added"/>
 
 
 

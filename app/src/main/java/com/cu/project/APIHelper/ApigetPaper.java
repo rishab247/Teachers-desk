@@ -34,7 +34,6 @@ public class ApigetPaper extends AsyncTask<String , Void , Void> {
     public static ArrayList<SubjectData> listitems2 =  new ArrayList<>();
     public static ArrayList<SubjectData> listitems3 =  new ArrayList<>();
 
-    public static ArrayList<SubjectData> listofitems = new ArrayList<>();
 
 
     @Override
@@ -87,8 +86,18 @@ public class ApigetPaper extends AsyncTask<String , Void , Void> {
             {
                 JSONArray jsonObject1 = pubarry.getJSONArray(i);
                 countpub++;
-                listitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), (Integer) jsonObject1.get(0)));
-                listofitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), (Integer) jsonObject1.get(0)));
+
+
+                long date1 = Long.parseLong(jsonObject1.get(2).toString().trim());
+
+                DateFormat simple = new SimpleDateFormat("dd MMM yyyy");
+
+                Date result1 = new Date(date1);
+
+                String hdate = simple.format(result1);
+
+
+                listitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , hdate,  (Integer) jsonObject1.get(0)));
 
             }
 
@@ -99,10 +108,15 @@ public class ApigetPaper extends AsyncTask<String , Void , Void> {
                 JSONArray jsonObject1 = patentarry.getJSONArray(i);
                 countpatent++;
 
-                Log.e("1st" , jsonObject1.get(1).toString() + " " + jsonObject1.get(2).toString());
+                long date1 = Long.parseLong(jsonObject1.get(2).toString().trim());
 
-                listitems1.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), (Integer) jsonObject1.get(0)));
-                listofitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim(), (Integer) jsonObject1.get(0)));
+                DateFormat simple = new SimpleDateFormat("dd MMM yyyy");
+
+                Date result1 = new Date(date1);
+
+                String hdate = simple.format(result1);
+
+                listitems1.add(new SubjectData(jsonObject1.get(1).toString().trim() , hdate , (Integer) jsonObject1.get(0)));
 
             }
 
@@ -112,8 +126,15 @@ public class ApigetPaper extends AsyncTask<String , Void , Void> {
                 JSONArray jsonObject1 = projectarry.getJSONArray(i);
 
                 countproject++;
-                listitems2.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim() , (Integer) jsonObject1.get(0)));
-                listofitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , jsonObject1.get(2).toString().trim() , (Integer) jsonObject1.get(0)));
+
+                long date1 = Long.parseLong(jsonObject1.get(2).toString().trim());
+
+                DateFormat simple = new SimpleDateFormat("dd MMM yyyy");
+
+                Date result1 = new Date(date1);
+
+                String hdate = simple.format(result1);
+                listitems2.add(new SubjectData(jsonObject1.get(1).toString().trim() , hdate, (Integer) jsonObject1.get(0)));
 
             }
 
@@ -125,14 +146,13 @@ public class ApigetPaper extends AsyncTask<String , Void , Void> {
 
                 long date1 = Long.parseLong(jsonObject1.get(2).toString().trim());
 
-                DateFormat simple = new SimpleDateFormat("dd MM yyyy");
+                DateFormat simple = new SimpleDateFormat("dd MMM yyyy");
 
                 Date result1 = new Date(date1);
 
                 String hdate = simple.format(result1);
 
                 listitems3.add(new SubjectData(jsonObject1.get(1).toString().trim() , hdate, (Integer)jsonObject1.get(0)));
-                listofitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , hdate, (Integer)jsonObject1.get(0)));
 
             }
 

@@ -26,6 +26,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cu.project.APIHelper.ApiPostPub;
 import com.cu.project.R;
 import com.cu.project.Util.JsonEncoder;
 import com.cu.project.ui.Authorclass;
@@ -136,7 +137,11 @@ public class AddPublication extends AppCompatActivity {
 
                     String[] info = {title, publishertext, url, dateofpub, des};
                     JsonEncoder jsonEncoder = new JsonEncoder(getApplicationContext());
-                    jsonEncoder.jsonify_pub(info);
+                    String information = jsonEncoder.jsonify_pub(info);
+
+                    ApiPostPub apiPostPub = new ApiPostPub(AddPublication.this);
+                    apiPostPub.execute(information);
+
 
                 }
 

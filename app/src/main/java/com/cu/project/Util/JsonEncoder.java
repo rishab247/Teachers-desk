@@ -116,8 +116,9 @@ public class JsonEncoder {
  }
 
 
-    public void jsonify_pub(String[] str) {
+    public String jsonify_pub(String[] str) {
 
+        String information = null;
         JSONObject jsonObject = new JSONObject();
         try {
 
@@ -155,20 +156,16 @@ public class JsonEncoder {
             jsonObject.put(pub_arr[7] , str[4]);
             jsonObject.put(pub_arr[8] , jsonArray1);
 
-            String information = jsonObject.toString();
+              information = jsonObject.toString();
 
-            Log.e("JSON FILE" , information);
-
-            ApiPostPub apiPostPub = new ApiPostPub();
-            apiPostPub.execute(information);
-
-
-
-
+//            ApiPostPub apiPostPub = new ApiPostPub();
+//            apiPostPub.execute(information);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        return information;
 
 
     }

@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cu.project.APIHelper.ApiVerify;
 import com.cu.project.APIHelper.Apiget;
 import com.cu.project.APIHelper.AsyncLoginResponse;
 import com.cu.project.APIHelper.AsyncResponse;
@@ -27,6 +28,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
@@ -48,7 +50,7 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         sharedpreferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
-          editor = sharedpreferences.edit();
+        editor = sharedpreferences.edit();
 
 
         signinloginbtn = findViewById(R.id.signinloginbutton);
@@ -96,19 +98,13 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         username = findViewById(R.id.fnamelogintext);
         password = findViewById(R.id.lnamelogintext);
 
-
-
         String usernametext = username.getText().toString().trim();
         String passtext = password.getText().toString().trim();
-
-
 
         if(usernametext.equals(""))
         {
             username.setError("Enter Euid");
             flag = 1;
-
-
         }
 
         if(passtext.equals(""))
@@ -126,7 +122,11 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
 
             try {
                 apiLogin.asyncLoginResponse =  this;
-                  apiLogin.execute();
+                apiLogin.execute();
+
+
+
+               // Log.e("STATYS" , statusinfo.toString());
 
 
             } catch (Exception e) {
@@ -136,6 +136,9 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
 
 
         }
+
+
+
 
 
 
@@ -154,6 +157,10 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         }
         else
         {
+
+            ApiVerify apiVerify = new ApiVerify();
+
+            apiVerify.execute();
 
             Apiget apiget = new Apiget(this);
             apiget.asyncResponse = this;
@@ -199,7 +206,7 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         String[] strings = (String[]) output;
         long date1 = Long.parseLong(strings[5]);
 
-        DateFormat simple = new SimpleDateFormat("dd MM yyyy");
+        DateFormat simple = new SimpleDateFormat("dd MMM yyyy");
 
         Date result1 = new Date(date1);
 

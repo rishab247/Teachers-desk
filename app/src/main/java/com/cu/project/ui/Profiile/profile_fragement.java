@@ -50,6 +50,7 @@ public class profile_fragement extends Fragment {
 
 
 
+
         Bundle extras = getActivity().getIntent().getExtras();
         String userName = extras.getString("name_").trim();
         String e_code = extras.getString("e_code").trim();
