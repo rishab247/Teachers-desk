@@ -62,12 +62,16 @@
         <activity android:name=".ui.AddWork.AddProject"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".ui.Authorclass" />
+        <activity android:name=".ui.Authorclass"
+                  android:screenOrientation="portrait"/>
 
-        <activity android:name=".ProfileEdit"/>
-        <activity android:name=".ui.detailclass"/>
+        <activity android:name=".ProfileEdit"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.detailclass"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".ui.Splash.logoutsplash"/>
+        <activity android:name=".ui.Splash.logoutsplash"
+            android:screenOrientation="portrait"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

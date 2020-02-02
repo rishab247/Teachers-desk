@@ -1,5 +1,6 @@
 package com.cu.project;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,15 +76,19 @@ public class ProfileEdit extends AppCompatActivity {
                         String oldpass = oldpasswordEditText.getText().toString().trim();
                         String newpass = newpasswordEditText.getText().toString().trim();
 
-                        if(oldpass.equals(""))
-                        {
+
+                        int flag = 0;
+
+                        if (oldpass.equals("")) {
                             oldpasswordEditText.setError("Field cannot be empty");
+                            flag = 1;
                         }
-                        if(newpass.equals(""))
-                        {
+                        if (newpass.equals("")) {
                             newpasswordEditText.setError("Field cannot be empty");
+                            flag = 1;
                         }
-                        else
+
+                        if(flag == 0)
                         {
                             oldpass = loginActivity.generatedhash12(oldpass);
                             oldpass = loginActivity.generatedhash12(oldpass);
@@ -91,16 +96,15 @@ public class ProfileEdit extends AppCompatActivity {
                             newpass = loginActivity.generatedhash12(newpass);
                             newpass = loginActivity.generatedhash12(newpass);
 
-                            Log.e("OLD PASS" , oldpass);
-                            Log.e("NEW PASS " , newpass);
-                            alertDialog.cancel();
-                            ApiPassword apiPassword = new ApiPassword(ProfileEdit.this);
-                            apiPassword.execute(oldpass , newpass);
 
+                            if (oldpass.equals(newpass)) {
+                                Toast.makeText(getApplicationContext(), "cannot have previous password", Toast.LENGTH_SHORT).show();
+                            } else {
+                                ApiPassword apiPassword = new ApiPassword(ProfileEdit.this);
+                                apiPassword.execute(oldpass, newpass);
+                                alertDialog.cancel();
                             }
-
-
-
+                        }
 
                     }
                 });
@@ -113,11 +117,8 @@ public class ProfileEdit extends AppCompatActivity {
                 });
 
 
-
             }
         });
-
-        //EditText fname , lname , pass , email , eid , pno , quali , depart, uni;
 
         fname = findViewById(R.id.fnameedittext);
         email = findViewById(R.id.emailedittext);
@@ -134,7 +135,6 @@ public class ProfileEdit extends AppCompatActivity {
 
         final String[] dataarry = bundle.getStringArray("data");
 
-//        final String[] datarray = new String[]{name , email , pno , depart , doj , quali , uni , dob , eid};
 
         fname.setText(dataarry[0]);
         email.setText(dataarry[1]);
@@ -154,42 +154,39 @@ public class ProfileEdit extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                 p_no = pno.getText().toString().trim();
+                p_no = pno.getText().toString().trim();
 
-                 qualifications = quali.getText().toString().trim();
+                qualifications = quali.getText().toString().trim();
 
-                 department = depart.getText().toString().trim();
+                department = depart.getText().toString().trim();
 
-                 university = uni.getText().toString().trim();
+                university = uni.getText().toString().trim();
+
+                int flag = 0;
 
 
-                if(p_no.equals(""))
-                {
+                if (p_no.equals("")) {
                     pno.setError("Field cannot be empty");
+                    flag = 1;
                 }
-                if(qualifications.equals(""))
-                {
+                if (qualifications.equals("")) {
                     quali.setError("Field cannot be empty");
+                    flag = 1;
                 }
-                if(department.equals(""))
-                {
+                if (department.equals("")) {
                     depart.setError("Field cannot be empty");
+                    flag = 1;
                 }
-                if(university.equals(""))
-                {
+                if (university.equals("")) {
                     uni.setError("Field cannot be empty");
+                    flag = 1;
                 }
 
-                else
-                {
+                if (flag == 0) {
 
-                    if(p_no.equals(dataarry[2]) && qualifications.equals(dataarry[5]) && department.equals(dataarry[3]) && university.equals(dataarry[6]))
-                    {
-                        Toast.makeText(getApplicationContext() , "None of the fields are chagnged" , Toast.LENGTH_SHORT).show();
-                    }
-
-                    else
-                    {
+                    if (p_no.equals(dataarry[2]) && qualifications.equals(dataarry[5]) && department.equals(dataarry[3]) && university.equals(dataarry[6])) {
+                        Toast.makeText(getApplicationContext(), "None of the fields are changed", Toast.LENGTH_SHORT).show();
+                    } else {
 
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ProfileEdit.this);
                         alertDialogBuilder.setCancelable(false);
@@ -202,7 +199,6 @@ public class ProfileEdit extends AppCompatActivity {
                         alertDialog.show();
 
 
-
                         savepass.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -213,7 +209,9 @@ public class ProfileEdit extends AppCompatActivity {
                                 alertDialog.cancel();
 
                                 ApiEditProfile apiEditProfile = new ApiEditProfile(ProfileEdit.this);
-                                apiEditProfile.execute(p_no , qualifications , university , department , password);
+                                apiEditProfile.execute(p_no, qualifications, university, department, password);
+
+
                             }
                         });
 
@@ -225,17 +223,12 @@ public class ProfileEdit extends AppCompatActivity {
                         });
 
 
-
                     }
                 }
 
 
             }
         });
-
-
-
-
     }
 
     private void initPopupViewControls()

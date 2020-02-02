@@ -4,6 +4,7 @@ package com.cu.project.ui.Profiile;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -49,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     private static SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
 
+    int LAUNCH_SECOND_ACTIVITY = 1;
     TabLayout tabLayout;
     ViewPager viewPager;
     FloatingActionsMenu menu;
@@ -61,9 +64,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
     ImageView signout;
 
-    TextView usertext , emailtext , pnotext , eidtext;
+    TextView quali , depart , pnotext, uni , eidtext;
 
     Bundle bundle = new Bundle();
+
 
     FloatingActionButton btn1 , btn2;
 
@@ -80,31 +84,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
 
         verified = findViewById(R.id.imageView3);
-
-        String[] info = null;
-
-        ApiVerify apiVerify = new ApiVerify();
-        try {
-             info = apiVerify.execute().get();
-
-
-
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if(info[0].equals("false"))
-        {
-            verified.setVisibility(View.GONE);
-        }
-        else
-        {
-            verified.setVisibility(View.VISIBLE);
-        }
-
-
 
 
         String name = bundle.getString("name_");
@@ -181,7 +160,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this , ProfileEdit.class);
                 intent.putExtra("data" , datarray);
-                startActivity(intent);
+                startActivityForResult(intent , 1);
             }
         });
 
@@ -219,6 +198,27 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+
+        if(requestCode == LAUNCH_SECOND_ACTIVITY)
+        {
+            if(resultCode == RESULT_OK)
+            {
+                String[] res = data.getStringArrayExtra("result");
+
+                pnotext = findViewById(R.id.phonenumber_id);
+                depart = findViewById(R.id.department_id);
+                quali = findViewById(R.id.qualification_id);
+                uni = findViewById(R.id.university_id);
+                pnotext.setText(res[0]);
+                depart.setText(res[1]);
+                quali.setText(res[2]);
+                uni.setText(res[3]);
+            }
+        }
+    }
 }
 
