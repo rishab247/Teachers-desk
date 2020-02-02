@@ -1,6 +1,7 @@
 package com.cu.project.ui.login;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -31,17 +32,16 @@ import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import static android.view.View.inflate;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 public class loginActivity extends Activity implements loginMvpView , AsyncLoginResponse , AsyncResponse {
 
-    Button signinloginbtn;
-    TextView Notamember;
-    EditText username , password;
+    private Button signinloginbtn;
+    private TextView Notamember;
+    private EditText username , password;
 
-
-    public ProgressBar bar;
     private static SharedPreferences sharedpreferences;
     static SharedPreferences.Editor editor;
 
@@ -53,6 +53,7 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         editor = sharedpreferences.edit();
 
 
+        // sign in button
         signinloginbtn = findViewById(R.id.signinloginbutton);
 
         signinloginbtn.setOnClickListener(new View.OnClickListener() {
@@ -64,11 +65,7 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
             }
         });
 
-
-        bar = findViewById(R.id.pbar);
-
-
-
+        // not a member text
         Notamember  =findViewById(R.id.Notamembertext);
         Notamember.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,9 +75,6 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
             }
         });
 
-
-
-
     }
 
 
@@ -88,7 +82,6 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
     public void openMainActivity() {
 
     }
-
 
 
     @Override
@@ -124,24 +117,11 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
                 apiLogin.asyncLoginResponse =  this;
                 apiLogin.execute();
 
-
-
-               // Log.e("STATYS" , statusinfo.toString());
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-
-
         }
-
-
-
-
-
-
     }
 
     @Override
@@ -158,16 +138,15 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         else
         {
 
-            ApiVerify apiVerify = new ApiVerify();
-
-            apiVerify.execute();
-
             Apiget apiget = new Apiget(this);
             apiget.asyncResponse = this;
             apiget.execute(str);
 
         }
     }
+
+
+    // generating the hash function
     public static String generatedhash12(String passwordToHash){
         String generatedPassword = null;
           try {
@@ -189,13 +168,13 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
     }
 
 
+    // returning the token for other functions
     public static String gettoken()
     {   if(sharedpreferences.getLong("Exp_time", 0)<System.currentTimeMillis())
             editor.clear();
         String token1 = sharedpreferences.getString("Token", "");
         if(token1.equals("")){
             Log.e(TAG, "gettoken: token doesnot exists or expired " );
-
         }
         return token1;
     }
@@ -211,12 +190,7 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         Date result1 = new Date(date1);
 
         String dojdate = simple.format(result1);
-
-
-
         long date2 = Long.parseLong(strings[8]);
-
-
         Date result2 = new Date(date2);
 
         String dobdate = simple.format(result2);

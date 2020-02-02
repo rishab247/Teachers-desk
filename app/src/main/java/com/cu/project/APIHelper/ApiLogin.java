@@ -54,7 +54,7 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
         try {
             res = testFetchOK();
         } catch (Exception e) {
-            Log.e("EXCEPTION" , "class not found");
+            Log.e("Login Error" , e.getMessage());
         }
         return res;
     }
@@ -70,7 +70,6 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
 
     private static OkHttpClient createAuthenticatedClient(final String username,
                                                           final String password) {
-        // build client with authentication information.
         OkHttpClient httpClient = new OkHttpClient.Builder().authenticator(new Authenticator() {
             public Request authenticate(Route route, Response response) throws IOException {
                 String credential = Credentials.basic(username, password);

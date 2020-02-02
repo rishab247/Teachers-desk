@@ -39,6 +39,9 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
     public AsyncResponse asyncResponse= null;
 
 
+    public static String[] statusarr = {""};
+
+
 
     public Apiget(Context context)
     {
@@ -59,6 +62,9 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
     String dob="";
 
 
+    String verifyurl = "https://apitims1.azurewebsites.net/Verify?token=";
+
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -75,11 +81,15 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
 
         String[] infoarr={""};
 
+
+
         OkHttpClient client = new OkHttpClient();
 
         String token = voids[0];
 
         urls = urls + token;
+
+        verifyurl = verifyurl + token;
 
 
         Request request = new Request.Builder()
@@ -130,8 +140,6 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
 
         if(dialog.isShowing())
             dialog.hide();
-
-
         asyncResponse.processFinish(strings);
 
 

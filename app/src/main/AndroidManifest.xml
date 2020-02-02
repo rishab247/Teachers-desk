@@ -67,6 +67,7 @@
         <activity android:name=".ProfileEdit"/>
         <activity android:name=".ui.detailclass"/>
 
+        <activity android:name=".ui.Splash.logoutsplash"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

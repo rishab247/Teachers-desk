@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,15 +31,20 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.cu.project.APIHelper.ApiVerify;
 import com.cu.project.ProfileEdit;
 import com.cu.project.R;
 import com.cu.project.ui.Authorclass;
 import com.cu.project.ui.Setting.SettingActivity;
+import com.cu.project.ui.Splash.logoutsplash;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.cu.project.ui.login.loginActivity;
+
+import java.util.concurrent.ExecutionException;
+
 public class ProfileActivity extends AppCompatActivity implements ProfileMvpView {
     private static SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
@@ -50,7 +56,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     TabItem tabprofile;
     TabItem tabview;
     ConstraintLayout constraintLayout;
-    Spinner setting;
+
+    ImageView verified;
 
     ImageView signout;
 
@@ -71,18 +78,34 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
         editor = sharedpreferences.edit();
 
-                /*
-                        intent_name.setClass(sContext,ProfileActivity.class);
-        intent_name.putExtra("e_code" , strings[0]);
-        intent_name.putExtra("name_" , strings[1]);
-        intent_name.putExtra("email_" , strings[2]);
-        intent_name.putExtra("p_no" , strings[3]);
-        intent_name.putExtra("depart_" , strings[4]);
-        intent_name.putExtra("doj_" , dojdate);
-        intent_name.putExtra("quali_" , strings[6]);
-        intent_name.putExtra("uni_" , strings[7]);
-        intent_name.putExtra("dob_" , dobdate);
-                 */
+
+        verified = findViewById(R.id.imageView3);
+
+        String[] info = null;
+
+        ApiVerify apiVerify = new ApiVerify();
+        try {
+             info = apiVerify.execute().get();
+
+
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(info[0].equals("false"))
+        {
+            verified.setVisibility(View.GONE);
+        }
+        else
+        {
+            verified.setVisibility(View.VISIBLE);
+        }
+
+
+
 
         String name = bundle.getString("name_");
 
@@ -104,22 +127,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
         final String[] datarray = new String[]{name , email , pno , depart , doj , quali , uni , dob , eid};
 
-//        usertext = findViewById(R.id.textView4);
-//        emailtext = findViewById(R.id.textView8);
-//        pnotext = findViewById(R.id.textView10);
+
         eidtext = findViewById(R.id.textView11);
-
-
-//        usertext.setText(name);
-//        emailtext.setText(email);
-//        pnotext.setText(pno);
         eidtext.setText(eid);
-
-
-        //toolbar = findViewById(R.id.toolbar);
-        //toolbar.setTitle("Profile");
-        //setSupportActionBar(toolbar);
-
 
 
         tabLayout = findViewById(R.id.tab_layout);
@@ -141,17 +151,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
                 viewPager.setCurrentItem(tab.getPosition());
 
                 if(tab.getPosition() == 0) {
-
-                   // slideDown(constraintLayout);
-
                     constraintLayout.setVisibility(View.VISIBLE);
                     menu.setVisibility(View.VISIBLE);
 
                 }
                 else if(tab.getPosition() == 1){
-
-                  //slideUp(constraintLayout);
-                  constraintLayout.setVisibility(View.GONE);
+                    constraintLayout.setVisibility(View.GONE);
                   menu.setVisibility(View.GONE);
                 }
             }
@@ -175,9 +180,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this , ProfileEdit.class);
-
                 intent.putExtra("data" , datarray);
-
                 startActivity(intent);
             }
         });
@@ -190,21 +193,11 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
                     public void onClick(View v) {
                         editor.clear();
 
-                Intent intent = new Intent(ProfileActivity.this , loginActivity.class);
+                Intent intent = new Intent(ProfileActivity.this , logoutsplash.class);
                 startActivity(intent);
                 finish();
             }
         });
-
-
-
-
-
-
-
-
-
-
     }
 
     public void showPopup(View v) {
@@ -220,49 +213,11 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
                 Toast.makeText(getApplicationContext()  , "TBA" , Toast.LENGTH_SHORT).show();
 
-//                switch (item.getItemId())
-//                {
-//                    case R.id.aboutus:
-//                        Toast.makeText(getApplicationContext()  , "TBA" , Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case R.id.terms_id:
-//                        Toast.makeText(getApplicationContext()  , "TBA" , Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case 2:
-//                        break;
-//                    case 3:
-//                        break;
-//                }
-
                 return false;
             }
         });
     }
 
-    public void slideUp(View view){
-        view.setVisibility(View.GONE);
-        TranslateAnimation animate = new TranslateAnimation(
-                0,                 // fromXDelta
-                0,                 // toXDelta
-                0,  // fromYDelta
-                -view.getHeight());                // toYDelta
-        animate.setDuration(500);
-        animate.setFillAfter(true);
-        view.startAnimation(animate);
-    }
-
-    // slide the view from its current position to below itself
-    public void slideDown(View view){
-        view.setVisibility(View.VISIBLE);
-        TranslateAnimation animate = new TranslateAnimation(
-                0,                 // fromXDelta
-                0,                 // toXDelta
-                0,                 // fromYDelta
-                view.getHeight()); // toYDelta
-        animate.setDuration(500);
-        animate.setFillAfter(true);
-        view.startAnimation(animate);
-    }
 
 
 }

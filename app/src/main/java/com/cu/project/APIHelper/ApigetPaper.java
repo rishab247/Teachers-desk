@@ -1,5 +1,7 @@
 package com.cu.project.APIHelper;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -33,6 +35,7 @@ public class ApigetPaper extends AsyncTask<String , Void , Void> {
     public static ArrayList<SubjectData> listitems1 =  new ArrayList<>();
     public static ArrayList<SubjectData> listitems2 =  new ArrayList<>();
     public static ArrayList<SubjectData> listitems3 =  new ArrayList<>();
+
 
 
 
@@ -167,5 +170,10 @@ public class ApigetPaper extends AsyncTask<String , Void , Void> {
         }
 
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
     }
 }

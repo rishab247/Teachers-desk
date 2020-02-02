@@ -57,9 +57,6 @@ public class detailclass  extends AppCompatActivity {
 
         String[] information = bundle.getStringArray("info");
 
-        for(int i= 0;i < information.length;i++)
-            Log.e("INFOEMATION" , information[i]);
-
 
         tohideurl = findViewById(R.id.textView10);
         tohidepublisher = findViewById(R.id.textView14);

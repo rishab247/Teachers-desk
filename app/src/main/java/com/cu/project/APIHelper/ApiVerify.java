@@ -19,6 +19,8 @@ public class ApiVerify extends AsyncTask<Void , Void , String[]> {
 
     String url = "https://apitims1.azurewebsites.net/Verify?token=";
 
+    String[] statusarr = {""};
+
     String token = loginActivity.gettoken();
 
     @Override
@@ -46,7 +48,7 @@ public class ApiVerify extends AsyncTask<Void , Void , String[]> {
             Boolean HODstatus = jsonObject.getBoolean("Hod");
 
 
-            String[] statusarr = {status.toString() , HODstatus.toString()};
+            statusarr = new String[]{status.toString(), HODstatus.toString()};
 
         }
         catch (IOException e) {
@@ -56,7 +58,7 @@ public class ApiVerify extends AsyncTask<Void , Void , String[]> {
         }
 
 
-        return null;
+        return statusarr;
     }
 
 

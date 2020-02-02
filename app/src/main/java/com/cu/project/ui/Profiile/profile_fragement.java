@@ -37,8 +37,6 @@ public class profile_fragement extends Fragment {
 
     String text1 , text2 , text3, text4;
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState)
     {
@@ -90,11 +88,6 @@ public class profile_fragement extends Fragment {
         uni.setText(uni_);
         dob.setText(dob_);
         doj.setText(doj_);
-
-
-
-
-
 
         return v;
     }
