@@ -33,6 +33,7 @@ public class ApiVerify extends AsyncTask<Void , Void , String[]> {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder().url(url).get().build();
+
         Response response = null;
 
         try {

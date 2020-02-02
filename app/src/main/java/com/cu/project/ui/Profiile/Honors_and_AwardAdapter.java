@@ -21,12 +21,12 @@ import com.cu.project.ui.detailclass;
 import java.util.ArrayList;
 import java.util.List;
 
-class CustomAdapter2 implements ListAdapter {
+class Honors_and_AwardAdapter implements ListAdapter {
 
     ArrayList<SubjectData> arrayList;
     Context context;
 
-    public CustomAdapter2(Context context, ArrayList<SubjectData> arrayList) {
+    public Honors_and_AwardAdapter(Context context, ArrayList<SubjectData> arrayList) {
         this.arrayList=arrayList;
         this.context=context;
     }
@@ -75,14 +75,13 @@ class CustomAdapter2 implements ListAdapter {
                 public void onClick(View v) {
 
 
-                    int id = ApigetPaper.listitems2.get(position).id;
-
+                    int id = arrayList.get(position).id;
                     Apigetdetails apigetdetails = new Apigetdetails(context);
-                    apigetdetails.execute(String.valueOf(id) , "Project");
+                    apigetdetails.execute(String.valueOf(id) , "Honors_and_Award");
 //                    Log.e("ID OD", String.valueOf(id));
 //                    Intent intent = new Intent(context , detailclass.class);
 //                    intent.putExtra("ID", id);
-//                    intent.putExtra("TYPE" , "Project");
+//                    intent.putExtra("TYPE" , "Honors_and_Award");
 //                    context.startActivity(intent);
                 }
             });

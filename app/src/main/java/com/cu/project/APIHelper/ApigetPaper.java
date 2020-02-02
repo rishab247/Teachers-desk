@@ -17,13 +17,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ApigetPaper extends AsyncTask<String , Void , Void> {
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
+public class ApigetPaper extends AsyncTask<String , Void , HashMap<String,ArrayList>> {
 
     public static int counthonor = 0 ;
     public static int countpatent = 0;
@@ -31,17 +34,16 @@ public class ApigetPaper extends AsyncTask<String , Void , Void> {
     public static int countproject = 0;
     String urls = "https://apitims1.azurewebsites.net/user/Accomplishment?token=";
 
-    public static ArrayList<SubjectData> listitems =  new ArrayList<>();
-    public static ArrayList<SubjectData> listitems1 =  new ArrayList<>();
-    public static ArrayList<SubjectData> listitems2 =  new ArrayList<>();
-    public static ArrayList<SubjectData> listitems3 =  new ArrayList<>();
-
+    private ArrayList<SubjectData> listitems =  new ArrayList<>();
+     private ArrayList<SubjectData> listitems1 =  new ArrayList<>();
+    private ArrayList<SubjectData> listitems2 =  new ArrayList<>();
+    private ArrayList<SubjectData> listitems3 =  new ArrayList<>();
 
 
 
     @Override
-    protected Void doInBackground(String... voids) {
-
+    protected HashMap<String, ArrayList> doInBackground(String... voids) {
+        HashMap<String, ArrayList> map = new HashMap<>();
         String jsonData;
 
         OkHttpClient client = new OkHttpClient();
@@ -78,6 +80,7 @@ public class ApigetPaper extends AsyncTask<String , Void , Void> {
             listitems1.clear();
             listitems2.clear();
             listitems3.clear();
+            map.clear();
 
             countpatent = 0;
             countproject = 0;
@@ -165,15 +168,23 @@ public class ApigetPaper extends AsyncTask<String , Void , Void> {
             countproject = projectarry.length();
 
 
+            Log.e("arrayoflist", "doInBackground: " );
+
+
+            map.put("1",listitems);
+            map.put("2",listitems1);
+            map.put("3",listitems2);
+            map.put("4",listitems3);
+
         }catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return map;
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
+    protected void onPostExecute(HashMap aVoid) {
         super.onPostExecute(aVoid);
     }
 }

@@ -1,18 +1,9 @@
 package com.cu.project.ui.Register;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,21 +11,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.cu.project.APIHelper.RegisterAPIHelper;
 import com.cu.project.R;
 import com.cu.project.Util.JsonEncoder;
-import com.cu.project.Util.util;
-import com.cu.project.ui.Profiile.ProfileActivity;
-import com.cu.project.ui.detailclass;
 import com.cu.project.ui.login.loginActivity;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -43,7 +31,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity{
@@ -365,7 +352,7 @@ public class RegisterActivity extends AppCompatActivity{
                 }
 
 
-                if(initiate == false)
+                if(!initiate)
                 {
                     pno.setError("Verify Your Phone number");
                 }
@@ -373,7 +360,7 @@ public class RegisterActivity extends AppCompatActivity{
 
 
 
-                if(flag == 0 && initiate == true)
+                if(flag == 0 && initiate)
                 {
 
                     SimpleDateFormat date1 = new SimpleDateFormat("yyyy/MM/dd");

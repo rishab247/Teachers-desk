@@ -4,8 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 
 import com.cu.project.Util.util;
+import com.cu.project.ui.Register.RegisterMvpPresenter;
 import com.cu.project.ui.Register.RegisterMvpView;
 
 import org.jetbrains.annotations.NotNull;

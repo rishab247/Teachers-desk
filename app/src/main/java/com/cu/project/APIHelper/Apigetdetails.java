@@ -4,6 +4,7 @@ package com.cu.project.APIHelper;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.SyncAdapterType;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -29,21 +30,28 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class Apigetdetails extends AsyncTask<String , Void , String[]> {
 
     String token = loginActivity.gettoken();
 
 
     String url = "https://apitims1.azurewebsites.net/user/Accomplishmen/Details?token=";
+    private static SharedPreferences sharedpreferences;
+    static SharedPreferences.Editor editor;
 
     String mMessage = "";
-    ProgressDialog dialog;
-    Context sContext;
+    private ProgressDialog dialog;
+      Context sContext;
 
 
     public Apigetdetails(Context context) {
         this.sContext = context;
+        sharedpreferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
     }
+
 
 
     @Override
@@ -54,12 +62,22 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
         dialog.show();
+
+        if(sharedpreferences.getLong("Exp_time", 0)<System.currentTimeMillis())
+            editor.clear();
+        token = sharedpreferences.getString("Token", "");
+        if(token.equals("")){
+            Log.e(TAG, "gettoken: token doesnot exists or expired " );
+        }
+
+
     }
 
     @Override
     protected String[] doInBackground(String... voids) {
 
         url = url + token;
+        Log.d("URL VERIFY1", "doInBackground: "+url);
         String[] infoarray = null;
 
 

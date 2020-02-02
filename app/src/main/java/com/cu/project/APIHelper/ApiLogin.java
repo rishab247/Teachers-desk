@@ -42,6 +42,7 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
 
         d = new ProgressDialog(this.scontext);
         d.setMessage("Please wait...");
+        Log.e("Inside Pre execute","call made and loader shown");
         d.setIndeterminate(true);
         d.setCancelable(false);
         d.show();
@@ -50,6 +51,7 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
 
     @Override
         protected String doInBackground(Void... strings) {
+        Log.e("EXCEPTION123" , "class not found");
 
         try {
             res = testFetchOK();
@@ -85,6 +87,7 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
     private static String doRequest(OkHttpClient httpClient, String anyURL) throws Exception {
         Request request = new Request.Builder().url(anyURL).build();
         Response response = httpClient.newCall(request).execute();
+
         String token;
         if (!response.isSuccessful()) {
             token = String.valueOf(response.code());

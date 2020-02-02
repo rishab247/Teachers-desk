@@ -1,5 +1,4 @@
 package com.cu.project.ui.Profiile;
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
@@ -20,13 +19,12 @@ import com.cu.project.ui.detailclass;
 
 import java.util.ArrayList;
 import java.util.List;
-
-class CustomAdapter1 implements ListAdapter {
-
+class PublicationAdapter implements ListAdapter {
     ArrayList<SubjectData> arrayList;
     Context context;
 
-    public CustomAdapter1(Context context, ArrayList<SubjectData> arrayList) {
+
+    public PublicationAdapter(Context context, ArrayList<SubjectData> arrayList) {
         this.arrayList=arrayList;
         this.context=context;
     }
@@ -62,32 +60,23 @@ class CustomAdapter1 implements ListAdapter {
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
         SubjectData subjectData=arrayList.get(position);
         if(convertView==null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             convertView=layoutInflater.inflate(R.layout.row, null);
-
-
-            final View finalConvertView = convertView;
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int id = arrayList.get(position).id;
+                    Log.e("ID OD", String.valueOf(id));
 
 
-                    int id = ApigetPaper.listitems1.get(position).id;
                     Apigetdetails apigetdetails = new Apigetdetails(context);
-                    apigetdetails.execute(String.valueOf(id) , "Patent");
-//                    Log.e("ID OD", String.valueOf(id));
-//                    Intent intent = new Intent(context , detailclass.class);
-//                    intent.putExtra("ID", id);
-//                    intent.putExtra("TYPE" , "Patent");
-//                    context.startActivity(intent);
+                    apigetdetails.execute(String.valueOf(id) , "Publication");
                 }
             });
             TextView tittle=convertView.findViewById(R.id.maintextview_id);
             TextView date = convertView.findViewById(R.id.datetextview_id);
-
             tittle.setText(subjectData.title);
             date.setText(subjectData.date);
         }

@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +18,13 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 
 import com.cu.project.R;
 import com.cu.project.ui.Upload.UploadActivity;
 
-import java.util.concurrent.ExecutionException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class View_fragment extends Fragment {
@@ -33,9 +32,7 @@ public class View_fragment extends Fragment {
     TextView txt;
 
     String token = loginActivity.gettoken();
-
     View v;
-
 
     ListView list , list1 , list2 , list3;
 
@@ -47,8 +44,11 @@ public class View_fragment extends Fragment {
     int count2 =0;
     int count3 = 0;
     int count4 = 0;
-
-
+    private ArrayList<SubjectData> listitems =  new ArrayList<>();
+    private ArrayList<SubjectData> listitems1 =  new ArrayList<>();
+    private ArrayList<SubjectData> listitems2 =  new ArrayList<>();
+    private ArrayList<SubjectData> listitems3 =  new ArrayList<>();
+    HashMap<String, ArrayList>  map;
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -71,7 +71,7 @@ public class View_fragment extends Fragment {
         list2.setAdapter(null);
         list3.setAdapter(null);
 
-
+          map = new HashMap<>();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -84,14 +84,17 @@ public class View_fragment extends Fragment {
                         ApigetPaper apigetPaper = new ApigetPaper();
 
                         try {
-                            apigetPaper.execute(token).get();
-
-                            if (ApigetPaper.listitems.size() == 0) {
+                           map = apigetPaper.execute(token).get();
+                            listitems = map.get("1");
+                            listitems1 = map.get("2");
+                            listitems2 = map.get("3");
+                            listitems3 = map.get("4");
+                            if (listitems.size() == 0) {
                                 txt = v.findViewById(R.id.noitems1id);
                                 txt.setVisibility(View.VISIBLE);
                             } else {
                                 list.setAdapter(null);
-                                CustomAdapter customAdapter = new CustomAdapter(getContext(), ApigetPaper.listitems);
+                                PublicationAdapter customAdapter = new PublicationAdapter(getContext(), listitems);
                                 list.setAdapter(customAdapter);
                                 count1 = list.getCount();
                                 list.invalidateViews();
@@ -99,11 +102,11 @@ public class View_fragment extends Fragment {
                                 txt.setVisibility(View.INVISIBLE);
                                 ListUtils.setDynamicHeight(list);
                             }
-                            if (ApigetPaper.listitems1.size() == 0) {
+                            if (listitems1.size() == 0) {
                                 txt = v.findViewById(R.id.noitems1id1);
                                 txt.setVisibility(View.VISIBLE);
                             } else {
-                                CustomAdapter1 customAdapter1 = new CustomAdapter1(getContext(), ApigetPaper.listitems1);
+                                PatentAdapter customAdapter1 = new PatentAdapter(getContext(), listitems1);
                                 list1.setAdapter(customAdapter1);
                                 ListUtils.setDynamicHeight(list1);
                                 list1.invalidateViews();
@@ -115,11 +118,11 @@ public class View_fragment extends Fragment {
                             }
 
 
-                            if (ApigetPaper.listitems2.size() == 0) {
+                            if (listitems2.size() == 0) {
                                 txt = v.findViewById(R.id.noitems1id2);
                                 txt.setVisibility(View.VISIBLE);
                             } else {
-                                CustomAdapter2 customAdapter2 = new CustomAdapter2(getContext(), ApigetPaper.listitems2);
+                                ProjectAdapter customAdapter2 = new ProjectAdapter(getContext(), listitems2);
                                 list2.setAdapter(customAdapter2);
                                 ListUtils.setDynamicHeight(list2);
                                 count3 = list2.getCount();
@@ -131,11 +134,11 @@ public class View_fragment extends Fragment {
 
                             // for the list of patents
 
-                            if (ApigetPaper.listitems3.size() == 0) {
+                            if (listitems3.size() == 0) {
                                 txt = v.findViewById(R.id.noitems1id3);
                                 txt.setVisibility(View.VISIBLE);
                             } else {
-                                CustomAdapter3 customAdapter3 = new CustomAdapter3(getContext(), ApigetPaper.listitems3);
+                                Honors_and_AwardAdapter customAdapter3 = new Honors_and_AwardAdapter(getContext(), listitems3);
                                 list3.setAdapter(customAdapter3);
                                 list3.invalidateViews();
                                 ListUtils.setDynamicHeight(list3);
@@ -152,7 +155,7 @@ public class View_fragment extends Fragment {
                         }
                     }
 
-                }, 2000);
+                }, 1000);
             }
         });
 

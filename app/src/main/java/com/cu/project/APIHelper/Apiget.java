@@ -141,10 +141,6 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
         if(dialog.isShowing())
             dialog.hide();
         asyncResponse.processFinish(strings);
-
-
-
-
     }
 
 
