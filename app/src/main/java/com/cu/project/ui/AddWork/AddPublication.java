@@ -90,6 +90,7 @@ public class AddPublication extends AppCompatActivity {
             }
         });
 
+
         savebtn = findViewById(R.id.pubsave_id);
 
         savebtn.setOnClickListener(new View.OnClickListener() {
@@ -147,133 +148,9 @@ public class AddPublication extends AppCompatActivity {
 
             }
         });
+}
 
 
-        imageView = findViewById(R.id.addauthbtn_id);
-
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(AddPublication.this);
-                alertDialogBuilder.setTitle("Search For Authors or Add");
-                alertDialogBuilder.setCancelable(false);
-
-                initPopupViewControls();
-
-                alertDialogBuilder.setView(popupInputDialogView);
-
-                final AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-
-
-                addbtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-
-                        String name = authname.getText().toString().trim();
-                        String pno = authpno.getText().toString().trim();
-                        String email = authemail.getText().toString().trim();
-
-
-                        if (name.equals("")) {
-                            authname.setError("Field cannot be empty");
-                        }
-                        if (pno.equals("")) {
-                            authpno.setError("Field cannot be empty");
-                        }
-                        if (email.equals("")) {
-                            authemail.setError("Field cannot be empty");
-                        } else {
-                            names.add(name);
-                            emails.add(email);
-                            pnos.add(pno);
-                            Toast.makeText(getApplicationContext(), "CLICKED!", Toast.LENGTH_SHORT).show();
-
-                            alertDialog.cancel();
-                        }
-
-
-                    }
-                });
-
-                canclebtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.cancel();
-                    }
-                });
-
-
-            }
-        });
-
-
-        listView = findViewById(R.id.authorslist_id);
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, names);
-
-        listView.setAdapter(adapter);
-        ListUtils.setDynamicHeight(listView);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-
-                androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(AddPublication.this);
-                alertDialogBuilder.setCancelable(false);
-
-                initPopupViewControlsdelete();
-
-                alertDialogBuilder.setView(popupInputDialogViewdelete);
-                authupname.setText(names.get(position));
-                authupemail.setText(emails.get(position));
-                authuppno.setText(pnos.get(position));
-
-                final AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-
-
-                delete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        names.remove(position);
-                        emails.remove(position);
-                        pnos.remove(position);
-
-                        listView.setAdapter(null);
-
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext() , android.R.layout.simple_list_item_1, android.R.id.text1 , names);
-
-                        listView.setAdapter(adapter);
-                        ListUtils.setDynamicHeight(listView);
-
-                        alertDialog.cancel();
-
-
-
-                    }
-                });
-
-                update.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        names.set(position , authupname.getText().toString().trim());
-                        emails.set(position, authupemail.getText().toString().trim());
-                        pnos.set(position , authupemail.getText().toString().trim());
-
-                        alertDialog.cancel();
-                    }
-                });
-            }
-        });
-
-
-    }
 
     private void initPopupViewControls() {
         LayoutInflater layoutInflater = LayoutInflater.from(AddPublication.this);

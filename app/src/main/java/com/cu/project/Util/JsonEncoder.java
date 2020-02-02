@@ -79,9 +79,10 @@ public class JsonEncoder {
      return information;
  }
 
- public void jsonify_honor(String[] str)
+ public String jsonify_honor(String[] str)
  {
 
+     String information = null;
 
      try{
 
@@ -96,23 +97,13 @@ public class JsonEncoder {
          {
              jsonObject.put(h_arr[i] , str[i]);
          }
-
-
-
-         String information = jsonObject.toString();
-
-         ApiPOST apiHelper = new ApiPOST(scontext);
-
-         apiHelper.execute(information);
-
-
-
-
+         information = jsonObject.toString();
      }catch (Exception e)
      {
-         System.out.println(e);
+         System.out.println(e.getMessage());
      }
 
+     return information;
  }
 
 
@@ -170,8 +161,9 @@ public class JsonEncoder {
 
     }
 
-    public void jsonify_patent(String[] str)
+    public String jsonify_patent(String[] str)
     {
+        String information = null;
         JSONObject jsonObject = new JSONObject();
 
         try {
@@ -185,13 +177,6 @@ public class JsonEncoder {
                 jsonArray.put(list1.get(i));
 
             JSONArray jsonArray2 = new JSONArray();
-//
-//            List<Integer> list2 = new ArrayList<>();
-//            list2.add(1);
-//
-//            for(int i =0;i < list2.size() ; i ++)
-//                jsonArray2.put(list2.get(i));
-
             JSONArray jsonArray3 = new JSONArray();
 
             List<String> list3 = new ArrayList<>();
@@ -217,19 +202,15 @@ public class JsonEncoder {
             jsonObject.put(pat_arr[8] , str[5]);
             jsonObject.put(pat_arr[9] , jsonArray1);
 
-            String information = jsonObject.toString();
+            information = jsonObject.toString();
 
             Log.e("JSON FILE FOR PATENT" , information);
-
-            ApiPostPatent apiPostPatent = new ApiPostPatent();
-            apiPostPatent.execute(information);
-
 
         }catch (JSONException e){
             e.printStackTrace();
         }
 
-
+        return information;
     }
 
 

@@ -52,12 +52,11 @@ public class UploadActivity extends AppCompatActivity {
         text4 = findViewById(R.id.textView7);
         totaltext = findViewById(R.id.total);
 
-
-
         c1 = ApigetPaper.countpub;
         c2 = ApigetPaper.countpatent;
         c3 = ApigetPaper.countproject;
         c4 = ApigetPaper.counthonor;
+
 
         text1.setText("Publications \n" + c1);
         text2.setText("Patents \n" + c2);
@@ -113,9 +112,4 @@ public class UploadActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
 }

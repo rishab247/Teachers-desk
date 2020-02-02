@@ -1,16 +1,21 @@
 package com.cu.project.ui.AddWork;
 
+
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +32,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class AddProject extends AppCompatActivity {
+public class AddProject extends AppCompatActivity{
+
     ImageView imageView;
     ListView listView;
 
@@ -35,22 +41,24 @@ public class AddProject extends AppCompatActivity {
 
     Button btn;
 
+    private View popupInputDialogView, popupInputDialogViewdelete;
+
+    EditText authname, authemail, authpno;
+    Button addbtn, canclebtn;
+
+    EditText authupname, authupemail, authuppno;
+    Button delete, update;
+
+    List<String> names = new ArrayList<>();
+    List<String> emails = new ArrayList<>();
+    List<String> pnos = new ArrayList<>();
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addproject);
 
-        imageView = findViewById(R.id.addauthbtn_id);
-
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AddProject.this , Authorclass.class);
-                startActivityForResult(intent , 1);
-            }
-        });
-
-        listView = findViewById(R.id.authorslist_id);
 
 
         title = findViewById(R.id.protitle_id);
@@ -65,7 +73,6 @@ public class AddProject extends AppCompatActivity {
             public void onClick(View v) {
                 int mYear, mMonth, mDay;
                 final Calendar c = Calendar.getInstance();
-//                c.get(Calendar.MILLISECOND);
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -140,32 +147,95 @@ public class AddProject extends AppCompatActivity {
         });
 
 
+        imageView = findViewById(R.id.addauthbtn_id);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddProject.this);
+                builder.setCancelable(false);
+                builder.setTitle("Add Creators");
+
+                initPopupViewControls();
+
+                builder.setView(popupInputDialogView);
+
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+                addbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        names.add(authname.getText().toString().trim());
+                        emails.add(authemail.getText().toString().trim());
+                        pnos.add(authpno.getText().toString().trim());
+
+                        alertDialog.cancel();
+                    }
+                });
 
 
-    }
+                canclebtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.cancel();
+                    }
+                });
+            }
+        });
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if(resultCode == RESULT_OK) {
 
-                String authname = data.getStringExtra("authname");
-                String authemail = data.getStringExtra("authemail");
-                String authpno = data.getStringExtra("authpno");
 
-                String add = authname;
+        listView = findViewById(R.id.authorslist_id);
+        final ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, names);
 
-                final String[] authnames = new String[]{authname};
-                final List<String> fruits_list = new ArrayList<>(Arrays.asList(authnames));
+        listView.setAdapter(adapter1);
+        AddPublication.ListUtils.setDynamicHeight(listView);
 
-                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, fruits_list);
 
-                listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext() , "CLICKED!" , Toast.LENGTH_SHORT).show();
 
             }
-        }
+        });
+
     }
 
 
+
+    private void initPopupViewControls() {
+        LayoutInflater layoutInflater = LayoutInflater.from(AddProject.this);
+
+        popupInputDialogView = layoutInflater.inflate(R.layout.authordetail, null);
+
+        authname = popupInputDialogView.findViewById(R.id.authname);
+        authemail = popupInputDialogView.findViewById(R.id.authemail);
+        authpno = popupInputDialogView.findViewById(R.id.authpno);
+
+        addbtn = popupInputDialogView.findViewById(R.id.addbtn);
+        canclebtn = popupInputDialogView.findViewById(R.id.canclebtn);
+
+
+    }
+
+    private void initPopupViewControlsdelete() {
+        // Get layout inflater object.
+        LayoutInflater layoutInflater = LayoutInflater.from(AddProject.this);
+
+        // Inflate the popup dialog from a layout xml file.
+        popupInputDialogViewdelete = layoutInflater.inflate(R.layout.authordetaildelete, null);
+
+        authupname = popupInputDialogViewdelete.findViewById(R.id.authupdatename);
+        authupemail = popupInputDialogViewdelete.findViewById(R.id.authupdateemail);
+        authuppno = popupInputDialogViewdelete.findViewById(R.id.authupdatepno);
+
+        update = popupInputDialogViewdelete.findViewById(R.id.updatebtn);
+        delete = popupInputDialogViewdelete.findViewById(R.id.deletebtn);
+
+    }
 }

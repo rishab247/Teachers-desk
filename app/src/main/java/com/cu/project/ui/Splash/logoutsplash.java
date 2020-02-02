@@ -17,13 +17,14 @@ public class logoutsplash extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.logoutsplash);
 
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.logoutsplash);
+
+
 
 
         new Handler().postDelayed(new Runnable() {

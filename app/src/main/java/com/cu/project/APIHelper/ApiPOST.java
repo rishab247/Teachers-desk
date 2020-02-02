@@ -1,36 +1,31 @@
 package com.cu.project.APIHelper;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
+import android.widget.Toast;
 
-import com.cu.project.Util.JsonEncoder;
-import com.cu.project.ui.AddWork.AddHonor;
 import com.cu.project.ui.Upload.UploadActivity;
 import com.cu.project.ui.login.loginActivity;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 
 import java.io.IOException;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okio.BufferedSink;
 
-public class ApiPOST  extends AsyncTask<String , Context, Void> {
+public class ApiPOST  extends AsyncTask<String , Context, String> {
+
+
     private ProgressDialog dialog;
+
     String token = loginActivity.gettoken();
+
     Context scontext;
 
     public ApiPOST(Context context)
@@ -48,11 +43,12 @@ public class ApiPOST  extends AsyncTask<String , Context, Void> {
         dialog.show();
     }
 
-
     @Override
-    protected Void doInBackground(String... voids) {
+    protected String doInBackground(String... voids) {
 
         String str = voids[0];
+
+        String code = null;
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
 
         String url = "https://apitims1.azurewebsites.net/user/upload/Honors_and_Award?token=";
@@ -60,40 +56,48 @@ public class ApiPOST  extends AsyncTask<String , Context, Void> {
 
         OkHttpClient client = new OkHttpClient();
 
-
         RequestBody body = RequestBody.create(MEDIA_TYPE, str);
         Request request = new Request.Builder()
                     .url(url).post(body).build();
 
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        Response response = null;
 
-                    String mMessage = e.getMessage();
-                    Log.v("honor failure Response", mMessage);
+        try {
+            response = client.newCall(request).execute();
 
-                }
+            code = String.valueOf(response.code());
 
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
-                    String mMessage = response.body().string();
-                    Log.e("honor_responce", mMessage);
-                }
-            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
-        return null;
+        return code;
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
+    protected void onPostExecute(String aVoid) {
         super.onPostExecute(aVoid);
-        dialog.hide();
 
-        Intent intent = new Intent(scontext , UploadActivity.class);
-        scontext.startActivity(intent);
+        if(dialog.isShowing())
+        {
+            dialog.cancel();
+        }
+
+        Activity activity = (Activity)scontext;
+
+        if(aVoid.equals("200"))
+        {
+            Intent intent = new Intent(scontext , UploadActivity.class);
+            scontext.startActivity(intent);
+            activity.finish();
+        }
+        else
+        {
+            Toast.makeText(scontext , "Honor or Award already exists" , Toast.LENGTH_SHORT).show();
+        }
 
     }
+
 }
 

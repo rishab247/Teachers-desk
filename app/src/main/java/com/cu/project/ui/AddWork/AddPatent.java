@@ -4,7 +4,9 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -14,8 +16,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cu.project.APIHelper.ApiPostPatent;
 import com.cu.project.R;
 import com.cu.project.Util.JsonEncoder;
 import com.cu.project.ui.Authorclass;
@@ -39,22 +43,24 @@ public class AddPatent extends AppCompatActivity {
     Button savebtn;
 
 
+    private View popupInputDialogView, popupInputDialogViewdelete;
+
+    EditText authname, authemail, authpno;
+    Button addbtn, canclebtn;
+
+    EditText authupname, authupemail, authuppno;
+    Button delete, update;
+
+    List<String> names = new ArrayList<>();
+    List<String> emails = new ArrayList<>();
+    List<String> pnos = new ArrayList<>();
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addpatent);
 
-        imageView = findViewById(R.id.addauthbtnpatent_id);
-
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AddPatent.this , Authorclass.class);
-                startActivityForResult(intent , 1);
-            }
-        });
-
-        listView = findViewById(R.id.authorslistpatent_id);
         spinner = findViewById(R.id.pspinner);
 
         Locale[] locale = Locale.getAvailableLocales();
@@ -97,6 +103,114 @@ public class AddPatent extends AppCompatActivity {
                 }, mYear, mMonth, mDay);
 
                 datePickerDialog.show();
+            }
+        });
+
+
+
+
+        imageView = findViewById(R.id.addauthbtnpatent_id);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddPatent.this);
+                builder.setCancelable(false);
+
+                initPopupViewControls();
+
+                builder.setView(popupInputDialogView);
+
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+                addbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        names.add(authname.getText().toString().trim());
+                        emails.add(authemail.getText().toString().trim());
+                        pnos.add(authpno.getText().toString().trim());
+
+                        alertDialog.cancel();
+                    }
+                });
+
+                canclebtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.cancel();
+                    }
+                });
+            }
+        });
+
+
+
+
+        listView = findViewById(R.id.authorslistpatent_id);
+
+        final ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, names);
+
+        listView.setAdapter(adapter1);
+        AddPublication.ListUtils.setDynamicHeight(listView);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddPatent.this);
+
+                initPopupViewControlsdelete();
+
+                builder.setView(popupInputDialogViewdelete);
+
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+                final int pos = position;
+
+                authupname.setText(names.get(position));
+                authupemail.setText(emails.get(position));
+                authuppno.setText(pnos.get(position));
+
+
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        names.remove(pos);
+                        emails.remove(pos);
+                        pnos.remove(pos);
+
+                        listView.setAdapter(null);
+
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(AddPatent.this , android.R.layout.simple_list_item_1, android.R.id.text1 , names);
+
+                        listView.setAdapter(adapter);
+                        AddPublication.ListUtils.setDynamicHeight(listView);
+
+                        alertDialog.cancel();
+
+                    }
+                });
+
+
+
+                update.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        names.set(pos , authupname.getText().toString().trim());
+                        emails.set(pos, authupemail.getText().toString().trim());
+                        pnos.set(pos , authupemail.getText().toString().trim());
+
+
+                    }
+                });
+
             }
         });
 
@@ -160,41 +274,47 @@ public class AddPatent extends AppCompatActivity {
 
                     String[] info = {titletext ,office , appnumber , urltext , dateofpatent , destext};
                     JsonEncoder jsonEncoder = new JsonEncoder(getApplicationContext());
-                    jsonEncoder.jsonify_patent(info);
+                    String information = jsonEncoder.jsonify_patent(info);
+
+                    ApiPostPatent apiPostPatent = new ApiPostPatent(AddPatent.this);
+                    apiPostPatent.execute(information);
 
                 }
             }
         });
 
+    }
 
 
+    private void initPopupViewControls() {
+        LayoutInflater layoutInflater = LayoutInflater.from(AddPatent.this);
 
+        // Inflate the popup dialog from a layout xml file.
+        popupInputDialogView = layoutInflater.inflate(R.layout.authordetail, null);
+
+        authname = popupInputDialogView.findViewById(R.id.authname);
+        authemail = popupInputDialogView.findViewById(R.id.authemail);
+        authpno = popupInputDialogView.findViewById(R.id.authpno);
+
+        addbtn = popupInputDialogView.findViewById(R.id.addbtn);
+        canclebtn = popupInputDialogView.findViewById(R.id.canclebtn);
 
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if(resultCode == RESULT_OK) {
+    private void initPopupViewControlsdelete() {
+        // Get layout inflater object.
+        LayoutInflater layoutInflater = LayoutInflater.from(AddPatent.this);
 
-                String authname = data.getStringExtra("authname");
-                String authemail = data.getStringExtra("authemail");
-                String authpno = data.getStringExtra("authpno");
+        // Inflate the popup dialog from a layout xml file.
+        popupInputDialogViewdelete = layoutInflater.inflate(R.layout.authordetaildelete, null);
 
+        authupname = popupInputDialogViewdelete.findViewById(R.id.authupdatename);
+        authupemail = popupInputDialogViewdelete.findViewById(R.id.authupdateemail);
+        authuppno = popupInputDialogViewdelete.findViewById(R.id.authupdatepno);
 
-                String add = authname;
+        update = popupInputDialogViewdelete.findViewById(R.id.updatebtn);
+        delete = popupInputDialogViewdelete.findViewById(R.id.deletebtn);
 
-                final String[] authnames = new String[]{authname};
-                final List<String> fruits_list = new ArrayList<>(Arrays.asList(authnames));
-
-                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, fruits_list);
-
-                listView.setAdapter(arrayAdapter);
-
-            }
-        }
     }
-
 }

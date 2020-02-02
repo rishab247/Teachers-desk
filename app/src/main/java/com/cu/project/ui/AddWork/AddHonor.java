@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddHonor extends AppCompatActivity {
+public class AddHonor extends AppCompatActivity{
 
     EditText title , date , issuer , des;
     Button savebtn;
@@ -31,7 +31,6 @@ public class AddHonor extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addhonor);
-
 
         title = findViewById(R.id.htitle_id);
         date = findViewById(R.id.honordate_id);
@@ -76,25 +75,34 @@ public class AddHonor extends AppCompatActivity {
                 String destext = des.getText().toString().trim();
 
 
+                int flag = 0;
+
                 if(titletext.equals(""))
                 {
                     title.setError("Field cannot be empty");
+                    flag = 1;
                 }
                 if(datetext.equals(""))
                 {
                     date.setError("Choose a date");
+                    flag = 1;
+
                 }
 
                 if(issuertext.equals(""))
                 {
                     issuer.setError("Field cannot be empty");
+                    flag = 1;
+
                 }
                 if(destext.equals(""))
                 {
                     des.setError("Field cannot be empty");
+                    flag = 1;
+
                 }
 
-                else
+                if(flag == 0)
                 {
 
                     SimpleDateFormat date1 = new SimpleDateFormat("yyyy/MM/dd");
@@ -113,20 +121,15 @@ public class AddHonor extends AppCompatActivity {
 
                     String[] valstr ={titletext , "honor" , issuertext , dateofhonor , destext};
                     JsonEncoder jsonEncoder = new JsonEncoder(AddHonor.this);
-                    jsonEncoder.jsonify_honor(valstr);
-                    finish();
+                    String info = jsonEncoder.jsonify_honor(valstr);
+
+                    ApiPOST apiPOST = new ApiPOST(AddHonor.this);
+                    apiPOST.execute(info);
+
                 }
-
-
 
             }
         });
-
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
 }
