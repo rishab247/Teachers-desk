@@ -263,19 +263,19 @@ public class RegisterActivity extends AppCompatActivity{
 
                 if(fnametext.equals("") || fnametext.equals("None"))
                 {
-                    fname.setError("Enter FirstName");
+                    fname.setError("This field is Required");
                     flag = 1;
                 }
 
                 if(lnametext.equals("") || lnametext.equals("None"))
                 {
-                    lname.setError("Enter LastName");
+                    lname.setError("This field is Required");
                     flag = 1;
                 }
 
                 if(eidtext.equals(""))
                 {
-                    eid.setError("Enter Eid");
+                    eid.setError("This field is Required");
                     flag = 1;
                 }
 
@@ -286,7 +286,7 @@ public class RegisterActivity extends AppCompatActivity{
                 }
                 if(emailtext.equals(""))
                 {
-                    email.setError("Enter Email");
+                    email.setError("This field is Required");
                 }
 
                 if(passwordtext.length() < 6)
@@ -297,7 +297,7 @@ public class RegisterActivity extends AppCompatActivity{
 
                 if(passwordtext.equals(""))
                 {
-                    pass.setError("Enter Password");
+                    pass.setError("This field is Required");
                     flag = 1;
                 }
 
@@ -311,7 +311,7 @@ public class RegisterActivity extends AppCompatActivity{
                 {
                     if(pnotext.equals(""))
                     {
-                        pno.setError("Enter Phone number");
+                        pno.setError("This field is Required");
                     }
                     else
                     pno.setError("Phone number not valid");
@@ -321,33 +321,33 @@ public class RegisterActivity extends AppCompatActivity{
 
                 if(departtext.equals(""))
                 {
-                    department.setError("Enter Department");
+                    department.setError("This field is Required");
                     flag = 1;
                 }
 
                 if(qualificationtext.equals(""))
                 {
-                    qualification.setError("Enter Qualification");
+                    qualification.setError("This field is Required");
                     flag = 1;
                 }
 
                 if(universitytext.equals(""))
                 {
-                    university.setError("Enter University");
+                    university.setError("This field is Required");
 
                     flag = 1;
                 }
 
                 if(dojtext.equals(""))
                 {
-                    doj.setError("Select a date");
+                    doj.setError("This field is Required");
                     flag = 1;
                 }
 
 
                 if(dobtext.equals(""))
                 {
-                    dob.setError("Select a date");
+                    dob.setError("This field is Required ");
                     flag = 1;
                 }
 

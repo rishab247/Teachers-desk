@@ -6,14 +6,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -62,6 +65,15 @@ public class AddPatent extends AppCompatActivity {
         setContentView(R.layout.activity_addpatent);
 
         spinner = findViewById(R.id.pspinner);
+        listView = findViewById(R.id.authorslistpatent_id);
+        final ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, names);
+        listView.setAdapter(adapter1);
+
+
+
+
+
 
         Locale[] locale = Locale.getAvailableLocales();
         ArrayList<String> countries = new ArrayList<>();
@@ -75,7 +87,7 @@ public class AddPatent extends AppCompatActivity {
         Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, countries);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, countries);
         spinner.setAdapter(adapter);
 
 
@@ -129,12 +141,37 @@ public class AddPatent extends AppCompatActivity {
                 addbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        boolean bool=true;
+                        if(authname.getText().toString().trim().equals(""))
+                        { bool=false;
+                            authname.setError( "This field is Required");}
+                        if(authemail.getText().toString().trim().equals("") )
+                        {  bool=false;
+                            authemail.setError("This field is Required" );}
+                        if(authpno.getText().toString().trim().equals(""))
+                        {  bool=false;
+                            authpno.setError("This field is Required");}
 
-                        names.add(authname.getText().toString().trim());
-                        emails.add(authemail.getText().toString().trim());
-                        pnos.add(authpno.getText().toString().trim());
 
-                        alertDialog.cancel();
+
+                        if(emails.contains(authemail.getText().toString().trim()))
+                        {  bool=false;
+                            authemail.setError("Duplicate entry" );}
+                        if(pnos.contains(authpno.getText().toString().trim()) )
+                        {  bool=false;
+                            authpno.setError("Duplicate entry");}
+
+
+                        if(bool)
+                        {
+
+                            names.add(authname.getText().toString().trim());
+                            emails.add(authemail.getText().toString().trim());
+                            pnos.add(authpno.getText().toString().trim());
+                            adapter1.notifyDataSetChanged();
+                             setDynamicHeight(listView);
+                            alertDialog.cancel();
+                        }
                     }
                 });
 
@@ -150,19 +187,16 @@ public class AddPatent extends AppCompatActivity {
 
 
 
-        listView = findViewById(R.id.authorslistpatent_id);
 
-        final ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, names);
 
-        listView.setAdapter(adapter1);
-        AddPublication.ListUtils.setDynamicHeight(listView);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddPatent.this);
+
+                 AlertDialog.Builder builder = new AlertDialog.Builder(AddPatent.this);
 
                 initPopupViewControlsdelete();
 
@@ -190,23 +224,62 @@ public class AddPatent extends AppCompatActivity {
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(AddPatent.this , android.R.layout.simple_list_item_1, android.R.id.text1 , names);
 
                         listView.setAdapter(adapter);
-                        AddPublication.ListUtils.setDynamicHeight(listView);
+
+                        setDynamicHeight(listView);
 
                         alertDialog.cancel();
 
                     }
                 });
 
+                final String oldname = authname.getText().toString().trim();
+
 
 
                 update.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                       boolean bool=true;
 
-                        names.set(pos , authupname.getText().toString().trim());
-                        emails.set(pos, authupemail.getText().toString().trim());
-                        pnos.set(pos , authupemail.getText().toString().trim());
 
+                        if(authupname.getText().toString().trim().equals(""))
+                        { bool=false;
+                            authupname.setError( "This field is Required");}
+                        if(authupemail.getText().toString().trim().equals("") )
+                        {  bool=false;
+                            authupemail.setError("This field is Required" );}
+                        if(authuppno.getText().toString().trim().equals(""))
+                        {  bool=false;
+                            authuppno.setError("This field is Required");}
+
+
+
+                        if(emails.contains(authupemail.getText().toString().trim()))
+                        {  bool=false;
+                            authupemail.setError("Duplicate entry" );}
+                        if(pnos.contains(authuppno.getText().toString().trim()) )
+                        {  bool=false;
+                            authuppno.setError("Duplicate entry");}
+
+
+                        if(authupname.getText().toString().trim().equals(oldname))
+                        {
+                            bool = false;
+                        }
+                        else
+                        {
+                            bool = true;
+                        }
+
+                        if(bool)
+                        {
+                            names.set(pos , authupname.getText().toString().trim());
+                            emails.set(pos, authupemail.getText().toString().trim());
+                            pnos.set(pos , authuppno.getText().toString().trim());
+                            adapter1.notifyDataSetChanged();
+                            setDynamicHeight(listView);
+                            alertDialog.cancel();
+                        }
 
                     }
                 });
@@ -237,23 +310,23 @@ public class AddPatent extends AppCompatActivity {
 
                 if(titletext.equals(""))
                 {
-                    title.setError("Field cannot be empty");
+                    title.setError("This field is Required");
                 }
                 if(datetext.equals(""))
                 {
-                    date.setError("Field cannot be empty");
+                    date.setError("This field is Required");
                 }
                 if(appnumber.equals(""))
                 {
-                    number.setError("Field cannot be empty");
+                    number.setError("This field is Required");
                 }
                 if(urltext.equals(""))
                 {
-                    url.setError("Field cannot be empty");
+                    url.setError("This field is Required");
                 }
                 if(destext.equals(""))
                 {
-                    des.setError("Field cannot be empty");
+                    des.setError("This field is Required");
                 }
 
                 else
@@ -317,4 +390,25 @@ public class AddPatent extends AppCompatActivity {
         delete = popupInputDialogViewdelete.findViewById(R.id.deletebtn);
 
     }
+
+         private static void setDynamicHeight(ListView mListView ) {
+            ListAdapter mListAdapter = mListView.getAdapter();
+            if (mListAdapter == null) {
+                // when adapter is null
+                return;
+            }
+            Log.e("Daynamic height testing",mListView.getWidth()+" "+mListView.getDividerHeight());
+            int height = 0;
+            int desiredWidth = View.MeasureSpec.makeMeasureSpec(mListView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+            for (int i = 0; i < mListAdapter.getCount(); i++) {
+                View listItem = mListAdapter.getView(i, null, mListView);
+                listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+                height += listItem.getMeasuredHeight();
+            }
+            ViewGroup.LayoutParams params = mListView.getLayoutParams();
+            params.height = height + (mListView.getDividerHeight() * (mListAdapter.getCount() - 1));
+            mListView.setLayoutParams(params);
+            mListView.requestLayout();
+        }
+
 }
