@@ -42,6 +42,9 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
     public static String[] statusarr = {""};
 
 
+    public Apiget() {
+        super();
+    }
 
     public Apiget(Context context)
     {

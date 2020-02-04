@@ -20,9 +20,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ApiPassword extends AsyncTask<String , Void , Integer> {
-
-    public Integer code;
+public class ApiPassword extends AsyncTask<String , Void , String> {
     String url = "https://apitims1.azurewebsites.net/Verify/password?token=";
     String token = loginActivity.gettoken();
 
@@ -49,7 +47,9 @@ public class ApiPassword extends AsyncTask<String , Void , Integer> {
     }
 
     @Override
-    protected Integer doInBackground(String... voids) {
+    protected String doInBackground(String... voids) {
+
+        String code = null;
 
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
         OkHttpClient client = new OkHttpClient();
@@ -75,26 +75,31 @@ public class ApiPassword extends AsyncTask<String , Void , Integer> {
                 .url(url).put(body).build();
 
 
-        Integer code = 0;
         try {
             Response response = client.newCall(request).execute();
 
-            code = response.code();
+            code = String.valueOf(response.code());
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        Log.e("CODE" ,code);
         return code;
     }
 
     @Override
-    protected void onPostExecute(Integer aVoid) {
+    protected void onPostExecute(String aVoid) {
         super.onPostExecute(aVoid);
-        dialog.hide();
 
-        if(aVoid.equals(200))
+        if(dialog.isShowing())
+        {
+            dialog.cancel();
+        }
+
+
+        if(aVoid.equals("200"))
         {
             Toast.makeText(sContext , "Password Changed" , Toast.LENGTH_SHORT).show();
         }

@@ -1,5 +1,6 @@
 package com.cu.project.ui.Profiile;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,23 +9,37 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
  import android.widget.Toolbar;
 
- import com.cu.project.R;
+import com.cu.project.APIHelper.ApiVerify;
+import com.cu.project.APIHelper.Apiget;
+import com.cu.project.APIHelper.AsyncLoginResponse;
+import com.cu.project.APIHelper.AsyncResponse;
+import com.cu.project.R;
+import com.cu.project.ui.login.loginActivity;
 
-public class profile_fragement extends Fragment {
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
-    Toolbar toolbar;
+public class profile_fragement extends Fragment{
 
-    public static TextView name;
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    public TextView name;
     static TextView ecode;
     static TextView email;
     static TextView pno;
@@ -33,6 +48,8 @@ public class profile_fragement extends Fragment {
     static TextView uni;
     static TextView dob;
     static TextView doj;
+
+    ImageView verified;
 
 
     String text1 , text2 , text3, text4;
@@ -47,7 +64,30 @@ public class profile_fragement extends Fragment {
         v =  inflater.inflate(R.layout.fragment_profile_fragement,container,false);
 
 
-
+//        verified = v.findViewById(R.id.imageView3);
+//        String[] info = null;
+//
+//        ApiVerify apiVerify = new ApiVerify();
+//        try {
+//
+//            info = apiVerify.execute().get();
+//
+//
+//
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if(info[0].equals("false"))
+//        {
+//            verified.setVisibility(View.GONE);
+//        }
+//        else
+//        {
+//            verified.setVisibility(View.VISIBLE);
+//        }
 
         Bundle extras = getActivity().getIntent().getExtras();
         String userName = extras.getString("name_").trim();
@@ -89,18 +129,9 @@ public class profile_fragement extends Fragment {
         dob.setText(dob_);
         doj.setText(doj_);
 
+
         return v;
     }
 
-
-
-
-
-
-
-
-
-
-
-
 }
+

@@ -1,10 +1,13 @@
 package com.cu.project.APIHelper;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.textclassifier.TextLanguage;
+import android.widget.Toast;
 
 import com.cu.project.ui.login.loginActivity;
 
@@ -19,10 +22,12 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ApiEditProfile extends AsyncTask<String, Void , Void> {
+public class ApiEditProfile extends AsyncTask<String, Void , String> {
 
     Context scontext;
     String p_no , depart , quali , uni , pass;
+
+    public static int code = 1;
 
     String url = "https://apitims1.azurewebsites.net/user/Profile?token=";
     String token = loginActivity.gettoken();
@@ -46,7 +51,7 @@ public class ApiEditProfile extends AsyncTask<String, Void , Void> {
     }
 
     @Override
-    protected Void doInBackground(String... voids) {
+    protected String doInBackground(String... voids) {
 
         url = url + token;
 
@@ -72,6 +77,7 @@ public class ApiEditProfile extends AsyncTask<String, Void , Void> {
             e.printStackTrace();
         }
 
+
         RequestBody body = RequestBody.create(MEDIA_TYPE , jsonObject.toString());
 
         Request request = new Request.Builder().url(url).put(body).build();
@@ -85,12 +91,36 @@ public class ApiEditProfile extends AsyncTask<String, Void , Void> {
             e.printStackTrace();
         }
 
-        return null;
+
+        code = response.code();
+
+        Log.e("REUQWE" , String.valueOf(response.code()));
+        return String.valueOf(response.code());
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
+    protected void onPostExecute(String aVoid) {
         super.onPostExecute(aVoid);
-        dialog.hide();
+
+        if(dialog.isShowing())
+        {
+         dialog.cancel();
+        }
+
+        if(aVoid.equals("200"))
+        {
+            Intent resultIntent = new Intent();
+
+            String[] info = {p_no , depart , quali , uni };
+            resultIntent.putExtra("result" , info);
+
+            Activity activity = (Activity)scontext;
+            activity.setResult(Activity.RESULT_OK , resultIntent);
+            activity.finish();
+        }
+        else{
+            Toast.makeText(scontext , "Password Invalid", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import com.cu.project.APIHelper.ApiAlert;
 import com.cu.project.R;
 import com.cu.project.Welcome;
+import com.cu.project.data.DataManager;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -20,7 +21,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class SplashActivity extends Activity implements SplashMvpView {
 
-    private static int SPLASH_SCREEN_TIME_OUT=1500;
+    private static int SPLASH_SCREEN_TIME_OUT = 1500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class SplashActivity extends Activity implements SplashMvpView {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_splash);
+
 
         ApiAlert apiAlert = new ApiAlert();
         apiAlert.execute();
@@ -46,7 +48,6 @@ public class SplashActivity extends Activity implements SplashMvpView {
             }
         }, SPLASH_SCREEN_TIME_OUT);
 
-
     }
 
     @Override
@@ -56,9 +57,5 @@ public class SplashActivity extends Activity implements SplashMvpView {
     @Override
     public void openLoginActivity() {
     }
-
-
-
-
 
 }
