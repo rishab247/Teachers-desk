@@ -1,43 +1,49 @@
 package com.cu.project.APIHelper;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-
 import com.cu.project.ui.Profiile.SubjectData;
+import com.cu.project.ui.Profiile.View_fragment;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.Authenticator;
+import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.Route;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
-
-public class ApigetPaper extends AsyncTask<String , Void , HashMap<String,ArrayList>> {
+public class ApigetPaper extends AsyncTask<String , Void , HashMap<String,ArrayList>>  {
 
     public static int counthonor = 0 ;
     public static int countpatent = 0;
     public static int countpub = 0 ;
     public static int countproject = 0;
-    String urls = "https://apitims1.azurewebsites.net/user/Accomplishment?token=";
+    public Asyncresponsegetpaper asyncresponsegetpaper=null;
+    private String urls = "https://apitims1.azurewebsites.net/user/Accomplishment?token=";
 
     private ArrayList<SubjectData> listitems =  new ArrayList<>();
      private ArrayList<SubjectData> listitems1 =  new ArrayList<>();
     private ArrayList<SubjectData> listitems2 =  new ArrayList<>();
     private ArrayList<SubjectData> listitems3 =  new ArrayList<>();
+    private WeakReference<Context> contextRef;
 
 
 
@@ -66,7 +72,7 @@ public class ApigetPaper extends AsyncTask<String , Void , HashMap<String,ArrayL
             responses = client.newCall(request).execute();
 
 
-            jsonData = responses.body().string();
+            jsonData = Objects.requireNonNull(responses.body()).string();
 
             JSONObject jsonObject = new JSONObject(jsonData);
 
@@ -135,7 +141,7 @@ public class ApigetPaper extends AsyncTask<String , Void , HashMap<String,ArrayL
 
                 long date1 = Long.parseLong(jsonObject1.get(2).toString().trim());
 
-                DateFormat simple = new SimpleDateFormat("dd MMM yyyy");
+                DateFormat simple = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
 
                 Date result1 = new Date(date1);
 
@@ -152,7 +158,7 @@ public class ApigetPaper extends AsyncTask<String , Void , HashMap<String,ArrayL
 
                 long date1 = Long.parseLong(jsonObject1.get(2).toString().trim());
 
-                DateFormat simple = new SimpleDateFormat("dd MMM yyyy");
+                DateFormat simple = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
 
                 Date result1 = new Date(date1);
 
@@ -179,12 +185,12 @@ public class ApigetPaper extends AsyncTask<String , Void , HashMap<String,ArrayL
         }catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-
-        return map;
-    }
+return map;
+     }
 
     @Override
     protected void onPostExecute(HashMap aVoid) {
         super.onPostExecute(aVoid);
-    }
+
+        asyncresponsegetpaper.processFinishgetpaper(aVoid);    }
 }

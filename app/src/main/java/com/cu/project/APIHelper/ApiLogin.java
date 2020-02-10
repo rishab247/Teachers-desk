@@ -6,9 +6,13 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Authenticator;
 import okhttp3.Credentials;
@@ -23,26 +27,25 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
 
 
 
-    String username , password;
-    String res = "";
-    ProgressDialog d;
-    Context scontext;
+    private String username , password;
+    private String res = "";
+    private ProgressDialog d;
+    private WeakReference<Context> contextRef;
 
 
     public ApiLogin(Context context , String username , String password)
     {
         this.username = username;
         this.password = password;
-        scontext = context;
+        contextRef =new WeakReference<> (context);
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-
-        d = new ProgressDialog(this.scontext);
+        Context scontext = contextRef.get();
+        d = new ProgressDialog(scontext);
         d.setMessage("Please wait...");
-        Log.e("Inside Pre execute","call made and loader shown");
         d.setIndeterminate(true);
         d.setCancelable(false);
         d.show();
@@ -51,12 +54,11 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
 
     @Override
         protected String doInBackground(Void... strings) {
-        Log.e("EXCEPTION123" , "class not found");
 
         try {
             res = testFetchOK();
         } catch (Exception e) {
-            Log.e("Login Error" , e.getMessage());
+            Log.e("Login Error" , Objects.requireNonNull(e.getMessage()));
         }
         return res;
     }
@@ -64,6 +66,7 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
 
     @Override
     protected void onPostExecute(String s) {
+
         if(d.isShowing()){
             d.cancel();
         }
@@ -72,16 +75,19 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
 
     private static OkHttpClient createAuthenticatedClient(final String username,
                                                           final String password) {
-        OkHttpClient httpClient = new OkHttpClient.Builder().authenticator(new Authenticator() {
-            public Request authenticate(Route route, Response response) throws IOException {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder().authenticator(new Authenticator() {
+            public Request authenticate(Route route, @NotNull Response response) {
                 String credential = Credentials.basic(username, password);
                 if (responseCount(response) >= 3) {
                     return null;
                 }
                 return response.request().newBuilder().header("Authorization", credential).build();
             }
-        }).build();
-        return httpClient;
+        }).connectTimeout(1, TimeUnit.MINUTES)
+                .writeTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(1, TimeUnit.MINUTES);
+
+        return builder.build();
     }
 
     private static String doRequest(OkHttpClient httpClient, String anyURL) throws Exception {
@@ -94,7 +100,7 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
         }
         else
         {
-            JSONObject jsonObject = new JSONObject(response.body().string());
+            JSONObject jsonObject = new JSONObject(Objects.requireNonNull(response.body()).string());
 
             token = jsonObject.getString("token");
         }
@@ -103,24 +109,21 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
     }
 
 
-    public static String fetch(String url, String username, String password) throws Exception {
+    private static String fetch(String url, String username, String password) throws Exception {
 
         OkHttpClient httpClient = createAuthenticatedClient(username, password);
 
-        String st = doRequest(httpClient , url);
-
-        return st;
+        return doRequest(httpClient , url);
 
     }
 
-    public String testFetchOK() throws Exception {
+    private String testFetchOK() throws Exception {
         String url = "https://apitims1.azurewebsites.net/login";
 
         Log.e("Printhelper",username + password);
 
 
-        String token = ApiLogin.fetch(url, username, password);
-        return token;
+        return ApiLogin.fetch(url, username, password);
     }
 
     private static int responseCount(Response response) {

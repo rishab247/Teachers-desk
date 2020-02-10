@@ -26,7 +26,6 @@ import com.cu.project.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -61,7 +60,7 @@ public class detailclass  extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        HashMap<String , ArrayList>  info = (HashMap<String, ArrayList>) bundle.get("info");
+        HashMap<String , ArrayList> info = (HashMap<String, ArrayList>) bundle.get("info");
 
 
         tohideurl = findViewById(R.id.textView10);

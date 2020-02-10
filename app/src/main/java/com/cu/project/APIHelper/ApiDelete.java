@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.cu.project.ui.Profiile.View_fragment;
@@ -42,7 +41,6 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
         this.type = type;
         this.pass = pass;
     }
-
     @Override
     protected void onPreExecute() {
         super.onPreExecute();

@@ -1,25 +1,17 @@
 package com.cu.project.ui.Profiile;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.DataSetObserver;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.cu.project.APIHelper.ApigetPaper;
 import com.cu.project.APIHelper.Apigetdetails;
 import com.cu.project.R;
-import com.cu.project.ui.detailclass;
 
 import java.util.ArrayList;
-import java.util.List;
 
 class PatentAdapter implements ListAdapter {
 
@@ -75,7 +67,7 @@ class PatentAdapter implements ListAdapter {
                 public void onClick(View v) {
 
 
-                    int id = arrayList.get(position).id;
+                    int id = arrayList.get(position).getId();
                     Apigetdetails apigetdetails = new Apigetdetails(context);
                     apigetdetails.execute(String.valueOf(id) , "Patent");
 
@@ -84,8 +76,8 @@ class PatentAdapter implements ListAdapter {
             TextView tittle=convertView.findViewById(R.id.maintextview_id);
             TextView date = convertView.findViewById(R.id.datetextview_id);
 
-            tittle.setText(subjectData.title);
-            date.setText(subjectData.date);
+            tittle.setText(subjectData.getTitle());
+            date.setText(subjectData.getDate());
         }
         return convertView;
     }

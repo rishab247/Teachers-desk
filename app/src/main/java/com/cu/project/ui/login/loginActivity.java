@@ -29,6 +29,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -37,10 +38,6 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 public class loginActivity extends Activity implements loginMvpView , AsyncLoginResponse , AsyncResponse {
-
-    private Button signinloginbtn;
-    private TextView Notamember;
-    private EditText username , password;
 
     private static SharedPreferences sharedpreferences;
     static SharedPreferences.Editor editor;
@@ -54,7 +51,7 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
 
 
         // sign in button
-        signinloginbtn = findViewById(R.id.signinloginbutton);
+        Button signinloginbtn = findViewById(R.id.signinloginbutton);
 
         signinloginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +63,8 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         });
 
         // not a member text
-        Notamember  =findViewById(R.id.Notamembertext);
-        Notamember.setOnClickListener(new View.OnClickListener() {
+        TextView notamember = findViewById(R.id.Notamembertext);
+        notamember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(loginActivity.this , RegisterActivity.class);
@@ -88,8 +85,8 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
     public void onLoginButtonClick() {
         int flag = 0;
 
-        username = findViewById(R.id.fnamelogintext);
-        password = findViewById(R.id.lnamelogintext);
+        EditText username = findViewById(R.id.fnamelogintext);
+        EditText password = findViewById(R.id.lnamelogintext);
 
         String usernametext = username.getText().toString().trim();
         String passtext = password.getText().toString().trim();
@@ -133,7 +130,7 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
 
         if(str.length() <= 4)
         {
-            Toast.makeText(getApplicationContext() , "Information Invalid", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext() , "Invalid Credentials", Toast.LENGTH_LONG).show();
         }
         else
         {
@@ -154,10 +151,9 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
              md.update(passwordToHash.getBytes());
             byte[] bytes = md.digest();
             StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++)
-            {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
+              for (byte aByte : bytes) {
+                  sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+              }
             generatedPassword = sb.toString();
         }
         catch (NoSuchAlgorithmException e)
@@ -185,7 +181,7 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         String[] strings = (String[]) output;
         long date1 = Long.parseLong(strings[5]);
 
-        DateFormat simple = new SimpleDateFormat("dd MMM yyyy");
+        DateFormat simple = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
 
         Date result1 = new Date(date1);
 

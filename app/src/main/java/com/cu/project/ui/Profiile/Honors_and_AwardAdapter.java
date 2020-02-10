@@ -75,7 +75,7 @@ class Honors_and_AwardAdapter implements ListAdapter {
                 public void onClick(View v) {
 
 
-                    int id = arrayList.get(position).id;
+                    int id = arrayList.get(position).getId();
                     Apigetdetails apigetdetails = new Apigetdetails(context);
                     apigetdetails.execute(String.valueOf(id) , "Honors_and_Award");
 //                    Log.e("ID OD", String.valueOf(id));
@@ -88,8 +88,8 @@ class Honors_and_AwardAdapter implements ListAdapter {
             TextView tittle=convertView.findViewById(R.id.maintextview_id);
             TextView date = convertView.findViewById(R.id.datetextview_id);
 
-            tittle.setText(subjectData.title);
-            date.setText(subjectData.date);
+            tittle.setText(subjectData.getTitle());
+            date.setText(subjectData.getDate());
         }
         return convertView;
     }
