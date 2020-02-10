@@ -36,10 +36,10 @@ public class ApiPostPatent extends AsyncTask<String , Void , String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-
         dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
         dialog.show();
     }
 
@@ -77,6 +77,11 @@ public class ApiPostPatent extends AsyncTask<String , Void , String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
+        if(dialog.isShowing())
+        {
+            dialog.cancel();
+        }
+
         Activity activity = (Activity)scontext;
 
         if(s.equals("200"))
@@ -87,7 +92,9 @@ public class ApiPostPatent extends AsyncTask<String , Void , String> {
         }
         else
         {
-            Toast.makeText(scontext , "Patent Already Exists", Toast.LENGTH_SHORT).show();
+            Toast.makeText(scontext , "Patent already exists" , Toast.LENGTH_SHORT).show();
         }
+
+
     }
 }

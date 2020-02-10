@@ -107,37 +107,29 @@ public class JsonEncoder {
  }
 
 
-    public String jsonify_pub(String[] str) {
+    public String jsonify_pub(String[] str , JSONArray jsonArrayofauth , int size) {
 
         String information = null;
         JSONObject jsonObject = new JSONObject();
         try {
+
 
             JSONArray jsonArray = new JSONArray();
 
             List<Integer> list1 = new ArrayList<>();
             list1.add(1);
 
-            for(int i =0;i < list1.size() ; i ++)
-                jsonArray.put(list1.get(i));
+            for(int i =0;i < size ; i ++)
+                jsonArray.put(1);
 
             JSONArray jsonArray2 = new JSONArray();
 
-            JSONArray jsonArray3 = new JSONArray();
-
-            List<String> list3 = new ArrayList<>();
-            list3.add("Tushar");
-            list3.add("email");
-            list3.add("pnumber");
-
-            for(int i =0;i < list3.size() ; i ++)
-                jsonArray3.put(list3.get(i));
-
-            JSONArray jsonArray1 = new JSONArray();
-            jsonArray1.put(jsonArray3);
+            String size1 = String.valueOf(size);
 
 
-            jsonObject.put(pub_arr[0] , "1");
+
+
+            jsonObject.put(pub_arr[0] , size1);
             jsonObject.put(pub_arr[1] , jsonArray);
             jsonObject.put(pub_arr[2] , jsonArray2);
             jsonObject.put(pub_arr[3] , str[0]);
@@ -145,12 +137,12 @@ public class JsonEncoder {
             jsonObject.put(pub_arr[5] , str[2]);
             jsonObject.put(pub_arr[6] , str[3]);
             jsonObject.put(pub_arr[7] , str[4]);
-            jsonObject.put(pub_arr[8] , jsonArray1);
+            jsonObject.put(pub_arr[8] , jsonArrayofauth);
 
-              information = jsonObject.toString();
+            information = jsonObject.toString();
 
-//            ApiPostPub apiPostPub = new ApiPostPub();
-//            apiPostPub.execute(information);
+            Log.e("TAG",information);
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -161,10 +153,12 @@ public class JsonEncoder {
 
     }
 
-    public String jsonify_patent(String[] str)
+    public String jsonify_patent(String[] str , JSONArray jsonArrayfromback , int size)
     {
         String information = null;
         JSONObject jsonObject = new JSONObject();
+
+        String size1 = String.valueOf(size);
 
         try {
 
@@ -173,25 +167,14 @@ public class JsonEncoder {
             List<Integer> list1 = new ArrayList<>();
             list1.add(1);
 
-            for(int i =0;i < list1.size() ; i ++)
-                jsonArray.put(list1.get(i));
+            for(int i =0;i < size ; i ++)
+                jsonArray.put(1);
 
             JSONArray jsonArray2 = new JSONArray();
-            JSONArray jsonArray3 = new JSONArray();
-
-            List<String> list3 = new ArrayList<>();
-            list3.add("Tushar");
-            list3.add("email");
-            list3.add("pnumber");
-
-            for(int i =0;i < list3.size() ; i ++)
-                jsonArray3.put(list3.get(i));
-
-            JSONArray jsonArray1 = new JSONArray();
-            jsonArray1.put(jsonArray3);
 
 
-            jsonObject.put(pat_arr[0] , "1");
+
+            jsonObject.put(pat_arr[0] , size1);
             jsonObject.put(pat_arr[1] , jsonArray);
             jsonObject.put(pat_arr[2] , jsonArray2);
             jsonObject.put(pat_arr[3] , str[0]);
@@ -200,7 +183,7 @@ public class JsonEncoder {
             jsonObject.put(pat_arr[6] , str[3]);
             jsonObject.put(pat_arr[7] , str[4]);
             jsonObject.put(pat_arr[8] , str[5]);
-            jsonObject.put(pat_arr[9] , jsonArray1);
+            jsonObject.put(pat_arr[9] , jsonArrayfromback);
 
             information = jsonObject.toString();
 
@@ -214,10 +197,11 @@ public class JsonEncoder {
     }
 
 
-    public void jsonify_project(String[] str)
+    public String jsonify_project(String[] str , JSONArray jsonArrayfromback , int size)
     {
         JSONObject jsonObject = new JSONObject();
 
+        String information = null;
         try {
 
             JSONArray jsonArray = new JSONArray();
@@ -225,32 +209,17 @@ public class JsonEncoder {
             List<Integer> list1 = new ArrayList<>();
             list1.add(1);
 
-            for(int i =0;i < list1.size() ; i ++)
-                jsonArray.put(list1.get(i));
+            for(int i =0;i < size ; i ++)
+                jsonArray.put(1);
+
+            String size1 = String.valueOf(size);
 
             JSONArray jsonArray2 = new JSONArray();
-//
-//            List<Integer> list2 = new ArrayList<>();
-//            list2.add(1);
-//
-//            for(int i =0;i < list2.size() ; i ++)
-//                jsonArray2.put(list2.get(i));
-
-            JSONArray jsonArray3 = new JSONArray();
-
-            List<String> list3 = new ArrayList<>();
-            list3.add("Tushar");
-            list3.add("email");
-            list3.add("pnumber");
-
-            for(int i =0;i < list3.size() ; i ++)
-                jsonArray3.put(list3.get(i));
-
-            JSONArray jsonArray1 = new JSONArray();
-            jsonArray1.put(jsonArray3);
 
 
-            jsonObject.put(pro_arr[0] , "1");
+
+
+            jsonObject.put(pro_arr[0] , size1);
             jsonObject.put(pro_arr[1] , jsonArray);
             jsonObject.put(pro_arr[2] , jsonArray2);
             jsonObject.put(pro_arr[3] , str[0] );
@@ -258,19 +227,17 @@ public class JsonEncoder {
             jsonObject.put(pro_arr[5] , str[1] );
             jsonObject.put(pro_arr[6] , str[2] );
             jsonObject.put(pro_arr[7] , str[3] );
-            jsonObject.put(pro_arr[8] , jsonArray1);
+            jsonObject.put(pro_arr[8] , jsonArrayfromback);
 
 
-            String information = jsonObject.toString();
-            ApiPostProject apiPostProject = new ApiPostProject();
-            apiPostProject.execute(information);
-
+            information = jsonObject.toString();
 
 
         }catch (JSONException e){
             e.printStackTrace();
         }
 
+        return information;
 
 
     }

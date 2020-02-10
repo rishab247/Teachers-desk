@@ -27,6 +27,9 @@ import com.cu.project.R;
 import com.cu.project.Util.JsonEncoder;
 import com.cu.project.ui.Authorclass;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -307,33 +310,57 @@ public class AddPatent extends AppCompatActivity {
                 String destext = des.getText().toString().trim();
                 String office = spinner.getSelectedItem().toString().trim();
 
+                int flag = 0;
 
                 if(titletext.equals(""))
                 {
                     title.setError("This field is Required");
+                    flag = 1;
                 }
                 if(datetext.equals(""))
                 {
                     date.setError("This field is Required");
+                    flag = 1;
                 }
                 if(appnumber.equals(""))
                 {
                     number.setError("This field is Required");
+                    flag = 1;
                 }
                 if(urltext.equals(""))
                 {
                     url.setError("This field is Required");
+                    flag = 1;
                 }
                 if(destext.equals(""))
                 {
                     des.setError("This field is Required");
+                    flag = 1;
                 }
 
-                else
+                if(flag == 0)
                 {
                     SimpleDateFormat date1 = new SimpleDateFormat("yyyy/MM/dd");
 
                     Date hdate = null;
+
+                    JSONObject jsonObject1 = new JSONObject();
+
+
+                    JSONArray jsonArray1 = new JSONArray();
+
+                    if (!names.isEmpty()) {
+                        for (int i = 0; i < names.size(); i++) {
+                            JSONArray jsonArray = new JSONArray();
+
+                            jsonArray.put(names.get(i));
+                            jsonArray.put(emails.get(i));
+                            jsonArray.put(pnos.get(i));
+
+
+                            jsonArray1.put(jsonArray);
+                        }
+                    }
 
                     try {
                         hdate = date1.parse(date.getText().toString().trim());
@@ -347,7 +374,7 @@ public class AddPatent extends AppCompatActivity {
 
                     String[] info = {titletext ,office , appnumber , urltext , dateofpatent , destext};
                     JsonEncoder jsonEncoder = new JsonEncoder(getApplicationContext());
-                    String information = jsonEncoder.jsonify_patent(info);
+                    String information = jsonEncoder.jsonify_patent(info , jsonArray1 , names.size());
 
                     ApiPostPatent apiPostPatent = new ApiPostPatent(AddPatent.this);
                     apiPostPatent.execute(information);

@@ -1,8 +1,14 @@
 package com.cu.project.APIHelper;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.cu.project.ui.Upload.UploadActivity;
 import com.cu.project.ui.login.loginActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -17,10 +23,28 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ApiPostProject  extends AsyncTask<String , Void , Void> {
+public class ApiPostProject  extends AsyncTask<String , Void , String> {
     String token = loginActivity.gettoken();
+
+    Context scontext;
+    ProgressDialog dialog;
+
+    public ApiPostProject(Context context) {
+        this.scontext = context;
+    }
+
     @Override
-    protected Void doInBackground(String... strings) {
+    protected void onPreExecute() {
+        super.onPreExecute();
+        dialog = new ProgressDialog(scontext);
+        dialog.setMessage("Please wait...");
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+    @Override
+    protected String doInBackground(String... strings) {
 
         String str = strings[0];
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
@@ -36,23 +60,44 @@ public class ApiPostProject  extends AsyncTask<String , Void , Void> {
         Request request = new Request.Builder()
                 .url(urlpost).post(body).build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+      String code = null;
 
-                String mMessage = e.getMessage();
-                Log.v("projectfailure Response", mMessage);
+      Response response = null;
 
-            }
 
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        try {
+            response = client.newCall(request).execute();
 
-                String mMessage = response.body().string();
-                Log.e("project_responce", mMessage);
-            }
-        });
+            code = String.valueOf(response.code());
 
-        return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return code;
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+
+
+        if(dialog.isShowing())
+        {
+            dialog.cancel();
+        }
+
+        Activity activity = (Activity)scontext;
+
+        if(s.equals("200"))
+        {
+            Intent intent = new Intent(scontext , UploadActivity.class);
+            scontext.startActivity(intent);
+            activity.finish();
+        }
+        else
+        {
+            Toast.makeText(scontext , "Project already exists" , Toast.LENGTH_SHORT).show();
+        }
     }
 }

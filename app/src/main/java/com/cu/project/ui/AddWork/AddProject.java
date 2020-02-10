@@ -1,28 +1,33 @@
 package com.cu.project.ui.AddWork;
 
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cu.project.APIHelper.ApiPostProject;
 import com.cu.project.R;
 import com.cu.project.Util.JsonEncoder;
 import com.cu.project.ui.Authorclass;
+
+import org.json.JSONArray;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,6 +63,13 @@ public class AddProject extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addproject);
+
+
+        listView = findViewById(R.id.authorslist_id);
+
+        final ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, names);
+        listView.setAdapter(adapter1);
 
 
 
@@ -98,31 +110,54 @@ public class AddProject extends AppCompatActivity{
                 String urltext = url.getText().toString().trim();
                 String destext = des.getText().toString().trim();
 
+
+                int flag = 0;
+
                 if(titletext.equals(""))
                 {
                     title.setError("Field cannot be empty");
+                    flag = 1;
                 }
 
 
                 if(datetext.equals(""))
                 {
                     date.setError("Field cannot be empty");
+                    flag = 1;
                 }
 
 
                 if(urltext.equals(""))
                 {
                     url.setError("Field cannot be empty");
+                    flag = 1;
                 }
 
 
                 if(destext.equals(""))
                 {
                     des.setError("Field cannot be empty");
+                    flag = 1;
                 }
 
-                else
+                if(flag == 0)
                 {
+
+                    JSONArray jsonArray1 = new JSONArray();
+
+                    if (!names.isEmpty()) {
+                        for (int i = 0; i < names.size(); i++) {
+                            JSONArray jsonArray = new JSONArray();
+
+                            jsonArray.put(names.get(i));
+                            jsonArray.put(emails.get(i));
+                            jsonArray.put(pnos.get(i));
+
+
+                            jsonArray1.put(jsonArray);
+                        }
+                    }
+
 
 
                     SimpleDateFormat date1 = new SimpleDateFormat("yyyy/MM/dd");
@@ -141,7 +176,11 @@ public class AddProject extends AppCompatActivity{
 
                     String[] info = {titletext , urltext , dateofpro , destext};
                     JsonEncoder jsonEncoder = new JsonEncoder(getApplicationContext());
-                    jsonEncoder.jsonify_project(info);
+                    String information = jsonEncoder.jsonify_project(info, jsonArray1 , names.size());
+
+
+                    ApiPostProject apiPostProject = new ApiPostProject(AddProject.this);
+                    apiPostProject.execute(information);
                 }
             }
         });
@@ -149,13 +188,14 @@ public class AddProject extends AppCompatActivity{
 
         imageView = findViewById(R.id.addauthbtn_id);
 
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddProject.this);
+
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(AddProject.this);
                 builder.setCancelable(false);
-                builder.setTitle("Add Creators");
 
                 initPopupViewControls();
 
@@ -167,14 +207,39 @@ public class AddProject extends AppCompatActivity{
                 addbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        names.add(authname.getText().toString().trim());
-                        emails.add(authemail.getText().toString().trim());
-                        pnos.add(authpno.getText().toString().trim());
+                        boolean bool=true;
+                        if(authname.getText().toString().trim().equals(""))
+                        { bool=false;
+                            authname.setError( "This field is Required");}
+                        if(authemail.getText().toString().trim().equals("") )
+                        {  bool=false;
+                            authemail.setError("This field is Required" );}
+                        if(authpno.getText().toString().trim().equals(""))
+                        {  bool=false;
+                            authpno.setError("This field is Required");}
 
-                        alertDialog.cancel();
+
+
+                        if(emails.contains(authemail.getText().toString().trim()))
+                        {  bool=false;
+                            authemail.setError("Duplicate entry" );}
+                        if(pnos.contains(authpno.getText().toString().trim()) )
+                        {  bool=false;
+                            authpno.setError("Duplicate entry");}
+
+
+                        if(bool)
+                        {
+
+                            names.add(authname.getText().toString().trim());
+                            emails.add(authemail.getText().toString().trim());
+                            pnos.add(authpno.getText().toString().trim());
+                            adapter1.notifyDataSetChanged();
+                            setDynamicHeight(listView);
+                            alertDialog.cancel();
+                        }
                     }
                 });
-
 
                 canclebtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -187,22 +252,104 @@ public class AddProject extends AppCompatActivity{
 
 
 
-        listView = findViewById(R.id.authorslist_id);
-        final ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, names);
-
-        listView.setAdapter(adapter1);
-        AddPublication.ListUtils.setDynamicHeight(listView);
-
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext() , "CLICKED!" , Toast.LENGTH_SHORT).show();
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddProject.this);
+
+                initPopupViewControlsdelete();
+
+                builder.setView(popupInputDialogViewdelete);
+
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+                final int pos = position;
+
+                authupname.setText(names.get(position));
+                authupemail.setText(emails.get(position));
+                authuppno.setText(pnos.get(position));
+
+
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        names.remove(pos);
+                        emails.remove(pos);
+                        pnos.remove(pos);
+
+                        listView.setAdapter(null);
+
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(AddProject.this , android.R.layout.simple_list_item_1, android.R.id.text1 , names);
+
+                        listView.setAdapter(adapter);
+
+                        setDynamicHeight(listView);
+
+                        alertDialog.cancel();
+
+                    }
+                });
+
+                final String oldname = authname.getText().toString().trim();
+
+
+
+                update.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        boolean bool=true;
+
+
+                        if(authupname.getText().toString().trim().equals(""))
+                        { bool=false;
+                            authupname.setError( "This field is Required");}
+                        if(authupemail.getText().toString().trim().equals("") )
+                        {  bool=false;
+                            authupemail.setError("This field is Required" );}
+                        if(authuppno.getText().toString().trim().equals(""))
+                        {  bool=false;
+                            authuppno.setError("This field is Required");}
+
+
+
+                        if(emails.contains(authupemail.getText().toString().trim()))
+                        {  bool=false;
+                            authupemail.setError("Duplicate entry" );}
+                        if(pnos.contains(authuppno.getText().toString().trim()) )
+                        {  bool=false;
+                            authuppno.setError("Duplicate entry");}
+
+
+                        if(authupname.getText().toString().trim().equals(oldname))
+                        {
+                            bool = false;
+                        }
+                        else
+                        {
+                            bool = true;
+                        }
+
+                        if(bool)
+                        {
+                            names.set(pos , authupname.getText().toString().trim());
+                            emails.set(pos, authupemail.getText().toString().trim());
+                            pnos.set(pos , authuppno.getText().toString().trim());
+                            adapter1.notifyDataSetChanged();
+                            setDynamicHeight(listView);
+                            alertDialog.cancel();
+                        }
+
+                    }
+                });
 
             }
         });
+
 
     }
 
@@ -211,6 +358,7 @@ public class AddProject extends AppCompatActivity{
     private void initPopupViewControls() {
         LayoutInflater layoutInflater = LayoutInflater.from(AddProject.this);
 
+        // Inflate the popup dialog from a layout xml file.
         popupInputDialogView = layoutInflater.inflate(R.layout.authordetail, null);
 
         authname = popupInputDialogView.findViewById(R.id.authname);
@@ -237,5 +385,24 @@ public class AddProject extends AppCompatActivity{
         update = popupInputDialogViewdelete.findViewById(R.id.updatebtn);
         delete = popupInputDialogViewdelete.findViewById(R.id.deletebtn);
 
+    }
+    private static void setDynamicHeight(ListView mListView ) {
+        ListAdapter mListAdapter = mListView.getAdapter();
+        if (mListAdapter == null) {
+            // when adapter is null
+            return;
+        }
+        Log.e("Daynamic height testing",mListView.getWidth()+" "+mListView.getDividerHeight());
+        int height = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(mListView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        for (int i = 0; i < mListAdapter.getCount(); i++) {
+            View listItem = mListAdapter.getView(i, null, mListView);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            height += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = mListView.getLayoutParams();
+        params.height = height + (mListView.getDividerHeight() * (mListAdapter.getCount() - 1));
+        mListView.setLayoutParams(params);
+        mListView.requestLayout();
     }
 }

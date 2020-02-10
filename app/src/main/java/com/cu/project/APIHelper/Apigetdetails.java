@@ -8,7 +8,9 @@ import android.content.SharedPreferences;
 import android.content.SyncAdapterType;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
+import com.cu.project.ui.Profiile.SubjectData;
 import com.cu.project.ui.detailclass;
 import com.cu.project.ui.login.loginActivity;
 
@@ -19,6 +21,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -32,7 +35,7 @@ import okhttp3.ResponseBody;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class Apigetdetails extends AsyncTask<String , Void , String[]> {
+public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , ArrayList>> {
 
     String token = loginActivity.gettoken();
 
@@ -74,12 +77,23 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
     }
 
     @Override
-    protected String[] doInBackground(String... voids) {
+    protected HashMap<String, ArrayList> doInBackground(String... voids) {
+
+        HashMap<String, ArrayList> map = new HashMap<>();
 
         url = url + token;
         Log.d("URL VERIFY1", "doInBackground: "+url);
-        String[] infoarray = null;
 
+
+        ArrayList<String> infoarray = new ArrayList<>();
+
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<String> emails = new ArrayList<>();
+        ArrayList<String> pnos = new ArrayList<>();
+
+        names.clear();
+        emails.clear();
+        pnos.clear();
 
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
 
@@ -94,6 +108,8 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
             jsonObject.put("id", id);
             jsonObject.put("Type", type);
 
+            Log.e("JSON" , jsonObject.toString());
+
 
             RequestBody body = RequestBody.create(MEDIA_TYPE, jsonObject.toString());
             Request request = new Request.Builder()
@@ -106,6 +122,8 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
 
             JSONArray jsonArray = null;
 
+            JSONArray authorjsonarr = null;
+
             if (!response.isSuccessful()) {
                 res = String.valueOf(response.code());
             }
@@ -114,13 +132,23 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
                 JSONObject jsonObject1 = new JSONObject(response.body().string());
 
                 jsonArray = jsonObject1.getJSONArray("data");
+
+                if(!type.equals("Honors_and_Award")){
+                    authorjsonarr = jsonObject1.getJSONArray("author");
+
+                    Log.e("DATA" , authorjsonarr.toString());
+                }
+
+
             }
-            for (int i = 0; i < jsonArray.length(); i++)
-                System.out.println(jsonArray.get(i));
+
+
 
             String title, issuer, date, des;
             String publisher, url;
             String poffice, appno;
+
+
 
 
             if (type.equals("Honors_and_Award")) {
@@ -128,20 +156,46 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
                 issuer = jsonArray.get(3).toString();
                 date = jsonArray.get(4).toString();
                 des = jsonArray.get(5).toString();
-                infoarray = new String[]{title, issuer, date, des, type, id};
+                infoarray.add(title);
+                infoarray.add(issuer);
+                infoarray.add(date);
+                infoarray.add(des);
+                infoarray.add(type);
+                infoarray.add(id);
 
-
-                Log.e("PRINT", title + issuer + date + des);
 
             } else {
                 if (type.equals("Patent")) {
+
+
                     title = jsonArray.get(1).toString();
                     poffice = jsonArray.get(2).toString();
                     appno = jsonArray.get(3).toString();
                     date = jsonArray.get(4).toString();
                     des = jsonArray.get(5).toString();
                     url = jsonArray.get(6).toString();
-                    infoarray = new String[]{title, poffice, appno, date, des, url, type, id};
+
+                    infoarray.add(title);
+                    infoarray.add(poffice);
+                    infoarray.add(appno);
+                    infoarray.add(date);
+                    infoarray.add(des);
+                    infoarray.add(url);
+                    infoarray.add(type);
+                    infoarray.add(id);
+
+
+
+                    // authors details
+
+                    for(int i=0;i < authorjsonarr.length(); i ++)
+                    {
+                        JSONArray jsonArray1 = authorjsonarr.getJSONArray(i);
+
+                        names.add(jsonArray1.get(1).toString());
+                        emails.add(jsonArray1.get(2).toString());
+                        pnos.add(jsonArray1.get(3).toString());
+                    }
 
 
                 } else if (type.equals("Publication")) {
@@ -151,14 +205,48 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
                     date = jsonArray.get(3).toString();
                     des = jsonArray.get(4).toString();
                     url = jsonArray.get(5).toString();
-                    infoarray = new String[]{title, publisher, date, des, url, type, id};
+
+                    infoarray.add(title);
+                    infoarray.add(publisher);
+                    infoarray.add(date);
+                    infoarray.add(des);
+                    infoarray.add(url);
+                    infoarray.add(type);
+                    infoarray.add(id);
+
+                    // authors details
+
+                    for(int i=0;i < authorjsonarr.length(); i ++)
+                    {
+                        JSONArray jsonArray1 = authorjsonarr.getJSONArray(i);
+
+                        names.add(jsonArray1.get(1).toString());
+                        emails.add(jsonArray1.get(2).toString());
+                        pnos.add(jsonArray1.get(3).toString());
+                    }
 
                 } else {
                     title = jsonArray.get(1).toString();
                     date = jsonArray.get(2).toString();
                     des = jsonArray.get(3).toString();
                     url = jsonArray.get(4).toString();
-                    infoarray = new String[]{title, date, des, url, type, id};
+                    infoarray.add(title);
+                    infoarray.add(date);
+                    infoarray.add(des);
+                    infoarray.add(url);
+                    infoarray.add(type);
+                    infoarray.add(id);
+
+                    // authors details
+
+                    for(int i=0;i < authorjsonarr.length(); i ++)
+                    {
+                        JSONArray jsonArray1 = authorjsonarr.getJSONArray(i);
+
+                        names.add(jsonArray1.get(1).toString());
+                        emails.add(jsonArray1.get(2).toString());
+                        pnos.add(jsonArray1.get(3).toString());
+                    }
                 }
             }
         } catch (JSONException e) {
@@ -167,12 +255,17 @@ public class Apigetdetails extends AsyncTask<String , Void , String[]> {
             e.printStackTrace();
         }
 
+        map.put("1" , names);
+        map.put("2" , emails);
+        map.put("3" , pnos);
+        map.put("4" , infoarray);
 
-        return infoarray;
+
+        return map;
     }
 
     @Override
-    protected void onPostExecute(String[] strings) {
+    protected void onPostExecute(HashMap<String , ArrayList> strings) {
         super.onPostExecute(strings);
 
         Intent intent = new Intent(sContext, detailclass.class);

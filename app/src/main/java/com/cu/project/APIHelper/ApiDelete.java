@@ -1,10 +1,12 @@
 package com.cu.project.APIHelper;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.cu.project.ui.Profiile.View_fragment;
@@ -42,10 +44,21 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
     }
 
     @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        dialog = new ProgressDialog(scontext);
+        dialog.setMessage("Please wait...");
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+
+    @Override
     protected String doInBackground(Void... voids) {
 
         url = url + token;
-        String message = null;
+        String code = null;
 
 
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
@@ -70,19 +83,7 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
 
             Response response = client.newCall(request).execute();
 
-            message = response.body().string();
-
-            if(message.equals(""))
-            {
-
-            }
-            else
-            {
-                JSONObject jsonObject1 = new JSONObject(message);
-
-                message = jsonObject1.getString("msg");
-
-            }
+            code = String.valueOf(response.code());
 
 
         } catch (JSONException e) {
@@ -94,11 +95,30 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
 
 
 
-        return message;
+        return code;
     }
 
     @Override
     protected void onPostExecute(String string) {
         super.onPostExecute(string);
+
+        if(dialog.isShowing())
+        {
+            dialog.cancel();
+        }
+
+        if(string.equals("401")){
+            Toast.makeText(scontext , "Please check your password" , Toast.LENGTH_SHORT).show();
+        }
+
+        else{
+
+            Activity activity = (Activity) scontext;
+            activity.finish();
+        }
+
+
+
+
     }
 }

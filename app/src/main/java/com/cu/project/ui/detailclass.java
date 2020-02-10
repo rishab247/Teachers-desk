@@ -26,10 +26,13 @@ import com.cu.project.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 public class detailclass  extends AppCompatActivity {
@@ -38,13 +41,18 @@ public class detailclass  extends AppCompatActivity {
     FloatingActionButton downloadfbtn ,deletebtn;
     TextView Title , Date , URL , publisher , appnumber , authname;
     TextView tohideurl , tohidepublisher , tohideapp , tohideauthor, typetext;
-    EditText des;
+    TextView des;
 
     private View popupInputDialogView = null;
     EditText passwordEditText;
     private TextView cancelUserDataButton;
     private TextView saveUserDataButton;
     String id = null , type = null;
+
+    private ArrayList<String> names = new ArrayList<>();
+    private ArrayList<String> emails = new ArrayList<>();
+    private ArrayList<String> pnos = new ArrayList<>();
+    private ArrayList<String> details = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,9 +61,7 @@ public class detailclass  extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-
-
-        String[] information = bundle.getStringArray("info");
+        HashMap<String , ArrayList>  info = (HashMap<String, ArrayList>) bundle.get("info");
 
 
         tohideurl = findViewById(R.id.textView10);
@@ -73,10 +79,24 @@ public class detailclass  extends AppCompatActivity {
         typetext = findViewById(R.id.typetext);
 
 
-        int last = information.length;
+        names = info.get("1");
+        emails = info.get("2");
+        pnos = info.get("3");
+        details = info.get("4");
 
-        type = information[last - 2];
-        id = information[last - 1];
+        String authdetails = "";
+
+        for(int i =0; i < names.size() ; i ++)
+        {
+            authdetails += names.get(i) + "\n";
+        }
+
+
+
+        int last = details.size();
+
+        type = details.get(last - 2);
+        id = details.get(last - 1);
 
         typetext.setText(type);
 
@@ -85,11 +105,11 @@ public class detailclass  extends AppCompatActivity {
 
         if(type.equals("Honors_and_Award")){
 
-            Title.setText(information[0]);
+            Title.setText(details.get(0));
             tohideurl.setText("Issuer");
-            URL.setText(information[1]);
+            URL.setText(details.get(1));
 
-            long date1 = Long.parseLong(information[2]);
+            long date1 = Long.parseLong(details.get(2));
 
             DateFormat simple = new SimpleDateFormat("dd MM yyyy");
 
@@ -99,7 +119,7 @@ public class detailclass  extends AppCompatActivity {
 
             Date.setText(hdate);
 
-            des.setText(information[3]);
+            des.setText(details.get(3));
 
             tohidepublisher.setVisibility(View.GONE);
             tohideapp.setVisibility(View.GONE);
@@ -112,10 +132,10 @@ public class detailclass  extends AppCompatActivity {
         }
         else if(type.equals("Publication")){
 
-            Title.setText(information[0]);
-            publisher.setText(information[1]);
+            Title.setText(details.get(0));
+            publisher.setText(details.get(1));
 
-            long date1 = Long.parseLong(information[2]);
+            long date1 = Long.parseLong(details.get(2));
 
             DateFormat simple = new SimpleDateFormat("dd MM yyyy");
 
@@ -125,8 +145,8 @@ public class detailclass  extends AppCompatActivity {
 
             Date.setText(hdate);
 
-            des.setText(information[3]);
-            URL.setText(information[4]);
+            des.setText(details.get(3));
+            URL.setText(details.get(4));
             tohidepublisher.setText("Publication or Publisher");
 
 
@@ -134,16 +154,18 @@ public class detailclass  extends AppCompatActivity {
 
             appnumber.setVisibility(View.GONE);
 
+            authname.setText(authdetails);
+
         }
         else if(type.equals("Patent"))
         {
 
-            Title.setText(information[0]);
+            Title.setText(details.get(0));
             tohidepublisher.setText("Patent Office");
-            publisher.setText(information[1]);
-            appnumber.setText(information[2]);
+            publisher.setText(details.get(1));
+            appnumber.setText(details.get(2));
 
-            long date1 = Long.parseLong(information[3]);
+            long date1 = Long.parseLong(details.get(3));
 
             DateFormat simple = new SimpleDateFormat("dd MM yyyy");
 
@@ -152,8 +174,9 @@ public class detailclass  extends AppCompatActivity {
             String hdate = simple.format(result1);
             Date.setText(hdate);
 
-            des.setText(information[4]);
-            URL.setText(information[5]);
+            des.setText(details.get(4));
+            URL.setText(details.get(5));
+            authname.setText(authdetails);
             tohideauthor.setText("Inventors");
 
 
@@ -161,10 +184,10 @@ public class detailclass  extends AppCompatActivity {
 
         }
         else{
-            Title.setText(information[0]);
+            Title.setText(details.get(0));
 
 
-            long date1 = Long.parseLong(information[1]);
+            long date1 = Long.parseLong(details.get(1));
 
             DateFormat simple = new SimpleDateFormat("dd MM yyyy");
 
@@ -173,8 +196,10 @@ public class detailclass  extends AppCompatActivity {
             String hdate = simple.format(result1);
 
             Date.setText(hdate);
-            URL.setText(information[2]);
-            des.setText(information[3]);
+            URL.setText(details.get(2));
+            des.setText(details.get(3));
+
+            authname.setText(authdetails);
 
             tohidepublisher.setVisibility(View.GONE);
             publisher.setVisibility(View.GONE);
@@ -216,7 +241,7 @@ public class detailclass  extends AppCompatActivity {
                 saveUserDataButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getApplicationContext() , "Your Data will be removed prmanently" , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext() , "Your Data will be removed permanently" , Toast.LENGTH_SHORT).show();
 
                         if(passwordEditText.getText().toString().trim().equals(""))
                         {
@@ -229,7 +254,7 @@ public class detailclass  extends AppCompatActivity {
                             if(type.equals("Honors_and_Award"))
                                 type = "HonorsandAward";
 
-                            ApiDelete apiDelete = new ApiDelete(getApplicationContext() , id, type , pass);
+                            ApiDelete apiDelete = new ApiDelete(detailclass.this , id, type , pass);
                             apiDelete.execute();
                         }
 

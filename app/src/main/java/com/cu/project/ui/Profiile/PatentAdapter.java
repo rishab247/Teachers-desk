@@ -78,11 +78,7 @@ class PatentAdapter implements ListAdapter {
                     int id = arrayList.get(position).id;
                     Apigetdetails apigetdetails = new Apigetdetails(context);
                     apigetdetails.execute(String.valueOf(id) , "Patent");
-//                    Log.e("ID OD", String.valueOf(id));
-//                    Intent intent = new Intent(context , detailclass.class);
-//                    intent.putExtra("ID", id);
-//                    intent.putExtra("TYPE" , "Patent");
-//                    context.startActivity(intent);
+
                 }
             });
             TextView tittle=convertView.findViewById(R.id.maintextview_id);

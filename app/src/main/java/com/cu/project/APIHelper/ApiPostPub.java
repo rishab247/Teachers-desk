@@ -1,5 +1,6 @@
 package com.cu.project.APIHelper;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +27,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ApiPostPub extends AsyncTask<String , Void , Void>  {
+public class ApiPostPub extends AsyncTask<String , Void , String>  {
     String token = loginActivity.gettoken();
 
     Context scontext;
@@ -50,9 +51,10 @@ public class ApiPostPub extends AsyncTask<String , Void , Void>  {
     }
 
     @Override
-    protected Void doInBackground(String... strings) {
+    protected String doInBackground(String... strings) {
 
         String str = strings[0];
+
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
 
 
@@ -66,43 +68,43 @@ public class ApiPostPub extends AsyncTask<String , Void , Void>  {
         Request request = new Request.Builder()
                 .url(urlpost).post(body).build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        Response response = null;
 
-                String mMessage = e.getMessage();
-                Log.v("pub failure Response", mMessage);
+        String code = null;
 
-            }
+        try {
+            response = client.newCall(request).execute();
 
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            code = String.valueOf(response.code());
 
-                String mMessage = response.body().string();
-
-
-                try {
-                    JSONObject jsonObject1 = new JSONObject(mMessage);
-
-                    String info = jsonObject1.getString("msg");
-                    Log.e("pub_responce", info);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        });
-
-        return null;
+        return code;
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
+    protected void onPostExecute(String aVoid) {
         super.onPostExecute(aVoid);
-        dialog.cancel();
+        if(dialog.isShowing())
+        {
+            dialog.cancel();
+        }
+
+        Activity activity = (Activity)scontext;
+
+        if(aVoid.equals("200"))
+        {
+            Intent intent = new Intent(scontext , UploadActivity.class);
+            scontext.startActivity(intent);
+            activity.finish();
+        }
+        else
+        {
+            Toast.makeText(scontext , "Publication already exists" , Toast.LENGTH_SHORT).show();
+        }
     }
 
 
