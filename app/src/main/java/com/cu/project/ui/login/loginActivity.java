@@ -204,4 +204,5 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         intent_name.putExtra("dob_" , dobdate);
         startActivity(intent_name);
     }
+
 }

@@ -63,7 +63,13 @@ public class ApiEditProfile extends AsyncTask<String, Void , String> {
         sharedpreferences = scontext.getSharedPreferences("Login", Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
         if(sharedpreferences.getLong("Exp_time", 0)<System.currentTimeMillis())
+        {
             editor.clear();
+        Toast.makeText(scontext,"You are Loggesd out",Toast.LENGTH_SHORT).show();
+
+
+
+        }
         String token= sharedpreferences.getString("Token", "");
         url = url + token;
 

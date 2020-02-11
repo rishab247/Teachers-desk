@@ -48,7 +48,7 @@ private   SharedPreferences sharedpreferences;
         Context scontext = contextRef.get();
         sharedpreferences = scontext.getSharedPreferences("Login", Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
-         dialog = new ProgressDialog(scontext);
+        dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
