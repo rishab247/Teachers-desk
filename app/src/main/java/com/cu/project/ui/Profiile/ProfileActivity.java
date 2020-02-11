@@ -34,6 +34,7 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.cu.project.APIHelper.ApiVerify;
+import com.cu.project.APIHelper.AsyncVerifyResponse;
 import com.cu.project.ProfileEdit;
 import com.cu.project.R;
 import com.cu.project.ui.Authorclass;
@@ -47,7 +48,7 @@ import com.cu.project.ui.login.loginActivity;
 
 import java.util.concurrent.ExecutionException;
 
-public class ProfileActivity extends AppCompatActivity implements ProfileMvpView {
+public class ProfileActivity extends AppCompatActivity implements ProfileMvpView, AsyncVerifyResponse {
     private static SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
 
@@ -66,7 +67,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
     TextView quali , depart , pnotext, uni , eidtext;
 
-    Bundle bundle = new Bundle();
 
 
     FloatingActionButton btn1 , btn2;
@@ -76,7 +76,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        ApiVerify apiVerify = new ApiVerify(this);
+        apiVerify.execute();
         Bundle bundle = getIntent().getExtras();
         sharedpreferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
 
@@ -103,7 +104,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         String dob = bundle.getString("dob_");
 
         String eid = bundle.getString("e_code");
-
+        editor.putString("name_",bundle.getString("name_")).apply();
+        editor.putString("email_", bundle.getString("email_") ).apply();
+        editor.putString("p_no",bundle.getString("p_no") ).apply();
         final String[] datarray = new String[]{name , email , pno , depart , doj , quali , uni , dob , eid};
 
 
@@ -219,6 +222,18 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
                 uni.setText(res[3]);
             }
         }
+    }
+
+    @Override
+    public void processVerifyFinish(String[] output) {
+         editor.putString("Verify",output[0]+output[1]);
+        editor.commit();
+
+        Log.e(  "processVerifyFinish: ",sharedpreferences.getString("Verify","") );
+        Log.e(  "processVerifyFinish: ",sharedpreferences.getString("email_","") );
+        Log.e(  "processVerifyFinish: ",sharedpreferences.getString("name_","") );
+        Log.e(  "processVerifyFinish: ",sharedpreferences.getString("p_no","") );
+
     }
 }
 

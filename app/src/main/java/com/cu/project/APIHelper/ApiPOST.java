@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.cu.project.ui.Upload.UploadActivity;
@@ -20,14 +22,16 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class ApiPOST  extends AsyncTask<String , Context, String> {
 
-
+    private   SharedPreferences sharedpreferences;
+      SharedPreferences.Editor editor;
     private ProgressDialog dialog;
 
-    String token = loginActivity.gettoken();
+//    String token = loginActivity.gettoken();
 
-    Context scontext;
 
     private WeakReference<Context> contextRef;
 
@@ -41,8 +45,10 @@ public class ApiPOST  extends AsyncTask<String , Context, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        scontext = contextRef.get();
+        Context scontext = contextRef.get();
 
+        sharedpreferences = scontext.getSharedPreferences("Login", Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
         dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);
@@ -56,7 +62,12 @@ public class ApiPOST  extends AsyncTask<String , Context, String> {
 
         String code = null;
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
-
+        if(sharedpreferences.getLong("Exp_time", 0)<System.currentTimeMillis())
+            editor.clear();
+        String token = sharedpreferences.getString("Token", "");
+        if(token.equals("")){
+            Log.e(TAG, "gettoken: token doesnot exists or expired " );
+        }
         String url = "https://apitims1.azurewebsites.net/user/upload/Honors_and_Award?token=";
         url = url + token;
 
@@ -89,6 +100,7 @@ public class ApiPOST  extends AsyncTask<String , Context, String> {
         {
             dialog.cancel();
         }
+        Context scontext = contextRef.get();
 
         Activity activity = (Activity)scontext;
 

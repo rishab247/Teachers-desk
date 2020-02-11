@@ -6,6 +6,7 @@ import com.cu.project.ui.login.loginActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -23,20 +24,29 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.cu.project.R;
 import com.cu.project.ui.Upload.UploadActivity;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class View_fragment extends Fragment implements Asyncresponsegetpaper {
     private Button upload_btn;
     private TextView txt;
 
-    String token = loginActivity.gettoken();
+
+//    String token = loginActivity.gettoken();
     View v;
 
     private ListView list , list1 , list2 , list3;
-
+    private static SharedPreferences sharedpreferences;
+    static SharedPreferences.Editor editor;
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -48,17 +58,21 @@ public class View_fragment extends Fragment implements Asyncresponsegetpaper {
     private ArrayList<SubjectData> listitems1 =  new ArrayList<>();
     private ArrayList<SubjectData> listitems2 =  new ArrayList<>();
     private ArrayList<SubjectData> listitems3 =  new ArrayList<>();
+    private ArrayList<SubjectData> listitems4 =  new ArrayList<>();
     ApigetPaper apigetPaper;
     HashMap<String, ArrayList>  map;
+    HashMap<String, ArrayList>  map1;
+    Gson gson;
      @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
         v = inflater.inflate(R.layout.fragment_view_fragment, container, false);
-        final Context context =  this.getContext();
+           gson = new Gson();
 
         swipeRefreshLayout = v.findViewById(R.id.swipe);
-
+         sharedpreferences = getContext().getSharedPreferences("Login", Context.MODE_PRIVATE);
+         editor = sharedpreferences.edit();
 
         list = v.findViewById(R.id.listView1);
         list1 = v.findViewById(R.id.listView2);
@@ -77,12 +91,34 @@ public class View_fragment extends Fragment implements Asyncresponsegetpaper {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                if(sharedpreferences.getLong("Exp_time", 0)<System.currentTimeMillis())
+                    editor.clear();
+                String token = sharedpreferences.getString("Token", "");
+                if(token.equals("")){
+                    Log.e(TAG, "gettoken: token doesnot exists or expired " );
+                }
 
                 apigetPaper.execute(token);
 
             }
         });
+
+
+
+//
+//         String storedHashMapString = sharedpreferences.getString("apigetpaper", "");
+//        if(storedHashMapString.equals("")){
+//            Toast.makeText(getContext(),"error",Toast.LENGTH_LONG).show();
+//        }
+//        else{
+////            java.lang.reflect.Type type = new TypeToken<HashMap<String, ArrayList> >(){}.getType();
+////            map1 = gson.fromJson(storedHashMapString, type);
+////            listitems4 = map1.get("1");
+////            SubjectData data = new SubjectData();
+////            data  = listitems4.get(1);
+////            Log.e("cache testing",data.getDate()+data.getId());
+//        }
+
 //        swipeRefreshLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
 //            @Override
 //            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
@@ -132,9 +168,12 @@ public class View_fragment extends Fragment implements Asyncresponsegetpaper {
 
     @Override
     public void processFinishgetpaper(HashMap map1) {
+        String hashMapString = gson.toJson(map1);
 
+        editor.putString("apigetpaper", hashMapString);
+        editor.commit();
 
-    try{
+        try{
         listitems = (ArrayList<SubjectData>)map1.get("1");
         listitems1 = (ArrayList<SubjectData>)map1.get("2");
         listitems2 = (ArrayList<SubjectData>)map1.get("3");
@@ -150,7 +189,7 @@ public class View_fragment extends Fragment implements Asyncresponsegetpaper {
             list.invalidateViews();
             txt = v.findViewById(R.id.noitems1id);
             txt.setVisibility(View.INVISIBLE);
-            ListUtils.setDynamicHeight(list);
+            setDynamicHeight(list);
 
         }
         if (listitems1.size() == 0) {
@@ -159,7 +198,7 @@ public class View_fragment extends Fragment implements Asyncresponsegetpaper {
         } else {
             PatentAdapter customAdapter1 = new PatentAdapter(getContext(), listitems1);
             list1.setAdapter(customAdapter1);
-            ListUtils.setDynamicHeight(list1);
+            setDynamicHeight(list1);
             list1.invalidateViews();
             count2 = list1.getCount();
 
@@ -175,7 +214,7 @@ public class View_fragment extends Fragment implements Asyncresponsegetpaper {
         } else {
             ProjectAdapter customAdapter2 = new ProjectAdapter(getContext(), listitems2);
             list2.setAdapter(customAdapter2);
-            ListUtils.setDynamicHeight(list2);
+            setDynamicHeight(list2);
             count3 = list2.getCount();
             txt = v.findViewById(R.id.noitems1id2);
             txt.setVisibility(View.INVISIBLE);
@@ -192,7 +231,7 @@ public class View_fragment extends Fragment implements Asyncresponsegetpaper {
             Honors_and_AwardAdapter customAdapter3 = new Honors_and_AwardAdapter(getContext(), listitems3);
             list3.setAdapter(customAdapter3);
             list3.invalidateViews();
-            ListUtils.setDynamicHeight(list3);
+            setDynamicHeight(list3);
             list3.invalidateViews();
             txt = v.findViewById(R.id.noitems1id3);
             txt.setVisibility(View.INVISIBLE);
@@ -213,8 +252,8 @@ public class View_fragment extends Fragment implements Asyncresponsegetpaper {
 
 
     }
-    public static class ListUtils {
-        public static void setDynamicHeight(ListView mListView) {
+
+        public   void setDynamicHeight(ListView mListView) {
             ListAdapter mListAdapter = mListView.getAdapter();
             if (mListAdapter == null) {
                 // when adapter is null
@@ -232,7 +271,7 @@ public class View_fragment extends Fragment implements Asyncresponsegetpaper {
             mListView.setLayoutParams(params);
             mListView.requestLayout();
         }
-    }
+
 
 
 

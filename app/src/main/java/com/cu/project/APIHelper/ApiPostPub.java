@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -28,10 +29,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ApiPostPub extends AsyncTask<String , Void , String>  {
-    String token = loginActivity.gettoken();
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
-    Context scontext;
+public class ApiPostPub extends AsyncTask<String , Void , String>  {
+//    String token = loginActivity.gettoken();
+private SharedPreferences sharedpreferences;
+      SharedPreferences.Editor editor;
+//    Context scontext;
 
     ProgressDialog dialog;
     private WeakReference<Context> contextRef;
@@ -47,8 +51,10 @@ public class ApiPostPub extends AsyncTask<String , Void , String>  {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        scontext = contextRef.get();
-        dialog = new ProgressDialog(scontext);
+        Context scontext = contextRef.get();
+        sharedpreferences = scontext.getSharedPreferences("Login", Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
+         dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
@@ -62,7 +68,12 @@ public class ApiPostPub extends AsyncTask<String , Void , String>  {
 
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
 
-
+        if(sharedpreferences.getLong("Exp_time", 0)<System.currentTimeMillis())
+            editor.clear();
+        String token = sharedpreferences.getString("Token", "");
+        if(token.equals("")){
+            Log.e(TAG, "gettoken: token doesnot exists or expired " );
+        }
         String urlpost = "https://apitims1.azurewebsites.net/user/upload/Publication?token=";
         urlpost = urlpost + token;
 
@@ -97,6 +108,7 @@ public class ApiPostPub extends AsyncTask<String , Void , String>  {
         {
             dialog.cancel();
         }
+        Context scontext = contextRef.get();
 
         Activity activity = (Activity)scontext;
 

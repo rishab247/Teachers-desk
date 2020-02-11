@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -26,14 +27,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ApiDelete extends AsyncTask<Void , Void , String> {
-
+    private static SharedPreferences sharedpreferences;
+    static SharedPreferences.Editor editor;
     String id = null, type = null, pass = null;
-    Context scontext;
-    ProgressDialog dialog;
+     ProgressDialog dialog;
 
     private WeakReference<Context> contextRef;
 
-    String token = loginActivity.gettoken();
+//    String token = loginActivity.gettoken();
 
     String url = "https://apitims1.azurewebsites.net//user/upload?token=";
 
@@ -46,17 +47,27 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        scontext = contextRef.get();
+        Context scontext = contextRef.get();
         dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
         dialog.show();
+
     }
 
 
     @Override
     protected String doInBackground(Void... voids) {
+        Context scontext = contextRef.get();
+
+        sharedpreferences = scontext.getSharedPreferences("Login", Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
+        if(sharedpreferences.getLong("Exp_time", 0)<System.currentTimeMillis())
+            editor.clear();
+        String token= sharedpreferences.getString("Token", "");
+
+
 
         url = url + token;
         String code = null;
@@ -102,7 +113,7 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
     @Override
     protected void onPostExecute(String string) {
         super.onPostExecute(string);
-
+        Context scontext = contextRef.get();
         Log.e("STRING" , string);
 
         if(dialog.isShowing())

@@ -39,12 +39,12 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , ArrayList>> {
 
-    String token = loginActivity.gettoken();
+//    String token = loginActivity.gettoken();
 
 
     String url = "https://apitims1.azurewebsites.net/user/Accomplishmen/Details?token=";
-    private static SharedPreferences sharedpreferences;
-    static SharedPreferences.Editor editor;
+    private   SharedPreferences sharedpreferences;
+    SharedPreferences.Editor editor;
 
     private WeakReference<Context> contextRef;
 
@@ -52,7 +52,6 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
 
     String mMessage = "";
     private ProgressDialog dialog;
-      Context sContext;
 
 
     public Apigetdetails(Context context) {
@@ -66,19 +65,15 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        sContext = contextRef.get();
-        dialog = new ProgressDialog(sContext);
+        Context sContext = contextRef.get();
+
+         dialog = new ProgressDialog(sContext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
         dialog.show();
 
-        if(sharedpreferences.getLong("Exp_time", 0)<System.currentTimeMillis())
-            editor.clear();
-        token = sharedpreferences.getString("Token", "");
-        if(token.equals("")){
-            Log.e(TAG, "gettoken: token doesnot exists or expired " );
-        }
+
 
 
     }
@@ -87,7 +82,12 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
     protected HashMap<String, ArrayList> doInBackground(String... voids) {
 
         HashMap<String, ArrayList> map = new HashMap<>();
-
+        if(sharedpreferences.getLong("Exp_time", 0)<System.currentTimeMillis())
+            editor.clear();
+        String token = sharedpreferences.getString("Token", "");
+        if(token.equals("")){
+            Log.e(TAG, "gettoken: token doesnot exists or expired " );
+        }
         url = url + token;
         Log.d("URL VERIFY1", "doInBackground: " + url);
 
@@ -263,10 +263,10 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
     protected void onPostExecute(HashMap<String , ArrayList> strings) {
         super.onPostExecute(strings);
 
+        Context sContext = contextRef.get();
+
         if(dialog.isShowing())
-        {
-            dialog.cancel();
-        }
+        { dialog.cancel();}
 
         if(strings.equals(null))
         {

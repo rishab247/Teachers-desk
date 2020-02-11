@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.textclassifier.TextLanguage;
@@ -25,15 +26,15 @@ import okhttp3.Response;
 
 public class ApiEditProfile extends AsyncTask<String, Void , String> {
 
-    Context scontext;
-    String p_no , depart , quali , uni , pass;
+     private String p_no , depart , quali , uni , pass;
 
     public static int code = 1;
     private WeakReference<Context> contextRef;
 
     String url = "https://apitims1.azurewebsites.net/user/Profile?token=";
-    String token = loginActivity.gettoken();
-
+//    String token = loginActivity.gettoken();
+        SharedPreferences sharedpreferences;
+        SharedPreferences.Editor editor;
     ProgressDialog dialog;
 
 
@@ -46,8 +47,9 @@ public class ApiEditProfile extends AsyncTask<String, Void , String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        scontext = contextRef.get();
-        dialog = new ProgressDialog(scontext);
+        Context scontext = contextRef.get();
+
+         dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
@@ -56,7 +58,13 @@ public class ApiEditProfile extends AsyncTask<String, Void , String> {
 
     @Override
     protected String doInBackground(String... voids) {
+        Context scontext = contextRef.get();
 
+        sharedpreferences = scontext.getSharedPreferences("Login", Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
+        if(sharedpreferences.getLong("Exp_time", 0)<System.currentTimeMillis())
+            editor.clear();
+        String token= sharedpreferences.getString("Token", "");
         url = url + token;
 
         p_no = voids[0];
@@ -105,6 +113,7 @@ public class ApiEditProfile extends AsyncTask<String, Void , String> {
     @Override
     protected void onPostExecute(String aVoid) {
         super.onPostExecute(aVoid);
+        Context scontext = contextRef.get();
 
         if(dialog.isShowing())
         {

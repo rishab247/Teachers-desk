@@ -3,6 +3,7 @@ package com.cu.project.APIHelper;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -23,13 +24,13 @@ import okhttp3.Response;
 
 public class ApiPassword extends AsyncTask<String , Void , String> {
     String url = "https://apitims1.azurewebsites.net/Verify/password?token=";
-    String token = loginActivity.gettoken();
+//    String token = loginActivity.gettoken();
 
     String oldpass = null;
     String newpass = null;
-
-    Context sContext;
-    ProgressDialog dialog;
+    SharedPreferences sharedpreferences;
+    SharedPreferences.Editor editor;
+     ProgressDialog dialog;
 
     private WeakReference<Context> contextRef;
 
@@ -43,8 +44,10 @@ public class ApiPassword extends AsyncTask<String , Void , String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        sContext = contextRef.get();
-        dialog = new ProgressDialog(sContext);
+
+        Context scontext = contextRef.get();
+
+         dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
@@ -53,12 +56,17 @@ public class ApiPassword extends AsyncTask<String , Void , String> {
 
     @Override
     protected String doInBackground(String... voids) {
+        Context scontext = contextRef.get();
 
         String code = null;
 
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
         OkHttpClient client = new OkHttpClient();
-
+        sharedpreferences = scontext.getSharedPreferences("Login", Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
+        if(sharedpreferences.getLong("Exp_time", 0)<System.currentTimeMillis())
+            editor.clear();
+        String token= sharedpreferences.getString("Token", "");
         url = url + token;
         oldpass = voids[0];
         newpass = voids[1];
@@ -97,6 +105,7 @@ public class ApiPassword extends AsyncTask<String , Void , String> {
     @Override
     protected void onPostExecute(String aVoid) {
         super.onPostExecute(aVoid);
+        Context sContext = contextRef.get();
 
         if(dialog.isShowing())
         {
