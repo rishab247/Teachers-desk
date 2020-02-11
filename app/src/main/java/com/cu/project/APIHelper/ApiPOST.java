@@ -12,6 +12,7 @@ import com.cu.project.ui.login.loginActivity;
 
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -28,14 +29,19 @@ public class ApiPOST  extends AsyncTask<String , Context, String> {
 
     Context scontext;
 
+    private WeakReference<Context> contextRef;
+
+
     public ApiPOST(Context context)
     {
-        scontext = context;
+        contextRef =new WeakReference<> (context);
+
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        scontext = contextRef.get();
 
         dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");

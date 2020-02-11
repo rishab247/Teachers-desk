@@ -34,21 +34,22 @@ import com.cu.project.ui.login.loginActivity;
 
 public class Apiget  extends AsyncTask<String , Void , String[]> {
 
-    private static Context sContext;
+    private static Context scontext;
     ProgressDialog dialog;
     public AsyncResponse asyncResponse= null;
 
 
+
+    private WeakReference<Context> contextRef;
+
     public static String[] statusarr = {""};
 
 
-    public Apiget() {
-        super();
-    }
 
     public Apiget(Context context)
     {
-        sContext = context;
+        contextRef =new WeakReference<> (context);
+
     }
 
     String urls = "https://apitims1.azurewebsites.net/user/Profile?token=";
@@ -71,7 +72,8 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        dialog = new ProgressDialog(sContext);
+        scontext = contextRef.get();
+        dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);

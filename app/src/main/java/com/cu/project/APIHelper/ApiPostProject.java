@@ -14,6 +14,7 @@ import com.cu.project.ui.login.loginActivity;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -29,13 +30,18 @@ public class ApiPostProject  extends AsyncTask<String , Void , String> {
     Context scontext;
     ProgressDialog dialog;
 
+    private WeakReference<Context> contextRef;
+
+
     public ApiPostProject(Context context) {
-        this.scontext = context;
+        contextRef =new WeakReference<> (context);
+
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        scontext = contextRef.get();
         dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);

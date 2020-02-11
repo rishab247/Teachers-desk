@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -28,6 +29,7 @@ public class ApiEditProfile extends AsyncTask<String, Void , String> {
     String p_no , depart , quali , uni , pass;
 
     public static int code = 1;
+    private WeakReference<Context> contextRef;
 
     String url = "https://apitims1.azurewebsites.net/user/Profile?token=";
     String token = loginActivity.gettoken();
@@ -37,12 +39,14 @@ public class ApiEditProfile extends AsyncTask<String, Void , String> {
 
     public ApiEditProfile(Context context)
     {
-        this.scontext = context;
+        contextRef =new WeakReference<> (context);
+
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        scontext = contextRef.get();
         dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);

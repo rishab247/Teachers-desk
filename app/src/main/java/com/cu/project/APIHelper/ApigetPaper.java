@@ -39,6 +39,8 @@ public class ApigetPaper extends AsyncTask<String , Void , HashMap<String,ArrayL
     public Asyncresponsegetpaper asyncresponsegetpaper=null;
     private String urls = "https://apitims1.azurewebsites.net/user/Accomplishment?token=";
 
+
+
     private ArrayList<SubjectData> listitems =  new ArrayList<>();
      private ArrayList<SubjectData> listitems1 =  new ArrayList<>();
     private ArrayList<SubjectData> listitems2 =  new ArrayList<>();

@@ -225,7 +225,6 @@ public class detailclass  extends AppCompatActivity {
             public void onClick(View v) {
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(detailclass.this);
-                alertDialogBuilder.setTitle("Please Enter Your Password to delete");
                 alertDialogBuilder.setCancelable(false);
 
                 initPopupViewControls();

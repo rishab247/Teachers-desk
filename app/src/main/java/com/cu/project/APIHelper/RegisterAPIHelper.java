@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import kotlin.Result;
 import okhttp3.Call;
@@ -33,14 +34,18 @@ public class RegisterAPIHelper  extends AsyncTask<String , String , String> {
 
     String length = null;
 
+    private WeakReference<Context> contextRef;
+
+
     public RegisterAPIHelper(Context context) {
-        scontext = context;
+        contextRef =new WeakReference<> (context);
+
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-
+        scontext = contextRef.get();
         dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);

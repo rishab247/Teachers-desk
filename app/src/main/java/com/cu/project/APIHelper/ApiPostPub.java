@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -33,16 +34,20 @@ public class ApiPostPub extends AsyncTask<String , Void , String>  {
     Context scontext;
 
     ProgressDialog dialog;
+    private WeakReference<Context> contextRef;
+
 
 
     public ApiPostPub(Context context) {
-        scontext = context;
+        contextRef =new WeakReference<> (context);
+
     }
 
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        scontext = contextRef.get();
         dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);

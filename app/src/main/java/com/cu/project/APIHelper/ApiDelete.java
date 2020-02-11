@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -30,13 +31,14 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
     Context scontext;
     ProgressDialog dialog;
 
+    private WeakReference<Context> contextRef;
 
     String token = loginActivity.gettoken();
 
     String url = "https://apitims1.azurewebsites.net//user/upload?token=";
 
     public ApiDelete(Context context, String id, String type, String pass) {
-        this.scontext = context;
+        contextRef =new WeakReference<> (context);
         this.id = id;
         this.type = type;
         this.pass = pass;
@@ -44,6 +46,7 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        scontext = contextRef.get();
         dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);
@@ -100,6 +103,8 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
     protected void onPostExecute(String string) {
         super.onPostExecute(string);
 
+        Log.e("STRING" , string);
+
         if(dialog.isShowing())
         {
             dialog.cancel();
@@ -110,7 +115,6 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
         }
 
         else{
-
             Activity activity = (Activity) scontext;
             activity.finish();
         }

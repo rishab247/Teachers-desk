@@ -9,6 +9,7 @@ import android.content.SyncAdapterType;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.cu.project.ui.Profiile.SubjectData;
 import com.cu.project.ui.detailclass;
@@ -20,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,13 +46,17 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
     private static SharedPreferences sharedpreferences;
     static SharedPreferences.Editor editor;
 
+    private WeakReference<Context> contextRef;
+
+
+
     String mMessage = "";
     private ProgressDialog dialog;
       Context sContext;
 
 
     public Apigetdetails(Context context) {
-        this.sContext = context;
+        contextRef =new WeakReference<> (context);
         sharedpreferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
     }
@@ -60,6 +66,7 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        sContext = contextRef.get();
         dialog = new ProgressDialog(sContext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);
@@ -82,7 +89,7 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
         HashMap<String, ArrayList> map = new HashMap<>();
 
         url = url + token;
-        Log.d("URL VERIFY1", "doInBackground: "+url);
+        Log.d("URL VERIFY1", "doInBackground: " + url);
 
 
         ArrayList<String> infoarray = new ArrayList<>();
@@ -108,7 +115,7 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
             jsonObject.put("id", id);
             jsonObject.put("Type", type);
 
-            Log.e("JSON" , jsonObject.toString());
+            Log.e("JSON", jsonObject.toString());
 
 
             RequestBody body = RequestBody.create(MEDIA_TYPE, jsonObject.toString());
@@ -125,153 +132,150 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
             JSONArray authorjsonarr = null;
 
             if (!response.isSuccessful()) {
-                res = String.valueOf(response.code());
-            }
-
-            else {
+                throw new IOException("Unexpected code " + response);
+            } else {
                 JSONObject jsonObject1 = new JSONObject(response.body().string());
 
                 jsonArray = jsonObject1.getJSONArray("data");
 
-                if(!type.equals("Honors_and_Award")){
+                if (!type.equals("Honors_and_Award")) {
                     authorjsonarr = jsonObject1.getJSONArray("author");
 
-                    Log.e("DATA" , authorjsonarr.toString());
                 }
 
 
-            }
+                String title, issuer, date, des;
+                String publisher, url;
+                String poffice, appno;
 
 
-
-            String title, issuer, date, des;
-            String publisher, url;
-            String poffice, appno;
-
-
-
-
-            if (type.equals("Honors_and_Award")) {
-                title = jsonArray.get(2).toString();
-                issuer = jsonArray.get(3).toString();
-                date = jsonArray.get(4).toString();
-                des = jsonArray.get(5).toString();
-                infoarray.add(title);
-                infoarray.add(issuer);
-                infoarray.add(date);
-                infoarray.add(des);
-                infoarray.add(type);
-                infoarray.add(id);
-
-
-            } else {
-                if (type.equals("Patent")) {
-
-
-                    title = jsonArray.get(1).toString();
-                    poffice = jsonArray.get(2).toString();
-                    appno = jsonArray.get(3).toString();
+                if (type.equals("Honors_and_Award")) {
+                    title = jsonArray.get(2).toString();
+                    issuer = jsonArray.get(3).toString();
                     date = jsonArray.get(4).toString();
                     des = jsonArray.get(5).toString();
-                    url = jsonArray.get(6).toString();
-
                     infoarray.add(title);
-                    infoarray.add(poffice);
-                    infoarray.add(appno);
+                    infoarray.add(issuer);
                     infoarray.add(date);
                     infoarray.add(des);
-                    infoarray.add(url);
                     infoarray.add(type);
                     infoarray.add(id);
 
-
-
-                    // authors details
-
-                    for(int i=0;i < authorjsonarr.length(); i ++)
-                    {
-                        JSONArray jsonArray1 = authorjsonarr.getJSONArray(i);
-
-                        names.add(jsonArray1.get(1).toString());
-                        emails.add(jsonArray1.get(2).toString());
-                        pnos.add(jsonArray1.get(3).toString());
-                    }
-
-
-                } else if (type.equals("Publication")) {
-
-                    title = jsonArray.get(1).toString();
-                    publisher = jsonArray.get(2).toString();
-                    date = jsonArray.get(3).toString();
-                    des = jsonArray.get(4).toString();
-                    url = jsonArray.get(5).toString();
-
-                    infoarray.add(title);
-                    infoarray.add(publisher);
-                    infoarray.add(date);
-                    infoarray.add(des);
-                    infoarray.add(url);
-                    infoarray.add(type);
-                    infoarray.add(id);
-
-                    // authors details
-
-                    for(int i=0;i < authorjsonarr.length(); i ++)
-                    {
-                        JSONArray jsonArray1 = authorjsonarr.getJSONArray(i);
-
-                        names.add(jsonArray1.get(1).toString());
-                        emails.add(jsonArray1.get(2).toString());
-                        pnos.add(jsonArray1.get(3).toString());
-                    }
 
                 } else {
-                    title = jsonArray.get(1).toString();
-                    date = jsonArray.get(2).toString();
-                    des = jsonArray.get(3).toString();
-                    url = jsonArray.get(4).toString();
-                    infoarray.add(title);
-                    infoarray.add(date);
-                    infoarray.add(des);
-                    infoarray.add(url);
-                    infoarray.add(type);
-                    infoarray.add(id);
+                    if (type.equals("Patent")) {
 
-                    // authors details
 
-                    for(int i=0;i < authorjsonarr.length(); i ++)
-                    {
-                        JSONArray jsonArray1 = authorjsonarr.getJSONArray(i);
+                        title = jsonArray.get(1).toString();
+                        poffice = jsonArray.get(2).toString();
+                        appno = jsonArray.get(3).toString();
+                        date = jsonArray.get(4).toString();
+                        des = jsonArray.get(5).toString();
+                        url = jsonArray.get(6).toString();
 
-                        names.add(jsonArray1.get(1).toString());
-                        emails.add(jsonArray1.get(2).toString());
-                        pnos.add(jsonArray1.get(3).toString());
+                        infoarray.add(title);
+                        infoarray.add(poffice);
+                        infoarray.add(appno);
+                        infoarray.add(date);
+                        infoarray.add(des);
+                        infoarray.add(url);
+                        infoarray.add(type);
+                        infoarray.add(id);
+
+
+                        // authors details
+
+                        for (int i = 0; i < authorjsonarr.length(); i++) {
+                            JSONArray jsonArray1 = authorjsonarr.getJSONArray(i);
+
+                            names.add(jsonArray1.get(1).toString());
+                            emails.add(jsonArray1.get(2).toString());
+                            pnos.add(jsonArray1.get(3).toString());
+                        }
+
+
+                    } else if (type.equals("Publication")) {
+
+                        title = jsonArray.get(1).toString();
+                        publisher = jsonArray.get(2).toString();
+                        date = jsonArray.get(3).toString();
+                        des = jsonArray.get(4).toString();
+                        url = jsonArray.get(5).toString();
+
+                        infoarray.add(title);
+                        infoarray.add(publisher);
+                        infoarray.add(date);
+                        infoarray.add(des);
+                        infoarray.add(url);
+                        infoarray.add(type);
+                        infoarray.add(id);
+
+                        // authors details
+
+                        for (int i = 0; i < authorjsonarr.length(); i++) {
+                            JSONArray jsonArray1 = authorjsonarr.getJSONArray(i);
+
+                            names.add(jsonArray1.get(1).toString());
+                            emails.add(jsonArray1.get(2).toString());
+                            pnos.add(jsonArray1.get(3).toString());
+                        }
+
+                    } else {
+                        title = jsonArray.get(1).toString();
+                        date = jsonArray.get(2).toString();
+                        des = jsonArray.get(3).toString();
+                        url = jsonArray.get(4).toString();
+                        infoarray.add(title);
+                        infoarray.add(date);
+                        infoarray.add(des);
+                        infoarray.add(url);
+                        infoarray.add(type);
+                        infoarray.add(id);
+
+                        // authors details
+
+                        for (int i = 0; i < authorjsonarr.length(); i++) {
+                            JSONArray jsonArray1 = authorjsonarr.getJSONArray(i);
+
+                            names.add(jsonArray1.get(1).toString());
+                            emails.add(jsonArray1.get(2).toString());
+                            pnos.add(jsonArray1.get(3).toString());
+                        }
                     }
                 }
             }
+            map.put("1", names);
+            map.put("2", emails);
+            map.put("3", pnos);
+            map.put("4", infoarray);
+
+            return map;
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        map.put("1" , names);
-        map.put("2" , emails);
-        map.put("3" , pnos);
-        map.put("4" , infoarray);
-
-
-        return map;
+        return null;
     }
 
     @Override
     protected void onPostExecute(HashMap<String , ArrayList> strings) {
         super.onPostExecute(strings);
 
-        Intent intent = new Intent(sContext, detailclass.class);
-        intent.putExtra("info" , strings);
+        if(dialog.isShowing())
+        {
+            dialog.cancel();
+        }
 
-        sContext.startActivity(intent);
-        dialog.hide();
+        if(strings.equals(null))
+        {
+            Toast.makeText(sContext , "Error Opening the file" , Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Intent intent = new Intent(sContext, detailclass.class);
+            intent.putExtra("info" , strings);
+            sContext.startActivity(intent);
+        }
     }
 }

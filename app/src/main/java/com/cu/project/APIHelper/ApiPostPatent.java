@@ -14,6 +14,7 @@ import com.cu.project.ui.login.loginActivity;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -27,8 +28,13 @@ public class ApiPostPatent extends AsyncTask<String , Void , String> {
     String token = loginActivity.gettoken();
 
     Context scontext;
+
+    private WeakReference<Context> contextRef;
+
+
     public ApiPostPatent(Context context) {
-        scontext = context;
+        contextRef =new WeakReference<> (context);
+
     }
 
     ProgressDialog dialog;
@@ -36,6 +42,7 @@ public class ApiPostPatent extends AsyncTask<String , Void , String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        scontext = contextRef.get();
         dialog = new ProgressDialog(scontext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);

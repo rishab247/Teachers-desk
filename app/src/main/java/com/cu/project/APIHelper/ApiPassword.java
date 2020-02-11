@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -30,15 +31,19 @@ public class ApiPassword extends AsyncTask<String , Void , String> {
     Context sContext;
     ProgressDialog dialog;
 
+    private WeakReference<Context> contextRef;
+
     public ApiPassword(Context context)
     {
-        this.sContext = context;
+        contextRef =new WeakReference<> (context);
+
     }
 
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        sContext = contextRef.get();
         dialog = new ProgressDialog(sContext);
         dialog.setMessage("Please wait...");
         dialog.setIndeterminate(true);
