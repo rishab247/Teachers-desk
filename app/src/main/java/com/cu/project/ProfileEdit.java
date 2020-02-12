@@ -321,6 +321,8 @@ public class ProfileEdit extends AppCompatActivity {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver() , resulturi);
 
 
+                        Log.e("BITMAP" , bitmap.toString());
+
 
                         Bitmap converetdImage = getResizedBitmap(bitmap, 200);
                         img_pro.setImageBitmap(converetdImage);

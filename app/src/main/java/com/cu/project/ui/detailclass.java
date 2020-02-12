@@ -23,6 +23,7 @@ import android.provider.DocumentsContract;
 import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,6 +32,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,13 +50,20 @@ import com.cu.project.APIHelper.Apigetdetails;
 import com.cu.project.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -76,11 +86,6 @@ import static com.cu.project.R.layout.accomplishments_details;
 public class detailclass  extends AppCompatActivity {
 
 
-    private static final String TAG = "PdfCreatorActivity";
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 111;
-    private File pdfFile;
-
-    private View mRootView;
     Context context;
 
     FloatingActionButton downloadfbtn, deletebtn;
@@ -156,7 +161,7 @@ public class detailclass  extends AppCompatActivity {
 
             long date1 = Long.parseLong(details.get(2));
 
-            DateFormat simple = new SimpleDateFormat("dd MM yyyy");
+            DateFormat simple = new SimpleDateFormat("dd MMM yyyy");
 
             java.util.Date result1 = new Date(date1);
 
@@ -181,7 +186,7 @@ public class detailclass  extends AppCompatActivity {
 
             long date1 = Long.parseLong(details.get(2));
 
-            DateFormat simple = new SimpleDateFormat("dd MM yyyy");
+            DateFormat simple = new SimpleDateFormat("dd MMM yyyy");
 
             java.util.Date result1 = new Date(date1);
 
@@ -209,7 +214,7 @@ public class detailclass  extends AppCompatActivity {
 
             long date1 = Long.parseLong(details.get(3));
 
-            DateFormat simple = new SimpleDateFormat("dd MM yyyy");
+            DateFormat simple = new SimpleDateFormat("dd MMM yyyy");
 
             java.util.Date result1 = new Date(date1);
 
@@ -228,7 +233,7 @@ public class detailclass  extends AppCompatActivity {
 
             long date1 = Long.parseLong(details.get(1));
 
-            DateFormat simple = new SimpleDateFormat("dd MM yyyy");
+            DateFormat simple = new SimpleDateFormat("dd MMM yyyy");
 
             java.util.Date result1 = new Date(date1);
 
@@ -310,17 +315,48 @@ public class detailclass  extends AppCompatActivity {
                         requestPermissions(permission , STORAGE_CODE);
                     }
                     else{
-                        savePdf();
+                        if(type.equals("Honors_and_Award"))
+                        {
+                            savePdfhonor();
+                        }
+                        else if(type.equals("Patent"))
+                        {
+                            savePdfpatent();
+                        }
+                        else if(type.equals("Publication"))
+                        {
+                            savePdfpub();
+                        }
+                        else
+                        {
+                            savePdf();
+                        }
+
                     }
                 }
                 else{
-                    savePdf();
+                    if(type.equals("Honors_and_Award"))
+                    {
+                        savePdfhonor();
+                    }
+                    else if(type.equals("Patent"))
+                    {
+                        savePdfpatent();
+                    }
+                    else if(type.equals("Publication"))
+                    {
+                        savePdfpub();
+                    }
+                    else
+                    {
+                        savePdf();
+                    }
                 }
             }
         });
     }
 
-    private void savePdf() {
+    private void savePdfhonor() {
 
         Document mDoc = new Document();
 
@@ -330,31 +366,73 @@ public class detailclass  extends AppCompatActivity {
 
         try {
 
-
-            Bitmap screen = getBitmapFromView(this.getWindow().findViewById(R.id.layout));
-
             PdfWriter.getInstance(mDoc , new FileOutputStream(mFilePath));
 
             mDoc.open();
 
-            LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-            ConstraintLayout root = (ConstraintLayout) inflater.inflate(accomplishments_details, null);
-            root.setDrawingCacheEnabled(true);
 
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            screen.compress(Bitmap.CompressFormat.PNG, 50, stream);
-            byte[] byteArray = stream.toByteArray();
+            float mHeadingFontSize = 35.0f;
+            float mValueFontSize = 20.0f;
 
-            Image image = null;
+            Font font1 = new Font();
+            font1.setSize(mHeadingFontSize);
+            font1.setColor(BaseColor.RED);
+            font1.setStyle(Font.BOLD);
 
-            image = Image.getInstance(byteArray);
+            Font font2 = new Font();
+            font2.setSize(mValueFontSize);
 
-            mDoc.add(image);
 
-            Log.e("PRINT FILE NAME" , mFileName);
+            mDoc.setPageSize(PageSize.A4);
+
+            Paragraph paragraph = new Paragraph();
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            paragraph.setIndentationLeft(20);
+            paragraph.setIndentationRight(20);
+            paragraph.setFont(font1);
+            paragraph.add(Title.getText().toString());
+
+
+            Paragraph paragraph1 = new Paragraph();
+            paragraph1.setAlignment(Element.ALIGN_LEFT);
+            paragraph1.setIndentationLeft(20);
+            paragraph1.setIndentationRight(20);
+            paragraph1.setFont(font2);
+            paragraph1.add(des.getText().toString());
+
+
+            Paragraph paragraph2 = new Paragraph();
+            paragraph2.setAlignment(Element.ALIGN_LEFT);
+            paragraph2.setIndentationLeft(20);
+            paragraph2.setIndentationRight(20);
+            paragraph2.setFont(font2);
+            String url = "URL: " + URL.getText().toString();
+            paragraph2.add(url);
+
+
+            Paragraph paragraph3 = new Paragraph();
+            paragraph3.setAlignment(Element.ALIGN_RIGHT);
+            paragraph3.setFont(font2);
+            paragraph3.setIndentationRight(20);
+            paragraph3.setIndentationLeft(20);
+            paragraph3.add(Date.getText().toString());
+
+
+
+            mDoc.add(paragraph);
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(paragraph3);
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(paragraph2);
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(paragraph1);
 
 
             mDoc.close();
+
 
             Toast.makeText(this , "File Saved" , Toast.LENGTH_SHORT).show();
 
@@ -365,6 +443,547 @@ public class detailclass  extends AppCompatActivity {
 
 
     }
+
+
+
+    private void savePdfpub() {
+
+        Document mDoc = new Document(PageSize.A4);
+
+        String mFileName = new SimpleDateFormat("yyyyMMdd_HHmmss" , Locale.getDefault()).format(System.currentTimeMillis());
+
+        String mFilePath = Environment.getExternalStorageDirectory() + "/" + mFileName + ".pdf";
+
+        try {
+
+            PdfWriter.getInstance(mDoc , new FileOutputStream(mFilePath));
+
+            mDoc.open();
+
+
+            float mHeadingFontSize = 35.0f;
+            float mValueFontSize = 20.0f;
+
+            Font font1 = new Font();
+            font1.setSize(mHeadingFontSize);
+            font1.setColor(BaseColor.RED);
+            font1.setStyle(Font.BOLD);
+
+            Font font2 = new Font();
+            font2.setSize(mValueFontSize);
+
+            Paragraph paragraph = new Paragraph();
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            paragraph.setIndentationLeft(20);
+            paragraph.setIndentationRight(20);
+            paragraph.setFont(font1);
+            paragraph.add(Title.getText().toString());
+
+
+            Paragraph paragraph1 = new Paragraph();
+            paragraph1.setAlignment(Element.ALIGN_LEFT);
+            paragraph1.setIndentationLeft(20);
+            paragraph1.setIndentationRight(20);
+            paragraph1.setFont(font2);
+            paragraph1.add(des.getText().toString());
+
+            Paragraph paragraph3 = new Paragraph();
+            paragraph3.setAlignment(Element.ALIGN_RIGHT);
+            paragraph3.setFont(font2);
+            paragraph3.setIndentationRight(20);
+            paragraph3.setIndentationLeft(20);
+            paragraph3.add(Date.getText().toString());
+
+
+
+            Font bfBold12 = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, new BaseColor(0, 0, 0));
+            Font bf12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
+
+
+            Font desfont = new Font(Font.FontFamily.TIMES_ROMAN , 14);
+
+            float[] columnWidths = {1.5f, 5f, 2f};
+            //create PDF table with the given widths
+            PdfPTable table = new PdfPTable(columnWidths);
+            table.setWidthPercentage(90f);
+            insertCell(table, "Name", Element.ALIGN_LEFT, 1 , bfBold12);
+            insertCell(table, "Email", Element.ALIGN_LEFT, 1 , bfBold12);
+            insertCell(table, "Phone Number", Element.ALIGN_LEFT, 1 , bfBold12);
+            table.setHeaderRows(1);
+
+
+            for(int i =0;i < names.size(); i ++)
+            {
+                insertCell(table , names.get(i) ,Element.ALIGN_LEFT, 1 , desfont);
+                insertCell(table , emails.get(i) ,Element.ALIGN_LEFT, 1 , desfont);
+                insertCell(table , pnos.get(i) ,Element.ALIGN_LEFT, 1 , desfont);
+            }
+
+
+            float[] columnWidths1 = {5f};
+            PdfPTable tabledes = new PdfPTable(columnWidths1);
+            tabledes.setWidthPercentage(90f);
+            insertCell(tabledes , des.getText().toString() , Element.ALIGN_LEFT , 1 , desfont);
+
+
+            Paragraph paragraph2 = new Paragraph();
+            paragraph2.setAlignment(Element.ALIGN_LEFT);
+            paragraph2.setIndentationLeft(20);
+            paragraph2.setIndentationRight(20);
+            paragraph2.setFont(font2);
+            String url = URL.getText().toString();
+            paragraph2.add(url);
+
+            Paragraph paragraph4 = new Paragraph();
+            paragraph4.setAlignment(Element.ALIGN_LEFT);
+            paragraph4.setIndentationLeft(20);
+            paragraph4.setIndentationRight(20);
+            paragraph4.setFont(font2);
+            String publisher1 = publisher.getText().toString();
+            paragraph4.add(publisher1);
+
+
+
+            Font bold = new Font();
+            bold.setStyle(Font.BOLD);
+            bold.setSize(20);
+
+            Paragraph p1 = new Paragraph();
+
+            p1.setAlignment(Element.ALIGN_LEFT);
+            p1.setIndentationLeft(20);
+            p1.setIndentationRight(20);
+            p1.setFont(bold);
+            p1.add("Description");
+
+            Paragraph p2 = new Paragraph();
+            p2.setAlignment(Element.ALIGN_LEFT);
+            p2.setIndentationLeft(20);
+            p2.setIndentationRight(20);
+            p2.setFont(bold);
+            p2.add("Authors");
+
+            Paragraph p3 = new Paragraph();
+            p3.setAlignment(Element.ALIGN_LEFT);
+            p3.setIndentationLeft(20);
+            p3.setIndentationRight(20);
+            p3.setFont(bold);
+            p3.add("URL");
+
+            Paragraph p4 = new Paragraph();
+            p4.setAlignment(Element.ALIGN_LEFT);
+            p4.setIndentationLeft(20);
+            p4.setIndentationRight(20);
+            p4.setFont(bold);
+            p4.add("Publisher");
+
+
+            mDoc.add(paragraph); // title
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(paragraph3); // date
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(p1);
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(tabledes); // description
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(p2);
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(table); // tables containing author details
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(p3);
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(paragraph2); // url
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(p4);
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(paragraph4);
+
+
+            mDoc.close();
+
+
+
+            Toast.makeText(this , "File Saved" , Toast.LENGTH_SHORT).show();
+
+        }catch (Exception e)
+        {
+            Toast.makeText(this  ,   e.getMessage() , Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+    private void insertCell(PdfPTable table, String text, int align, int colspan, Font font){
+
+        //create a new cell with the specified Text and Font
+        PdfPCell cell = new PdfPCell(new Phrase(text.trim(), font));
+        //set the cell alignment
+        cell.setHorizontalAlignment(align);
+        //set the cell column span in case you want to merge two or more cells
+        cell.setColspan(colspan);
+        //in case there is no text and you wan to create an empty row
+        if(text.trim().equalsIgnoreCase("")){
+            cell.setMinimumHeight(10f);
+        }
+        //add the call to the table
+        table.addCell(cell);
+
+    }
+
+
+
+    private void savePdfpatent() {
+
+        Document mDoc = new Document(PageSize.A4);
+
+        String mFileName = new SimpleDateFormat("yyyyMMdd_HHmmss" , Locale.getDefault()).format(System.currentTimeMillis());
+
+        String mFilePath = Environment.getExternalStorageDirectory() + "/" + mFileName + ".pdf";
+
+        try {
+
+            PdfWriter.getInstance(mDoc , new FileOutputStream(mFilePath));
+
+            mDoc.open();
+
+
+            float mHeadingFontSize = 35.0f;
+            float mValueFontSize = 20.0f;
+
+            Font font1 = new Font();
+            font1.setSize(mHeadingFontSize);
+            font1.setColor(BaseColor.RED);
+            font1.setStyle(Font.BOLD);
+
+            Font font2 = new Font();
+            font2.setSize(mValueFontSize);
+
+            Paragraph paragraph = new Paragraph();
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            paragraph.setIndentationLeft(20);
+            paragraph.setIndentationRight(20);
+            paragraph.setFont(font1);
+            paragraph.add(Title.getText().toString());
+
+
+            Paragraph paragraph1 = new Paragraph();
+            paragraph1.setAlignment(Element.ALIGN_LEFT);
+            paragraph1.setIndentationLeft(20);
+            paragraph1.setIndentationRight(20);
+            paragraph1.setFont(font2);
+            paragraph1.add(des.getText().toString());
+
+            Paragraph paragraph3 = new Paragraph();
+            paragraph3.setAlignment(Element.ALIGN_RIGHT);
+            paragraph3.setFont(font2);
+            paragraph3.setIndentationRight(20);
+            paragraph3.setIndentationLeft(20);
+            paragraph3.add(Date.getText().toString());
+
+
+
+            Font bfBold12 = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, new BaseColor(0, 0, 0));
+            Font bf12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
+
+
+            Font desfont = new Font(Font.FontFamily.TIMES_ROMAN , 14);
+
+            float[] columnWidths = {1.5f, 5f, 2f};
+            //create PDF table with the given widths
+            PdfPTable table = new PdfPTable(columnWidths);
+            table.setWidthPercentage(90f);
+            insertCell(table, "Name", Element.ALIGN_LEFT, 1 , bfBold12);
+            insertCell(table, "Email", Element.ALIGN_LEFT, 1 , bfBold12);
+            insertCell(table, "Phone Number", Element.ALIGN_LEFT, 1 , bfBold12);
+            table.setHeaderRows(1);
+
+
+            for(int i =0;i < names.size(); i ++)
+            {
+                insertCell(table , names.get(i) ,Element.ALIGN_LEFT, 1 , desfont);
+                insertCell(table , emails.get(i) ,Element.ALIGN_LEFT, 1 , desfont);
+                insertCell(table , pnos.get(i) ,Element.ALIGN_LEFT, 1 , desfont);
+            }
+
+
+            float[] columnWidths1 = {5f};
+            PdfPTable tabledes = new PdfPTable(columnWidths1);
+            tabledes.setWidthPercentage(90f);
+            insertCell(tabledes , des.getText().toString() , Element.ALIGN_LEFT , 1 , desfont);
+
+
+            Paragraph paragraph2 = new Paragraph();
+            paragraph2.setAlignment(Element.ALIGN_LEFT);
+            paragraph2.setIndentationLeft(20);
+            paragraph2.setIndentationRight(20);
+            paragraph2.setFont(font2);
+            String url = URL.getText().toString();
+            paragraph2.add(url);
+
+            Paragraph paragraph4 = new Paragraph();
+            paragraph4.setAlignment(Element.ALIGN_LEFT);
+            paragraph4.setIndentationLeft(20);
+            paragraph4.setIndentationRight(20);
+            paragraph4.setFont(font2);
+            String publisher1 = publisher.getText().toString();
+            paragraph4.add(publisher1);
+
+            Paragraph paragraph5 = new Paragraph();
+            paragraph5.setAlignment(Element.ALIGN_LEFT);
+            paragraph5.setIndentationLeft(20);
+            paragraph5.setIndentationRight(20);
+            paragraph5.setFont(font2);
+            String publisher2 = appnumber.getText().toString();
+            paragraph5.add(publisher2);
+
+
+
+            Font bold = new Font();
+            bold.setStyle(Font.BOLD);
+            bold.setSize(20);
+
+            Paragraph p1 = new Paragraph();
+
+            p1.setAlignment(Element.ALIGN_LEFT);
+            p1.setIndentationLeft(20);
+            p1.setIndentationRight(20);
+            p1.setFont(bold);
+            p1.add("Description");
+
+            Paragraph p2 = new Paragraph();
+            p2.setAlignment(Element.ALIGN_LEFT);
+            p2.setIndentationLeft(20);
+            p2.setIndentationRight(20);
+            p2.setFont(bold);
+            p2.add("Inventors");
+
+            Paragraph p3 = new Paragraph();
+            p3.setAlignment(Element.ALIGN_LEFT);
+            p3.setIndentationLeft(20);
+            p3.setIndentationRight(20);
+            p3.setFont(bold);
+            p3.add("URL");
+
+            Paragraph p = new Paragraph();
+            p.setAlignment(Element.ALIGN_LEFT);
+            p.setIndentationLeft(20);
+            p.setIndentationRight(20);
+            p.setFont(bold);
+            p.add("Application Number");
+
+            Paragraph p4 = new Paragraph();
+            p4.setAlignment(Element.ALIGN_LEFT);
+            p4.setIndentationLeft(20);
+            p4.setIndentationRight(20);
+            p4.setFont(bold);
+            p4.add("Patent Office");
+
+
+            mDoc.add(paragraph); // title
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(paragraph3); // date
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(p1);
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(tabledes); // description
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(p2);
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(table); // tables containing author details
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(p3);
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(paragraph2); // url
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(p);
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(paragraph5);
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(p4);
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(paragraph4);
+            mDoc.add(new Paragraph("\n"));
+            mDoc.add(new Paragraph("\n"));
+
+
+
+            mDoc.close();
+
+
+
+            Toast.makeText(this , "File Saved" , Toast.LENGTH_SHORT).show();
+
+        }catch (Exception e)
+        {
+            Toast.makeText(this  ,   e.getMessage() , Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+
+    private void savePdf() {
+
+            Document mDoc = new Document(PageSize.A4);
+
+            String mFileName = new SimpleDateFormat("yyyyMMdd_HHmmss" , Locale.getDefault()).format(System.currentTimeMillis());
+
+            String mFilePath = Environment.getExternalStorageDirectory() + "/" + mFileName + ".pdf";
+
+            try {
+
+                PdfWriter.getInstance(mDoc , new FileOutputStream(mFilePath));
+
+                mDoc.open();
+
+
+                float mHeadingFontSize = 35.0f;
+                float mValueFontSize = 20.0f;
+
+                Font font1 = new Font();
+                font1.setSize(mHeadingFontSize);
+                font1.setColor(BaseColor.RED);
+                font1.setStyle(Font.BOLD);
+
+                Font font2 = new Font();
+                font2.setSize(mValueFontSize);
+
+                Paragraph paragraph = new Paragraph();
+                paragraph.setAlignment(Element.ALIGN_CENTER);
+                paragraph.setIndentationLeft(20);
+                paragraph.setIndentationRight(20);
+                paragraph.setFont(font1);
+                paragraph.add(Title.getText().toString());
+
+
+                Paragraph paragraph1 = new Paragraph();
+                paragraph1.setAlignment(Element.ALIGN_LEFT);
+                paragraph1.setIndentationLeft(20);
+                paragraph1.setIndentationRight(20);
+                paragraph1.setFont(font2);
+                paragraph1.add(des.getText().toString());
+
+                Paragraph paragraph3 = new Paragraph();
+                paragraph3.setAlignment(Element.ALIGN_RIGHT);
+                paragraph3.setFont(font2);
+                paragraph3.setIndentationRight(20);
+                paragraph3.setIndentationLeft(20);
+                paragraph3.add(Date.getText().toString());
+
+
+
+                Font bfBold12 = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, new BaseColor(0, 0, 0));
+                Font bf12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
+
+
+                Font desfont = new Font(Font.FontFamily.TIMES_ROMAN , 14);
+
+                float[] columnWidths = {1.5f, 5f, 2f};
+                //create PDF table with the given widths
+                PdfPTable table = new PdfPTable(columnWidths);
+                table.setWidthPercentage(90f);
+                insertCell(table, "Name", Element.ALIGN_LEFT, 1 , bfBold12);
+                insertCell(table, "Email", Element.ALIGN_LEFT, 1 , bfBold12);
+                insertCell(table, "Phone Number", Element.ALIGN_LEFT, 1 , bfBold12);
+                table.setHeaderRows(1);
+
+
+                for(int i =0;i < names.size(); i ++)
+                {
+                    insertCell(table , names.get(i) ,Element.ALIGN_LEFT, 1 , desfont);
+                    insertCell(table , emails.get(i) ,Element.ALIGN_LEFT, 1 , desfont);
+                    insertCell(table , pnos.get(i) ,Element.ALIGN_LEFT, 1 , desfont);
+                }
+
+
+                float[] columnWidths1 = {5f};
+                PdfPTable tabledes = new PdfPTable(columnWidths1);
+                tabledes.setWidthPercentage(90f);
+                insertCell(tabledes , URL.getText().toString() , Element.ALIGN_LEFT , 1 , desfont);
+
+
+                Paragraph paragraph2 = new Paragraph();
+                paragraph2.setAlignment(Element.ALIGN_LEFT);
+                paragraph2.setIndentationLeft(20);
+                paragraph2.setIndentationRight(20);
+                paragraph2.setFont(font2);
+                String url = des.getText().toString();
+                paragraph2.add(url);
+
+
+
+                Font bold = new Font();
+                bold.setStyle(Font.BOLD);
+                bold.setSize(20);
+
+                Paragraph p1 = new Paragraph();
+
+                p1.setAlignment(Element.ALIGN_LEFT);
+                p1.setIndentationLeft(20);
+                p1.setIndentationRight(20);
+                p1.setFont(bold);
+                p1.add("Description");
+
+                Paragraph p2 = new Paragraph();
+                p2.setAlignment(Element.ALIGN_LEFT);
+                p2.setIndentationLeft(20);
+                p2.setIndentationRight(20);
+                p2.setFont(bold);
+                p2.add("Creators");
+
+                Paragraph p3 = new Paragraph();
+                p3.setAlignment(Element.ALIGN_LEFT);
+                p3.setIndentationLeft(20);
+                p3.setIndentationRight(20);
+                p3.setFont(bold);
+                p3.add("URL");
+
+
+                mDoc.add(paragraph); // title
+                mDoc.add(new Paragraph("\n"));
+                mDoc.add(new Paragraph("\n"));
+                mDoc.add(paragraph3); // date
+                mDoc.add(new Paragraph("\n"));
+                mDoc.add(new Paragraph("\n"));
+                mDoc.add(p1);
+                mDoc.add(new Paragraph("\n"));
+                mDoc.add(tabledes); // description
+                mDoc.add(new Paragraph("\n"));
+                mDoc.add(new Paragraph("\n"));
+                mDoc.add(p2);
+                mDoc.add(new Paragraph("\n"));
+                mDoc.add(table); // tables containing author details
+                mDoc.add(new Paragraph("\n"));
+                mDoc.add(new Paragraph("\n"));
+                mDoc.add(p3);
+                mDoc.add(new Paragraph("\n"));
+                mDoc.add(paragraph2); // url
+
+                mDoc.close();
+
+
+
+                Toast.makeText(this , "File Saved" , Toast.LENGTH_SHORT).show();
+
+            }catch (Exception e)
+            {
+                Toast.makeText(this  ,   e.getMessage() , Toast.LENGTH_SHORT).show();
+            }
+
+    }
+
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
@@ -372,12 +991,26 @@ public class detailclass  extends AppCompatActivity {
             case STORAGE_CODE:{
 
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    savePdf();
+                    if(type.equals("Honors_and_Award"))
+                    {
+                        savePdfhonor();
+                    }
+                    else if(type.equals("Patent"))
+                    {
+                        savePdfpatent();
+                    }
+                    else if(type.equals("Publication"))
+                    {
+                        savePdfpub();
+                    }
+                    else
+                    {
+                        savePdf();
+                    }
                 }
                 else{
                     Toast.makeText(this , "Permission Denied" , Toast.LENGTH_SHORT).show();
                 }
-
             }
         }
     }
@@ -395,35 +1028,4 @@ public class detailclass  extends AppCompatActivity {
 
 
     }
-
-
-    public static Bitmap getBitmapFromView(View v) {
-        v.clearFocus();
-        v.setPressed(false);
-
-        boolean willNotCache = v.willNotCacheDrawing();
-        v.setWillNotCacheDrawing(false);
-
-        int color = v.getDrawingCacheBackgroundColor();
-        v.setDrawingCacheBackgroundColor(0);
-
-        if (color != 0) {
-            v.destroyDrawingCache();
-        }
-        v.buildDrawingCache();
-        Bitmap cacheBitmap = v.getDrawingCache();
-        if (cacheBitmap == null) {
-            return null;
-        }
-
-        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
-
-        v.destroyDrawingCache();
-        v.setWillNotCacheDrawing(willNotCache);
-        v.setDrawingCacheBackgroundColor(color);
-
-        return bitmap;
-    }
-
-
 }
