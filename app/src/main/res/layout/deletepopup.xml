@@ -47,7 +47,7 @@
                 android:id="@+id/pass1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Old Password"
+                android:hint="Password"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
