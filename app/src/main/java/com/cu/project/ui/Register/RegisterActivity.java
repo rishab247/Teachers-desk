@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telecom.PhoneAccount;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -517,6 +518,7 @@ public class RegisterActivity extends AppCompatActivity{
     }
 
 
+
     //the callback to detect the verification status
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
@@ -569,7 +571,7 @@ public class RegisterActivity extends AppCompatActivity{
                         if (task.isSuccessful()) {
                             alertDialog.cancel();
                             initiate =  true;
-                            Toast.makeText(getBaseContext(),"task.isSuccessful",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(),"Verified   ",Toast.LENGTH_SHORT).show();
                         } else {
 
 
