@@ -90,21 +90,13 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
 
         String name = bundle.getString("name_");
-
         String email = bundle.getString("email_");
-
         String pno = bundle.getString("p_no");
-
         String depart = bundle.getString("depart_");
-
         String doj = bundle.getString("doj_");
-
         String quali = bundle.getString("quali_");
-
         String uni = bundle.getString("uni_");
-
         String dob = bundle.getString("dob_");
-
         String eid = bundle.getString("e_code");
         editor.putString("name_",bundle.getString("name_")).apply();
         editor.putString("email_", bundle.getString("email_") ).apply();
