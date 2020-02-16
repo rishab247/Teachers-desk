@@ -49,7 +49,6 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
     public Apiget(Context context)
     {
         contextRef =new WeakReference<> (context);
-
     }
 
     String urls = "https://apitims1.azurewebsites.net/user/Profile?token=";
@@ -64,6 +63,7 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
     String quali="";
     String uni="";
     String dob="";
+    String imagestr="";
 
 
     String verifyurl = "https://apitims1.azurewebsites.net/Verify?token=";
@@ -126,7 +126,19 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
              dob = arrObj.get(8).toString().trim();
 
 
-            infoarr = new String[]{ecode , name , email , pno , depart , doj , quali , uni ,dob};
+
+
+            JSONArray arrObj1 = jsonObject.getJSONArray("pic");
+
+
+            imagestr = arrObj1.get(0).toString().trim();
+
+            Log.e("PIC JSON" , imagestr);
+
+
+
+            infoarr = new String[]{ecode , name , email , pno , depart , doj , quali , uni ,dob , imagestr};
+            Log.e("INFO"  , infoarr.toString());
 
 
         }catch (IOException e) {

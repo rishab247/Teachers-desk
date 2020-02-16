@@ -189,6 +189,7 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         long date2 = Long.parseLong(strings[8]);
         Date result2 = new Date(date2);
 
+        Log.e("IMAGE JSON" , strings[9]);
         String dobdate = simple.format(result2);
 
         Intent intent_name = new Intent();
@@ -202,6 +203,7 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         intent_name.putExtra("quali_" , strings[6]);
         intent_name.putExtra("uni_" , strings[7]);
         intent_name.putExtra("dob_" , dobdate);
+        intent_name.putExtra("imagestr" , strings[9]);
         startActivity(intent_name);
     }
 

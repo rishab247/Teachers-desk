@@ -63,32 +63,6 @@ public class profile_fragement extends Fragment{
 
         v =  inflater.inflate(R.layout.fragment_profile_fragement,container,false);
 
-
-//        verified = v.findViewById(R.id.imageView3);
-//        String[] info = null;
-//
-//        ApiVerify apiVerify = new ApiVerify();
-//        try {
-//
-//            info = apiVerify.execute().get();
-//
-//
-//
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        if(info[0].equals("false"))
-//        {
-//            verified.setVisibility(View.GONE);
-//        }
-//        else
-//        {
-//            verified.setVisibility(View.VISIBLE);
-//        }
-
         Bundle extras = getActivity().getIntent().getExtras();
         String userName = extras.getString("name_").trim();
         String e_code = extras.getString("e_code").trim();
@@ -106,8 +80,6 @@ public class profile_fragement extends Fragment{
         text4 = p_no;
 
 
-
-        Log.e("uSERNAME" , userName);
 
         name = v.findViewById(R.id.user_nameid);
         ecode = v.findViewById(R.id.ecode_id);

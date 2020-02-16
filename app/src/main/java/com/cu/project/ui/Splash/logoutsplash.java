@@ -30,8 +30,6 @@ public class logoutsplash extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i=new Intent(logoutsplash.this, loginActivity.class);
-                startActivity(i);
                 finish();
             }
         }, SPLASH_SCREEN_TIME_OUT);

@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +59,7 @@ public class ProfileEdit extends AppCompatActivity {
     String university;
 
     CircleImageView img_pro;
+    String imageresponce;
 
     int RESULT_LOAD_IMAGE = 1;
     Uri imageuri;
@@ -112,7 +115,7 @@ public class ProfileEdit extends AppCompatActivity {
 
 
                             if (oldpass.equals(newpass)) {
-                                Toast.makeText(getApplicationContext(), "cannot have previous password", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "you cannot use previous password", Toast.LENGTH_SHORT).show();
                             } else {
                                 ApiPassword apiPassword = new ApiPassword(ProfileEdit.this);
                                 apiPassword.execute(oldpass, newpass);
@@ -144,6 +147,8 @@ public class ProfileEdit extends AppCompatActivity {
         dob = findViewById(R.id.dobedittext);
         doj = findViewById(R.id.dojedittext);
 
+        img_pro = findViewById(R.id.profile_img);
+
 
         Bundle bundle = getIntent().getExtras();
 
@@ -159,6 +164,22 @@ public class ProfileEdit extends AppCompatActivity {
         uni.setText(dataarry[6]);
         dob.setText(dataarry[7]);
         eid.setText(dataarry[8]);
+
+        imageresponce = dataarry[9];
+
+        Log.e("DATA" , dataarry[9]);
+
+        if(dataarry[9].equals("noimage"))
+        {
+
+        }
+        else{
+            Bitmap bitmap = StringToBitMap(dataarry[9]);
+            img_pro.setImageBitmap(bitmap);
+        }
+
+
+        final Drawable old = img_pro.getDrawable();
 
 
         savebtn = findViewById(R.id.savechanges);
@@ -177,7 +198,6 @@ public class ProfileEdit extends AppCompatActivity {
                 university = uni.getText().toString().trim();
 
                 int flag = 0;
-
 
                 if (p_no.equals("")) {
                     pno.setError("Field cannot be empty");
@@ -198,7 +218,8 @@ public class ProfileEdit extends AppCompatActivity {
 
                 if (flag == 0) {
 
-                    if (p_no.equals(dataarry[2]) && qualifications.equals(dataarry[5]) && department.equals(dataarry[3]) && university.equals(dataarry[6])) {
+                    if (p_no.equals(dataarry[2]) && qualifications.equals(dataarry[5]) && department.equals(dataarry[3]) && university.equals(dataarry[6])
+                    && old == img_pro.getDrawable()) {
                         Toast.makeText(getApplicationContext(), "None of the fields are changed", Toast.LENGTH_SHORT).show();
                     } else {
 
@@ -223,8 +244,7 @@ public class ProfileEdit extends AppCompatActivity {
                                 alertDialog.cancel();
 
                                 ApiEditProfile apiEditProfile = new ApiEditProfile(ProfileEdit.this);
-                                apiEditProfile.execute(p_no, qualifications, university, department, password);
-
+                                apiEditProfile.execute(p_no, qualifications, university, department, password , imageresponce);
 
                             }
                         });
@@ -245,15 +265,12 @@ public class ProfileEdit extends AppCompatActivity {
         });
 
 
-        img_pro = findViewById(R.id.profile_img);
+
 
         img_pro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-//                Intent gallery = new Intent(Intent.ACTION_PICK);
-//                gallery.setType("Image/*");
-//                startActivityForResult(Intent.createChooser(gallery, "Select Picture"), RESULT_LOAD_IMAGE);
 
                 Intent i = new Intent(
                         Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -290,8 +307,6 @@ public class ProfileEdit extends AppCompatActivity {
 
         savepass = popupInputDialogprofile.findViewById(R.id.btnconfirm);
         canclepass = popupInputDialogprofile.findViewById(R.id.canclepass);
-
-
     }
 
 
@@ -320,16 +335,17 @@ public class ProfileEdit extends AppCompatActivity {
 
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver() , resulturi);
 
-
-                        Log.e("BITMAP" , bitmap.toString());
-
-
                         Bitmap converetdImage = getResizedBitmap(bitmap, 200);
                         img_pro.setImageBitmap(converetdImage);
 
                         int ans = converetdImage.getByteCount();
 
+
                         Log.e("SIZE" , String.valueOf(ans));
+
+                        imageresponce = BitMapToString(converetdImage);
+
+                        Log.e("BITSTRING" , imageresponce);
 
 
 
@@ -356,5 +372,24 @@ public class ProfileEdit extends AppCompatActivity {
             width = (int) (height * bitmapRatio);
         }
         return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }

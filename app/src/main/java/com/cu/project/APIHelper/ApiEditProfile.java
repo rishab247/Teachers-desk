@@ -26,15 +26,15 @@ import okhttp3.Response;
 
 public class ApiEditProfile extends AsyncTask<String, Void , String> {
 
-     private String p_no , depart , quali , uni , pass;
+     private String p_no , depart , quali , uni , pass , imagestr;
 
     public static int code = 1;
     private WeakReference<Context> contextRef;
 
     String url = "https://apitims1.azurewebsites.net/user/Profile?token=";
-//    String token = loginActivity.gettoken();
-        SharedPreferences sharedpreferences;
-        SharedPreferences.Editor editor;
+
+    SharedPreferences sharedpreferences;
+    SharedPreferences.Editor editor;
     ProgressDialog dialog;
 
 
@@ -78,6 +78,8 @@ public class ApiEditProfile extends AsyncTask<String, Void , String> {
         uni = voids[2];
         depart = voids[3];
         pass = voids[4];
+        imagestr = voids[5];
+
 
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
         OkHttpClient client = new OkHttpClient();
@@ -91,9 +93,12 @@ public class ApiEditProfile extends AsyncTask<String, Void , String> {
             jsonObject.put("Qualification", quali);
             jsonObject.put("University" , uni);
             jsonObject.put("Department_Name" , depart);
+            jsonObject.put("pic" , imagestr);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        Log.e("JSON PIC" , imagestr);
 
 
         RequestBody body = RequestBody.create(MEDIA_TYPE , jsonObject.toString());
@@ -130,7 +135,7 @@ public class ApiEditProfile extends AsyncTask<String, Void , String> {
         {
             Intent resultIntent = new Intent();
 
-            String[] info = {p_no , depart , quali , uni };
+            String[] info = {p_no , depart , quali , uni , imagestr};
             resultIntent.putExtra("result" , info);
 
             Activity activity = (Activity)scontext;

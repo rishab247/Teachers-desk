@@ -9,7 +9,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -50,6 +54,8 @@ import com.cu.project.ui.login.loginActivity;
 
 import java.util.concurrent.ExecutionException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProfileActivity extends AppCompatActivity implements ProfileMvpView, AsyncVerifyResponse {
     private static SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
@@ -70,6 +76,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     TextView quali , depart , pnotext, uni , eidtext;
 
 
+    CircleImageView pro_img;
 
     FloatingActionButton btn1 , btn2;
 
@@ -88,6 +95,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
         verified = findViewById(R.id.imageView3);
 
+        pro_img = findViewById(R.id.profile_img);
+
 
         String name = bundle.getString("name_");
         String email = bundle.getString("email_");
@@ -98,14 +107,47 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         String uni = bundle.getString("uni_");
         String dob = bundle.getString("dob_");
         String eid = bundle.getString("e_code");
+        String imgstr = bundle.getString("imagestr");
+
         editor.putString("name_",bundle.getString("name_")).apply();
         editor.putString("email_", bundle.getString("email_") ).apply();
         editor.putString("p_no",bundle.getString("p_no") ).apply();
-        final String[] datarray = new String[]{name , email , pno , depart , doj , quali , uni , dob , eid};
+
 
 
         eidtext = findViewById(R.id.textView11);
         eidtext.setText(eid);
+
+
+
+
+        if(imgstr.equals("noimage"))
+        {
+
+        }
+        else
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for(int i=0;i < imgstr.length() ; i ++)
+            {
+                if(imgstr.charAt(i) == '\\' && imgstr.charAt(i + 1) == 'n')
+                {
+                    stringBuilder.append("\n");
+                    i = i + 1;
+                }
+                else
+                    stringBuilder.append(imgstr.charAt(i));
+
+            }
+
+            Log.e("SDAFASDFSFSDFDSFSDF" , String.valueOf(stringBuilder));
+
+
+            imgstr = String.valueOf(stringBuilder);
+            pro_img.setImageBitmap(StringToBitMap(String.valueOf(stringBuilder)));
+        }
+        final String[] datarray = new String[]{name , email , pno , depart , doj , quali , uni , dob , eid , imgstr};
 
 
         tabLayout = findViewById(R.id.tab_layout);
@@ -214,6 +256,16 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
                 depart.setText(res[1]);
                 quali.setText(res[2]);
                 uni.setText(res[3]);
+
+                if(res[4].equals("noimage"))
+                {
+
+                }
+                else
+                {
+                    Log.e("DFSDFDSFSDFFSfsf "  ,  res[4]);
+                    pro_img.setImageBitmap(StringToBitMap(res[4]));
+                }
             }
         }
     }
@@ -245,6 +297,18 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
                  .setNegativeButton("No", null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
+                    encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }
 
