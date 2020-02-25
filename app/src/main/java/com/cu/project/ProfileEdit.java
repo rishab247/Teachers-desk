@@ -318,7 +318,7 @@ public class ProfileEdit extends AppCompatActivity {
             imageuri = data.getData();
 
 
-            CropImage.activity(imageuri)
+                CropImage.activity(imageuri)
                     .setAspectRatio(1 , 1)
                     .start(this);
 

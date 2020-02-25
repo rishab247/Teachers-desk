@@ -13,11 +13,6 @@ public class SubjectData {
     }
 
 
-
-      SubjectData( ) {
-
-    }
-
     public String getTitle() {
         return title;
     }

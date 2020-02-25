@@ -40,12 +40,12 @@ public class Authorclass  extends AppCompatActivity {
 //        Toolbar toolbar = findViewById(R.id.toolbar__);
 //        setSupportActionBar(toolbar);
 
-
-        materialSearchView = findViewById(R.id.searchview);
-
-        authname = findViewById(R.id.authors_name);
-        authemail = findViewById(R.id.authors_email);
-        authpno = findViewById(R.id.authors_pno);
+//
+//        materialSearchView = findViewById(R.id.searchview);
+//
+//        authname = findViewById(R.id.authors_name);
+//        authemail = findViewById(R.id.authors_email);
+//        authpno = findViewById(R.id.authors_pno);
 
 //        save_btn = findViewById(R.id.savebtnid__);
 //        btn = findViewById(R.id.button);

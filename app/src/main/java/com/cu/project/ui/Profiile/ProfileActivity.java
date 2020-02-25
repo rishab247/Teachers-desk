@@ -44,6 +44,7 @@ import com.cu.project.APIHelper.AsyncVerifyResponse;
 import com.cu.project.ProfileEdit;
 import com.cu.project.R;
 import com.cu.project.ui.Authorclass;
+import com.cu.project.ui.DownloadReport;
 import com.cu.project.ui.Setting.SettingActivity;
 import com.cu.project.ui.Splash.logoutsplash;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -200,6 +201,19 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
                 Intent intent = new Intent(ProfileActivity.this , ProfileEdit.class);
                 intent.putExtra("data" , datarray);
                 startActivityForResult(intent , 1);
+            }
+        });
+
+
+
+        // for downloading the report
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(ProfileActivity.this , DownloadReport.class);
+                startActivity(intent);
             }
         });
 
