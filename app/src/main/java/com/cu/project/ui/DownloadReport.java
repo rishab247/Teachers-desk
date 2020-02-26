@@ -1,6 +1,9 @@
 package com.cu.project.ui;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +33,7 @@ public class DownloadReport  extends AppCompatActivity {
 
 
     EditText datefrom , dateto;
+    private static final int STORAGE_CODE = 1000;
 
     Button fulldownload;
 
@@ -163,6 +167,10 @@ public class DownloadReport  extends AppCompatActivity {
                             String finaltype = null;
                             if(type.equals("All"))
                                 finaltype = "all";
+
+                            else if(type.equals("Honors and Award")){
+                                finaltype = "HonorsandAward";
+                            }
 
                             else
                                 finaltype = type;
