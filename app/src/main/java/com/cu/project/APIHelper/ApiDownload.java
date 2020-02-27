@@ -89,9 +89,6 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
 
         String mMessage = null;
 
-
-
-
         String startdate = voids[0];
         String enddate = voids[1];
         String type = voids[2];
@@ -365,6 +362,14 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
                             jsonArray.get(5).toString()));
                 }
 
+                for(int i =0 ;i  < listitems3.size(); i ++){
+
+                    honorpdf pdf = listitems3.get(i);
+
+                    Log.e(TAG, "doInBackground honors: " + pdf.getTitle() );
+
+
+                }
                 map.put("3", listitems3);
 
             }
@@ -438,14 +443,14 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
                                 author1));
                         author1 = new ArrayList<>();
                     } else {
-                        author1.add(new Author(jsonArray.get(7).toString(), jsonArray.get(8).toString(), jsonArray.get(9).toString()));
+                        author1.add(new Author(jsonArray1.get(7).toString(), jsonArray1.get(8).toString(), jsonArray1.get(9).toString()));
                     }
                 }
 
 
                 JSONArray jsonArray1 = patentarray.getJSONArray(patentarray.length() - 1);
 
-                author1.add(new Author(jsonArray.get(7).toString(), jsonArray.get(8).toString(), jsonArray.get(9).toString()));
+                author1.add(new Author(jsonArray1.get(7).toString(), jsonArray1.get(8).toString(), jsonArray1.get(9).toString()));
 
                 listitems1.add(new patentpdf(jsonArray1.get(1).toString(),
                         jsonArray1.get(2).toString(),
@@ -512,7 +517,18 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
                             jsonArray4.get(5).toString()));
                 }
 
-                map.put("1" , listitems);
+                for(int i =0 ;i  < listitems3.size(); i ++){
+
+                    honorpdf pdf = listitems3.get(i);
+
+                    Log.e(TAG, "doInBackground honors: " + pdf.getTitle() );
+
+
+                }
+
+
+
+                    map.put("1" , listitems);
                 map.put("2" , listitems1);
                 map.put("3" , listitems2);
                 map.put("4" , listitems3);
