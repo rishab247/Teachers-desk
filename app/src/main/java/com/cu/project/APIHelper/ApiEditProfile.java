@@ -24,6 +24,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static android.content.ContentValues.TAG;
+
 public class ApiEditProfile extends AsyncTask<String, Void , String> {
 
      private String p_no , depart , quali , uni , pass , imagestr;
@@ -94,6 +96,7 @@ public class ApiEditProfile extends AsyncTask<String, Void , String> {
             jsonObject.put("University" , uni);
             jsonObject.put("Department_Name" , depart);
             jsonObject.put("pic" , imagestr);
+            Log.e(TAG, "doInBackground: "+jsonObject.toString() );
         } catch (JSONException e) {
             e.printStackTrace();
         }

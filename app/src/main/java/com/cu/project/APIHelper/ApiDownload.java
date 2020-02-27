@@ -173,11 +173,9 @@ int k=0;
 
 
 
-                        for(int j=0;j<author.size();j++){
-                            Log.e(TAG, "doInBackground: "+author.get(j).getName() +"   "+i);
-                        }
+
                         Log.e(TAG, "doInBackground: k"+k );
-                        author.clear();
+                        author=new ArrayList<>();
                      }
                     else {
                          author.add(new Author(jsonArray.get(6).toString(), jsonArray.get(7).toString(), jsonArray.get(8).toString()));
