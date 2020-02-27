@@ -138,7 +138,7 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
 
                 jsonArray = jsonObject1.getJSONArray("data");
 
-                if (!type.equals("Honors_and_Award")) {
+                if (!type.equals("HonorsandAward")) {
                     authorjsonarr = jsonObject1.getJSONArray("author");
 
                 }
@@ -149,7 +149,7 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
                 String poffice, appno;
 
 
-                if (type.equals("Honors_and_Award")) {
+                if (type.equals("HonorsandAward")) {
                     title = jsonArray.get(2).toString();
                     issuer = jsonArray.get(3).toString();
                     date = jsonArray.get(4).toString();
@@ -268,7 +268,7 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
         if(dialog.isShowing())
         { dialog.cancel();}
 
-        if(strings.equals(null))
+        if(strings == null)
         {
             Toast.makeText(sContext , "Error Opening the file" , Toast.LENGTH_SHORT).show();
         }

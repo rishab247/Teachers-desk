@@ -176,17 +176,17 @@ public class DownloadReport  extends AppCompatActivity {
                                 finaltype = type;
 
                             ApiDownload apiDownload = new ApiDownload(DownloadReport.this);
-                            apiDownload.execute(datestart , dateend , finaltype);
+                            apiDownload.execute(datestart , dateend , finaltype , "pdf");
                         }
                     });
 
-//                    excel.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            ApiDownload apiDownload = new ApiDownload(DownloadReport.this);
-//                            apiDownload.execute(datestart , dateend);
-//                        }
-//                    });
+                    excel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ApiDownload apiDownload = new ApiDownload(DownloadReport.this);
+                            apiDownload.execute(datestart , dateend , "excel");
+                        }
+                    });
 
                 }
 

@@ -77,7 +77,7 @@ class Honors_and_AwardAdapter implements ListAdapter {
 
                     int id = arrayList.get(position).getId();
                     Apigetdetails apigetdetails = new Apigetdetails(context);
-                    apigetdetails.execute(String.valueOf(id) , "Honors_and_Award");
+                    apigetdetails.execute(String.valueOf(id) , "HonorsandAward");
 //                    Log.e("ID OD", String.valueOf(id));
 //                    Intent intent = new Intent(context , detailclass.class);
 //                    intent.putExtra("ID", id);

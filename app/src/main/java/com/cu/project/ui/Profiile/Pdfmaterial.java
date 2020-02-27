@@ -1,6 +1,7 @@
 package com.cu.project.ui.Profiile;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Pdfmaterial {
 
@@ -9,9 +10,9 @@ public class Pdfmaterial {
     String date;
     String Des;
     String URL;
-    ArrayList<Author> author;
+    ArrayList author;
 
-    public Pdfmaterial(String Title , String publisher , String date , String Des , String url , ArrayList<Author> author) {
+    public Pdfmaterial(String Title, String publisher, String date, String Des, String url, ArrayList author) {
         this.title = Title;
         this.publisher = publisher;
         this.date = date;
@@ -62,11 +63,13 @@ public class Pdfmaterial {
         this.URL = URL;
     }
 
-    public ArrayList<Author> getAuthor() {
+    public ArrayList getAuthor() {
         return author;
     }
 
-    public void setAuthor(ArrayList<Author> author) {
+    public void setAuthor(ArrayList author) {
         this.author = author;
     }
+
+
 }

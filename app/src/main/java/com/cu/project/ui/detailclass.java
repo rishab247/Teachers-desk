@@ -113,7 +113,7 @@ public class detailclass  extends AppCompatActivity {
         Log.e("TYPE ", type);
 
 
-        if (type.equals("Honors_and_Award")) {
+        if (type.equals("HonorsandAward")) {
 
             Title.setText(details.get(0));
             tohideurl.setText("Issuer");
