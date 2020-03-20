@@ -10,9 +10,9 @@ public class Pdfmaterial {
     String date;
     String Des;
     String URL;
-    ArrayList author;
+    ArrayList<Author> author;
 
-    public Pdfmaterial(String Title, String publisher, String date, String Des, String url, ArrayList author) {
+    public Pdfmaterial(String Title, String publisher, String date, String Des, String url, ArrayList<Author> author) {
         this.title = Title;
         this.publisher = publisher;
         this.date = date;
@@ -63,7 +63,7 @@ public class Pdfmaterial {
         this.URL = URL;
     }
 
-    public ArrayList getAuthor() {
+    public ArrayList<Author> getAuthor() {
         return author;
     }
 
