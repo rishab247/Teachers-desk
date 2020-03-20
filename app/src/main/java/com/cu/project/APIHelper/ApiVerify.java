@@ -85,8 +85,9 @@ public ApiVerify(Context context){
             Boolean status = jsonObject.getBoolean("Status");
             Boolean HODstatus = jsonObject.getBoolean("Hod");
 
-
             statusarr = new String[]{status.toString(), HODstatus.toString()};
+
+   //         Log.e("INSIDE VERIFY" , statusarr.toString());
 
         }
         catch (IOException e) {

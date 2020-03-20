@@ -204,6 +204,7 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         intent_name.putExtra("uni_" , strings[7]);
         intent_name.putExtra("dob_" , dobdate);
         intent_name.putExtra("imagestr" , strings[9]);
+        intent_name.putExtra("verify" , strings[10]);
         startActivity(intent_name);
     }
 

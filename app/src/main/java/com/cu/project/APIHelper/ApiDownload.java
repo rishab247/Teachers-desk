@@ -11,6 +11,8 @@ import android.util.Log;
 
 import androidx.core.content.FileProvider;
 
+
+import com.cu.project.PDFdownload;
 import com.cu.project.Util.JsonEncoder;
 import com.cu.project.ui.Profiile.Author;
 import com.cu.project.ui.Profiile.Pdfmaterial;
@@ -20,6 +22,7 @@ import com.cu.project.ui.Profiile.patentpdf;
 import com.cu.project.ui.Profiile.projectpdf;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfPTable;
 
 import org.json.JSONArray;
@@ -27,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -123,7 +127,7 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
 
 
         String str = jsonObject1.toString();
-        Log.e("JSON STR " , str );
+        Log.e("JSON STR ", str);
         RequestBody body = RequestBody.create(MEDIA_TYPE, str);
 
         Request request = new Request.Builder()
@@ -214,7 +218,6 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
                 map.put("1", listitems);
 
             }
-
             else if (type.equals("Patent")) {
                 patentarray = jsonObject.getJSONArray("Patent");
 
@@ -282,7 +285,6 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
                 map.put("2", listitems1);
 
             }
-
             else if (type.equals("Project")) {
                 projectarray = jsonObject.getJSONArray("Project");
 
@@ -345,14 +347,13 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
                 map.put("3", listitems2);
 
             }
-
-            else if(type.equals("HonorsandAward")){
+            else if (type.equals("HonorsandAward")) {
 
                 honorarray = jsonObject.getJSONArray("Honors_and_Award");
 
-                Log.e(TAG, "doInBackground size: " + honorarray.length() );
+                Log.e(TAG, "doInBackground size: " + honorarray.length());
 
-                for(int i =0 ;i < honorarray.length(); i ++){
+                for (int i = 0; i < honorarray.length(); i++) {
 
                     JSONArray jsonArray = honorarray.getJSONArray(i);
 
@@ -362,18 +363,17 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
                             jsonArray.get(5).toString()));
                 }
 
-                for(int i =0 ;i  < listitems3.size(); i ++){
+                for (int i = 0; i < listitems3.size(); i++) {
 
                     honorpdf pdf = listitems3.get(i);
 
-                    Log.e(TAG, "doInBackground honors: " + pdf.getTitle() );
+                    Log.e(TAG, "doInBackground honors: " + pdf.getTitle());
 
 
                 }
                 map.put("3", listitems3);
 
-            }
-            else{
+            } else {
 
                 pubarray = jsonObject.getJSONArray("Publication");
 
@@ -505,9 +505,9 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
                 //printing all honors values
                 honorarray = jsonObject.getJSONArray("Honors_and_Award");
 
-                Log.e(TAG, "doInBackground size: " + honorarray.length() );
+                Log.e(TAG, "doInBackground size: " + honorarray.length());
 
-                for(int i =0 ;i < honorarray.length(); i ++){
+                for (int i = 0; i < honorarray.length(); i++) {
 
                     JSONArray jsonArray4 = honorarray.getJSONArray(i);
 
@@ -517,21 +517,20 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
                             jsonArray4.get(5).toString()));
                 }
 
-                for(int i =0 ;i  < listitems3.size(); i ++){
+                for (int i = 0; i < listitems3.size(); i++) {
 
                     honorpdf pdf = listitems3.get(i);
 
-                    Log.e(TAG, "doInBackground honors: " + pdf.getTitle() );
+                    Log.e(TAG, "doInBackground honors: " + pdf.getTitle());
 
 
                 }
 
 
-
-                    map.put("1" , listitems);
-                map.put("2" , listitems1);
-                map.put("3" , listitems2);
-                map.put("4" , listitems3);
+                map.put("1", listitems);
+                map.put("2", listitems1);
+                map.put("3", listitems2);
+                map.put("4", listitems3);
 
             }
 
@@ -541,12 +540,22 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
             e.printStackTrace();
         }
 
-        if(voids[3].equals("pdf")){
+        if (voids[3].equals("pdf")) {
 
-        }
-        else{
 
+
+            try {
+                PDFdownload pdFdownload = new PDFdownload(map);
+                pdFdownload.downloadfile();
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
 
 
         return map;

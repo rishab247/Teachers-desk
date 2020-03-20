@@ -110,6 +110,9 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
             jsonData = responses.body().string();
 
 
+        //    Log.e("Response in API GET", jsonData);
+
+
             JSONObject jsonObject = new JSONObject(jsonData);
 
             JSONArray arrObj = jsonObject.getJSONArray("Status");
@@ -135,9 +138,14 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
 
             Log.e("PIC JSON" , imagestr);
 
+            JSONArray array = jsonObject.getJSONArray("Verify");
+
+            String verifystr = array.get(0).toString().trim();
+
+            Log.e("VERIFY" , verifystr);
 
 
-            infoarr = new String[]{ecode , name , email , pno , depart , doj , quali , uni ,dob , imagestr};
+            infoarr = new String[]{ecode , name , email , pno , depart , doj , quali , uni ,dob , imagestr , verifystr};
             Log.e("INFO"  , infoarr.toString());
 
 

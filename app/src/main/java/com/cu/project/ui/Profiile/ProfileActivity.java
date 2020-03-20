@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -52,6 +51,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.cu.project.ui.login.loginActivity;
+import com.itextpdf.text.Image;
 
 import java.util.concurrent.ExecutionException;
 
@@ -68,6 +68,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     PageAdapter pagerAdapter;
     TabItem tabprofile;
     TabItem tabview;
+    TabItem tabinfo;
     ConstraintLayout constraintLayout;
 
     ImageView verified;
@@ -80,6 +81,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     CircleImageView pro_img;
 
     FloatingActionButton btn1 , btn2;
+
+    String type = "false";
 
 
     @Override
@@ -99,6 +102,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         pro_img = findViewById(R.id.profile_img);
 
 
+
         String name = bundle.getString("name_");
         String email = bundle.getString("email_");
         String pno = bundle.getString("p_no");
@@ -109,6 +113,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
         String dob = bundle.getString("dob_");
         String eid = bundle.getString("e_code");
         String imgstr = bundle.getString("imagestr");
+        String verifystr = bundle.getString("verify");
 
         editor.putString("name_",bundle.getString("name_")).apply();
         editor.putString("email_", bundle.getString("email_") ).apply();
@@ -142,7 +147,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
             }
 
-            Log.e("SDAFASDFSFSDFDSFSDF" , String.valueOf(stringBuilder));
+         //   Log.e("SDAFASDFSFSDFDSFSDF" , String.valueOf(stringBuilder));
 
 
             imgstr = String.valueOf(stringBuilder);
@@ -152,11 +157,21 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
 
         tabLayout = findViewById(R.id.tab_layout);
-        tabprofile = findViewById(R.id.profile_tab);
-        tabview = findViewById(R.id.view_tab);
+//        tabprofile = findViewById(R.id.profile_tab);
+//        tabview = findViewById(R.id.view_tab);
+//        tabinfo = findViewById(R.id.info_tab);
         viewPager = findViewById(R.id.view_pager);
 
-
+        assert verifystr != null;
+        if(verifystr.equals("true")){
+            tabLayout.addTab(tabLayout.newTab().setText("Profile").setIcon(getResources().getDrawable(R.drawable.profile_img)));
+            tabLayout.addTab(tabLayout.newTab().setText("Accomplishment").setIcon(getResources().getDrawable(R.drawable.baseline_emoji_events_black_24dp)));
+            tabLayout.addTab(tabLayout.newTab().setText("Information"));
+        }
+        else{
+            tabLayout.addTab(tabLayout.newTab().setText("Profile").setIcon(getResources().getDrawable(R.drawable.profile_img)));
+            tabLayout.addTab(tabLayout.newTab().setText("Accomplishment").setIcon(getResources().getDrawable(R.drawable.baseline_emoji_events_black_24dp)));
+        }
         pagerAdapter = new PageAdapter(getSupportFragmentManager() , tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
 
@@ -177,6 +192,15 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
                 else if(tab.getPosition() == 1){
                     constraintLayout.setVisibility(View.GONE);
                   menu.setVisibility(View.GONE);
+                }
+                else if(tab.getPosition() == 1){
+                    constraintLayout.setVisibility(View.GONE);
+                    menu.setVisibility(View.GONE);
+                }
+
+                else{
+                    constraintLayout.setVisibility(View.GONE);
+                    menu.setVisibility(View.GONE);
                 }
             }
 
@@ -277,7 +301,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
                 }
                 else
                 {
-                    Log.e("DFSDFDSFSDFFSfsf "  ,  res[4]);
+                  //  Log.e("DFSDFDSFSDFFSfsf "  ,  res[4]);
                     pro_img.setImageBitmap(StringToBitMap(res[4]));
                 }
             }
@@ -286,13 +310,23 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
     @Override
     public void processVerifyFinish(String[] output) {
-         editor.putString("Verify",output[0]+output[1]);
+         editor.putString("Verify",output[0]);
+         editor.putString("HOD" , output[1]);
         editor.commit();
 
         Log.e(  "processVerifyFinish: ",sharedpreferences.getString("Verify","") );
+        Log.e(  "processVerifyFinish: ",sharedpreferences.getString("HOD","") );
         Log.e(  "processVerifyFinish: ",sharedpreferences.getString("email_","") );
         Log.e(  "processVerifyFinish: ",sharedpreferences.getString("name_","") );
         Log.e(  "processVerifyFinish: ",sharedpreferences.getString("p_no","") );
+
+        if(sharedpreferences.getString("Verify" , "").equals("true")){
+            verified.setVisibility(View.VISIBLE);
+        }
+
+        if(sharedpreferences.getString("HOD" , "").equals("true")){
+            type = "true";
+        }
 
     }
 
