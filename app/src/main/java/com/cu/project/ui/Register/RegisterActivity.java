@@ -53,15 +53,16 @@ public class RegisterActivity extends AppCompatActivity{
     TextView Alreadyamember ;
     Spinner type_spinner;
     Dialog dialog;
-    private String mVerificationId;
-    AlertDialog.Builder builder;
     View popupdialog;
     Button verifybtn , canclebtn;
     EditText otpedittext;
     TextView resendtext;
       AlertDialog alertDialog;
+    AlertDialog.Builder builder;
+
     private FirebaseAuth mAuth;
 
+    private String mVerificationId;
 
     private boolean initiate = false;
 
@@ -482,26 +483,6 @@ public class RegisterActivity extends AppCompatActivity{
 
     int range = 9;
     int length = 4;
-
-    public int generateRandomNumber() {
-        int randomNumber;
-
-        SecureRandom secureRandom = new SecureRandom();
-        String s = "";
-        for (int i = 0; i < length; i++) {
-            int number = secureRandom.nextInt(range);
-            if (number == 0 && i == 0)
-            {
-                i = -1;
-                continue;
-            }
-            s = s + number;
-        }
-
-        randomNumber = Integer.parseInt(s);
-
-        return randomNumber;
-    }
 
 
 

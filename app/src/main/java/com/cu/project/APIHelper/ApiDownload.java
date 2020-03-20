@@ -11,6 +11,7 @@ import android.util.Log;
 
 import androidx.core.content.FileProvider;
 
+import com.cu.project.Excel_download;
 import com.cu.project.Util.JsonEncoder;
 import com.cu.project.ui.Profiile.Author;
 import com.cu.project.ui.Profiile.Pdfmaterial;
@@ -546,6 +547,26 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
         }
         else{
 
+
+            Excel_download file  = new Excel_download();
+            file.persanalinfo();
+            file.Publication(map.get("1"));
+            file.downloadfile();
+
+
+
+//            if(type.equals("Publication")){
+//
+//            }else if(type.equals("Patent")){
+//
+//            }
+//            else  if (type.equals("Project")){
+//
+//            }else if(type.equals("HonorsandAward")){
+//
+//            }else{
+//
+//            }
         }
 
 
