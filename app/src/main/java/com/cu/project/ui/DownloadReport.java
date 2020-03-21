@@ -183,18 +183,8 @@ public class DownloadReport  extends AppCompatActivity {
                     excel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String finaltype = null;
-                            if(type.equals("All"))
-                                finaltype = "all";
-
-                            else if(type.equals("Honors and Award")){
-                                finaltype = "HonorsandAward";
-                            }
-
-                            else
-                                finaltype = type;
                             ApiDownload apiDownload = new ApiDownload(DownloadReport.this);
-                            apiDownload.execute(datestart , dateend , finaltype , "excel");
+                            apiDownload.execute(datestart , dateend , "excel");
                         }
                     });
 

@@ -178,19 +178,26 @@
         app:tabTextColor="#000">
 
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/profile_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/profile_img"
-            android:text="Profile" />
+<!--        <com.google.android.material.tabs.TabItem-->
+<!--            android:id="@+id/profile_tab"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:icon="@drawable/profile_img"-->
+<!--            android:text="Profile" />-->
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/view_tab"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:icon="@drawable/baseline_emoji_events_black_24dp"
-            android:text="Accomplishments" />
+<!--        <com.google.android.material.tabs.TabItem-->
+<!--            android:id="@+id/view_tab"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:icon="@drawable/baseline_emoji_events_black_24dp"-->
+<!--            android:text="Accomplishments" />-->
+
+<!--        <com.google.android.material.tabs.TabItem-->
+<!--            android:id="@+id/info_tab"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Information"-->
+<!--            android:visibility="gone"/>-->
 
 
     </com.google.android.material.tabs.TabLayout>

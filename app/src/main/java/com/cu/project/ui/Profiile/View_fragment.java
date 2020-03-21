@@ -87,7 +87,7 @@ public class View_fragment extends Fragment implements Asyncresponsegetpaper {
         list3.setAdapter(null);
          apigetPaper = new ApigetPaper(  );
          apigetPaper.asyncresponsegetpaper = this;
-          map = new HashMap<>();
+         map = new HashMap<>();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -105,42 +105,6 @@ public class View_fragment extends Fragment implements Asyncresponsegetpaper {
 
 
 
-//
-//         String storedHashMapString = sharedpreferences.getString("apigetpaper", "");
-//        if(storedHashMapString.equals("")){
-//            Toast.makeText(getContext(),"error",Toast.LENGTH_LONG).show();
-//        }
-//        else{
-////            java.lang.reflect.Type type = new TypeToken<HashMap<String, ArrayList> >(){}.getType();
-////            map1 = gson.fromJson(storedHashMapString, type);
-////            listitems4 = map1.get("1");
-////            SubjectData data = new SubjectData();
-////            data  = listitems4.get(1);
-////            Log.e("cache testing",data.getDate()+data.getId());
-//        }
-
-//        swipeRefreshLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-//            @Override
-//            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-//
-//            }
-//        });
-//        swipeRefreshLayout.setOnDragListener(new View.OnDragListener() {
-//            @Override
-//            public boolean onDrag(View view, DragEvent dragEvent) {
-//                ApigetPaper apigetPaper = new ApigetPaper();
-//
-//                apigetPaper.asyncresponsegetpaper = (Asyncresponsegetpaper) v.getContext();
-//
-//                apigetPaper.execute(token);
-//                return false;
-//            }
-//        });
-
-
-
-
-
         upload_btn = v.findViewById(R.id.uploadbtn);
         upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,15 +119,6 @@ public class View_fragment extends Fragment implements Asyncresponsegetpaper {
 
 
         return v;
-    }
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-
     }
 
     @Override

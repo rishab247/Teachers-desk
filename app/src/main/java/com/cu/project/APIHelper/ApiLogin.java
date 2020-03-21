@@ -102,6 +102,8 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
         {
             JSONObject jsonObject = new JSONObject(Objects.requireNonNull(response.body()).string());
 
+            Log.e("Api Login data" , jsonObject.toString());
+
             token = jsonObject.getString("token");
         }
 
