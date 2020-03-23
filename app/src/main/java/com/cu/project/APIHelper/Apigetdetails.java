@@ -73,9 +73,6 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
         dialog.setCancelable(false);
         dialog.show();
 
-
-
-
     }
 
     @Override

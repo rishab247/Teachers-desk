@@ -68,7 +68,7 @@ public class HOD_fragment extends Fragment implements AsynHodResponse {
 
         ArrayList<SubjectDataHod> subjectDataHods = output;
 
-        HODlistAdapter hoDlistAdapter = new HODlistAdapter(getActivity().getApplicationContext() , subjectDataHods);
+        HODlistAdapter hoDlistAdapter = new HODlistAdapter(getContext() , subjectDataHods);
 
         listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
 

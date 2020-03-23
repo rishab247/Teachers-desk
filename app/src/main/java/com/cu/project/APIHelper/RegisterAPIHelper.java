@@ -1,14 +1,18 @@
 package com.cu.project.APIHelper;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.cu.project.Util.util;
 import com.cu.project.ui.Register.RegisterMvpPresenter;
 import com.cu.project.ui.Register.RegisterMvpView;
+import com.cu.project.ui.login.loginActivity;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -27,7 +31,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.internal.Util;
 
-public class RegisterAPIHelper  extends AsyncTask<String , String , String> {
+public class RegisterAPIHelper  extends AsyncTask<String , String , Integer> {
 
     Context scontext;
     ProgressDialog dialog;
@@ -54,7 +58,7 @@ public class RegisterAPIHelper  extends AsyncTask<String , String , String> {
     }
 
     @Override
-    protected String doInBackground(String... voids) {
+    protected Integer doInBackground(String... voids) {
 
         String str = voids[0];
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
@@ -69,20 +73,39 @@ public class RegisterAPIHelper  extends AsyncTask<String , String , String> {
         Request request = new Request.Builder()
                 .url(url).post(body).build();
 
+        Response response = null;
 
         try {
-            Response response = client.newCall(request).execute();
+            response = client.newCall(request).execute();
+
+            String str1 = response.body().string();
+            Log.e("Register Response" , str1);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return length;
+        return 200;
     }
 
 
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(Integer result) {
         super.onPostExecute(result);
-        dialog.cancel();
+
+        Context scontext = contextRef.get();
+
+        if(dialog.isShowing()){
+            dialog.cancel();
+        }
+
+        if(result == 200){
+            Intent intent = new Intent(scontext , loginActivity.class);
+            scontext.startActivity(intent);
+            ((Activity)scontext).finish();
+        }
+        else{
+            Toast.makeText(scontext, "Error Occurred" ,  Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

@@ -433,8 +433,8 @@ public class RegisterActivity extends AppCompatActivity{
                     RegisterAPIHelper apiHelper = new RegisterAPIHelper(RegisterActivity.this);
                     apiHelper.execute(information);
 
-                    Intent intent = new Intent(RegisterActivity.this , loginActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(RegisterActivity.this , loginActivity.class);
+//                    startActivity(intent);
 
                     }
 

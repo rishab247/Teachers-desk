@@ -12,6 +12,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 
+import com.cu.project.APIHelper.ApigetIndividual;
 
 import java.util.ArrayList;
 
@@ -66,7 +67,7 @@ public class HODlistAdapter implements ListAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         SubjectDataHod hodData = arrayList.get(position);
 
         if(convertView==null) {
@@ -76,9 +77,14 @@ public class HODlistAdapter implements ListAdapter {
                 @Override
                 public void onClick(View v) {
 
+                    String eid = arrayList.get(position).getEid();
+
+                    ApigetIndividual apigetIndividual = new ApigetIndividual(context , eid);
+
+                        apigetIndividual.execute();
+
                 }
             });
-
 
 
             TextView tittle=convertView.findViewById(R.id.name_emp);
