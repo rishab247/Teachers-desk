@@ -61,6 +61,8 @@ public class RegisterAPIHelper  extends AsyncTask<String , String , Integer> {
     protected Integer doInBackground(String... voids) {
 
         String str = voids[0];
+
+        Log.e("REGISTER" , str);
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
 
 

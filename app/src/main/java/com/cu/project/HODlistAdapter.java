@@ -78,8 +78,9 @@ public class HODlistAdapter implements ListAdapter {
                 public void onClick(View v) {
 
                     String eid = arrayList.get(position).getEid();
+                    boolean verify = arrayList.get(position).getVerify();
 
-                    ApigetIndividual apigetIndividual = new ApigetIndividual(context , eid);
+                    ApigetIndividual apigetIndividual = new ApigetIndividual(context , eid , verify);
 
                         apigetIndividual.execute();
 
@@ -101,8 +102,6 @@ public class HODlistAdapter implements ListAdapter {
             }
             else{
                 verified_img.setImageDrawable(convertView.getResources().getDrawable(R.drawable.cross));
-
-
             }
         }
         return convertView;

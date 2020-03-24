@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.cu.project.Individual;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,10 +24,11 @@ import okhttp3.Response;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class ApigetIndividual extends AsyncTask<Void, Void, Void> {
+public class ApigetIndividual extends AsyncTask<Void, Void, String[]> {
 
     private WeakReference<Context> contextRef;
     private String eid;
+    private boolean verify;
     ProgressDialog dialog;
 
     private SharedPreferences sharedpreferences;
@@ -34,11 +36,12 @@ public class ApigetIndividual extends AsyncTask<Void, Void, Void> {
 
     String url = "https://apitims1.azurewebsites.net/faculty/Profile?token=";
 
-    public ApigetIndividual(Context context, String eid) {
+    public ApigetIndividual(Context context, String eid , boolean vereify) {
         contextRef =new WeakReference<> (context);
         sharedpreferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
         this.eid = eid;
+        this.verify = vereify;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class ApigetIndividual extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected String[] doInBackground(Void... voids) {
 
         MediaType MEDIA_TYPE = MediaType.parse("application/json");
         String token= sharedpreferences.getString("Token", "");
@@ -80,6 +83,8 @@ public class ApigetIndividual extends AsyncTask<Void, Void, Void> {
 
         Response response = null;
 
+        String[] infoarr = null;
+
         try {
             response = client.newCall(request).execute();
 
@@ -87,15 +92,39 @@ public class ApigetIndividual extends AsyncTask<Void, Void, Void> {
 
             Log.e(TAG, "doInBackground: " + mMessage);
 
-        } catch (IOException e) {
+            JSONObject jsonObject1 = new JSONObject(mMessage);
+
+            JSONArray jsonArray = jsonObject1.getJSONArray("msg");
+
+
+            String imagestr = (String) jsonObject1.get("pic");
+
+            Log.e("PIC JSON" , imagestr);
+
+
+            String name = jsonArray.get(0).toString().trim();
+            String pno = jsonArray.get(1).toString().trim();
+            String mail = jsonArray.get(2).toString().trim();
+            String branch = jsonArray.get(3).toString().trim();
+            String dob = jsonArray.get(4).toString().trim();
+            String doj = jsonArray.get(5).toString().trim();
+            String quali = jsonArray.get(6).toString().trim();
+            String uni = jsonArray.get(7).toString().trim();
+
+
+
+            infoarr = new String[]{name, pno, mail, branch, dob, doj, quali, uni , imagestr};
+
+
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return infoarr;
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
+    protected void onPostExecute(String[] aVoid) {
         super.onPostExecute(aVoid);
 
         if(dialog.isShowing()){
@@ -105,6 +134,9 @@ public class ApigetIndividual extends AsyncTask<Void, Void, Void> {
         Context sContext = contextRef.get();
 
         Intent intent = new Intent(sContext , Individual.class);
+        intent.putExtra("information", aVoid);
+        intent.putExtra("Verify", verify);
+        intent.putExtra("EID" , eid);
         sContext.startActivity(intent);
     }
 }

@@ -147,7 +147,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
             }
 
-         //   Log.e("SDAFASDFSFSDFDSFSDF" , String.valueOf(stringBuilder));
+            Log.e("SDAFASDFSFSDFDSFSDF" , String.valueOf(stringBuilder));
 
 
             imgstr = String.valueOf(stringBuilder);
