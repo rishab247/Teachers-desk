@@ -142,7 +142,7 @@ public class Individual extends AppCompatActivity {
 
 
                     String[] eid = new String[]{userEid};
-                    APIVerifyIndividual apiVerifyIndividual = new APIVerifyIndividual(Individual.this, eid);
+                    APIVerifyIndividual apiVerifyIndividual = new APIVerifyIndividual(Individual.this, eid,1);
                     apiVerifyIndividual.execute();
 
                 }

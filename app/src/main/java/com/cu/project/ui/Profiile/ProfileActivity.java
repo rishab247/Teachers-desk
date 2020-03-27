@@ -187,13 +187,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
                 if(tab.getPosition() == 0) {
                     constraintLayout.setVisibility(View.VISIBLE);
                     menu.setVisibility(View.VISIBLE);
-
                 }
                 else if(tab.getPosition() == 1){
                     constraintLayout.setVisibility(View.GONE);
                   menu.setVisibility(View.GONE);
                 }
-                else if(tab.getPosition() == 1){
+                else if(tab.getPosition() == 2){
                     constraintLayout.setVisibility(View.GONE);
                     menu.setVisibility(View.GONE);
                 }
@@ -311,11 +310,11 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
     @Override
     public void processVerifyFinish(String[] output) {
          editor.putString("Verify",output[0]);
-         editor.putString("HOD" , output[1]);
+//         editor.putString("HOD" , output[1]);
         editor.commit();
 
         Log.e(  "processVerifyFinish: ",sharedpreferences.getString("Verify","") );
-        Log.e(  "processVerifyFinish: ",sharedpreferences.getString("HOD","") );
+    //    Log.e(  "processVerifyFinish: ",sharedpreferences.getString("HOD","") );
         Log.e(  "processVerifyFinish: ",sharedpreferences.getString("email_","") );
         Log.e(  "processVerifyFinish: ",sharedpreferences.getString("name_","") );
         Log.e(  "processVerifyFinish: ",sharedpreferences.getString("p_no","") );

@@ -27,17 +27,19 @@ public class APIVerifyIndividual extends AsyncTask<Void, Void, String> {
     String url = "https://apitims1.azurewebsites.net/facultyverify?token=";
     String[] eid = null;
     WeakReference<Context> contextRef;
+    int reference;
 
     ProgressDialog dialog;
 
     private SharedPreferences sharedpreferences;
     private SharedPreferences.Editor editor;
 
-    public APIVerifyIndividual(Context context, String[] eid) {
+    public APIVerifyIndividual(Context context, String[] eid,int reference) {
         contextRef = new WeakReference<>(context);
         sharedpreferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
         this.eid = eid;
+        this.reference = reference;
     }
 
     @Override
@@ -115,6 +117,9 @@ public class APIVerifyIndividual extends AsyncTask<Void, Void, String> {
         }
 
         Toast.makeText(contextRef.get(), aVoid , Toast.LENGTH_SHORT).show();
-        ((Activity)contextRef.get()).finish();
+
+        if(reference == 1){
+            ((Activity)contextRef.get()).finish();
+        }
     }
 }

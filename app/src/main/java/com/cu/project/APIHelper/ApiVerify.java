@@ -110,11 +110,6 @@ public ApiVerify(Context context){
         }
         asyncVerifyResponse.processVerifyFinish(aVoid);
 
-//        if(!aVoid.equals("200"))
-//
-//        {
-//            Toast.makeText(scontext , "aVoid"+aVoid , Toast.LENGTH_SHORT).show();
-//        }
     }
 
 }
