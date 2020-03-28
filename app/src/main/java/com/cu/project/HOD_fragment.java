@@ -63,7 +63,7 @@ public class HOD_fragment extends Fragment implements AsynHodResponse , AdapterV
     static SharedPreferences.Editor editor;
 
     ApiHodData apiHodData;
-
+    ActionMode mode1;
     EditText inputSearch;
 
     HODlistAdapter hoDlistAdapter;
@@ -329,6 +329,7 @@ public class HOD_fragment extends Fragment implements AsynHodResponse , AdapterV
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                 mode.getMenuInflater().inflate(R.menu.hod_menu, menu);
+                mode1 =mode;
                 return true;
             }
 
@@ -336,14 +337,23 @@ public class HOD_fragment extends Fragment implements AsynHodResponse , AdapterV
             public void onDestroyActionMode(ActionMode mode) {
                 // TODO Auto-generated method stub
                 hoDlistAdapter.removeSelection();
+                mode.finish();
+                Log.e(TAG , "onPause: "  );
+
             }
 
             @Override
             public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
                 // TODO Auto-generated method stub
+
                 return false;
             }
         });
+
+
+
+
+
 
 
         swipeRefreshLayout.setRefreshing(false);
@@ -366,7 +376,14 @@ public class HOD_fragment extends Fragment implements AsynHodResponse , AdapterV
         apigetIndividual.execute();
     }
 
-
+    @Override
+    public void onPause () {
+if (mode1!=null){
+    mode1.finish();
+}
+        Log.e(TAG , "onPause: "  );
+super.onPause();
+    }
     private void initPopupViewControls(){
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         popupInputDialogView = layoutInflater.inflate(R.layout.download_hod_data, null);
@@ -384,4 +401,3 @@ public class HOD_fragment extends Fragment implements AsynHodResponse , AdapterV
 
     }
 }
-

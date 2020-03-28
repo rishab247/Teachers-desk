@@ -24,6 +24,7 @@ public class PageAdapter extends FragmentPagerAdapter {
                 case 0:
                     return new profile_fragement();
                 case 1:
+
                     return new View_fragment();
                 case 2:
                     return new HOD_fragment();

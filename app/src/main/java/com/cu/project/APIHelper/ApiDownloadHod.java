@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.cu.project.Exceldownload;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -117,7 +119,8 @@ public class ApiDownloadHod extends AsyncTask<Void, Void, Void> {
             response = client.newCall(request).execute();
 
             mMessage = response.body().string();
-
+            Exceldownload exceldownload  = new Exceldownload();
+            exceldownload.downloadexcel(mMessage);
             Log.e("MESSAGE RESPONSE", mMessage);
 
             return null;

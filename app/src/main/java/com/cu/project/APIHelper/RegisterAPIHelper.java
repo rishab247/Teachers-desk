@@ -36,15 +36,14 @@ public class RegisterAPIHelper  extends AsyncTask<String , String , Integer> {
     Context scontext;
     ProgressDialog dialog;
 
-    String length = null;
 
     private WeakReference<Context> contextRef;
-
 
     public RegisterAPIHelper(Context context) {
         contextRef =new WeakReference<> (context);
 
     }
+
 
     @Override
     protected void onPreExecute() {
@@ -69,6 +68,7 @@ public class RegisterAPIHelper  extends AsyncTask<String , String , Integer> {
         String url = util.url + "/register";
 
         OkHttpClient client = new OkHttpClient();
+        Log.e("Register json" , str );
 
 
         RequestBody body = RequestBody.create(MEDIA_TYPE, str);

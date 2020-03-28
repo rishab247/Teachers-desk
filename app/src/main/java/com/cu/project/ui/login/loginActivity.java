@@ -208,4 +208,11 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
         startActivity(intent_name);
     }
 
+    @Override
+    protected void onPostResume () {
+        super.onPostResume();
+        ((EditText)findViewById(R.id.fnamelogintext)).setText("");
+        ((EditText)findViewById(R.id.lnamelogintext)).setText("");
+
+    }
 }

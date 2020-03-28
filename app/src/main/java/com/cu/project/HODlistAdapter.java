@@ -149,6 +149,7 @@ protected void publishResults(CharSequence constraint, FilterResults results) {
     }
 
     public void toggleSelection(int position) {
+        Log.e(TAG , "toggleSelection: " +mSelectedItemsIds.get(position) );
         selectView(position, !mSelectedItemsIds.get(position));
     }
 

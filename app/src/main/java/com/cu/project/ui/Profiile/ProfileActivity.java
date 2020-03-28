@@ -36,10 +36,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.cu.project.APIHelper.ApiVerify;
 import com.cu.project.APIHelper.AsyncVerifyResponse;
+import com.cu.project.HOD_fragment;
 import com.cu.project.ProfileEdit;
 import com.cu.project.R;
 import com.cu.project.ui.Authorclass;
@@ -178,21 +180,23 @@ public class ProfileActivity extends AppCompatActivity implements ProfileMvpView
 
         constraintLayout = findViewById(R.id.constraintLayout2);
         menu = findViewById(R.id.f_btn);
-
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
 
+                 Log.w("TAG" , "onTabSelected: " + tab.getPosition());
                 if(tab.getPosition() == 0) {
+
                     constraintLayout.setVisibility(View.VISIBLE);
                     menu.setVisibility(View.VISIBLE);
-                }
+                 }
                 else if(tab.getPosition() == 1){
-                    constraintLayout.setVisibility(View.GONE);
+                     constraintLayout.setVisibility(View.GONE);
                   menu.setVisibility(View.GONE);
                 }
                 else if(tab.getPosition() == 2){
+
                     constraintLayout.setVisibility(View.GONE);
                     menu.setVisibility(View.GONE);
                 }
