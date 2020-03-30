@@ -68,7 +68,7 @@ public class ApiPOST  extends AsyncTask<String , Context, String> {
         if(token.equals("")){
             Log.e(TAG, "gettoken: token doesnot exists or expired " );
         }
-        String url = "https://apitims1.azurewebsites.net/user/upload/Honors_and_Award?token=";
+        String url = "https://apitims.azurewebsites.net/user/upload/Honors_and_Award?token=";
         url = url + token;
 
         OkHttpClient client = new OkHttpClient();

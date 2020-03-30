@@ -36,7 +36,7 @@ public class ApiDelete extends AsyncTask<Void , Void , String> {
 
 //    String token = loginActivity.gettoken();
 
-    String url = "https://apitims1.azurewebsites.net//user/upload?token=";
+    String url = "https://apitims.azurewebsites.net//user/upload?token=";
 
     public ApiDelete(Context context, String id, String type, String pass) {
         contextRef =new WeakReference<> (context);

@@ -27,7 +27,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class ApiVerify extends AsyncTask<Void , Void , String[]> {
 
-    String url = "https://apitims1.azurewebsites.net/Verify?token=";
+    String url = "https://apitims.azurewebsites.net/Verify?token=";
 
     String[] statusarr = {""};
     private WeakReference<Context> contextRef;

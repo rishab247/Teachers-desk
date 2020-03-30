@@ -67,7 +67,7 @@ private   SharedPreferences sharedpreferences;
             Log.e(TAG, "gettoken: token doesnot exists or expired " );
         }
 
-        String urlpost = "https://apitims1.azurewebsites.net/user/upload/Project?token=";
+        String urlpost = "https://apitims.azurewebsites.net/user/upload/Project?token=";
         urlpost = urlpost + token;
 
         OkHttpClient client = new OkHttpClient();

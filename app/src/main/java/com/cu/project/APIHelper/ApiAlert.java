@@ -12,7 +12,7 @@ import okhttp3.Response;
 
 public class ApiAlert extends AsyncTask<Void, Void , Void> {
 
-    String url = "https://apitims1.azurewebsites.net/Alert";
+    String url = "https://apitims.azurewebsites.net//Alert";
     @Override
     protected Void doInBackground(Void... voids) {
 

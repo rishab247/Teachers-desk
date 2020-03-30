@@ -33,7 +33,7 @@ public class ApiEditProfile extends AsyncTask<String, Void , String> {
     public static int code = 1;
     private WeakReference<Context> contextRef;
 
-    String url = "https://apitims1.azurewebsites.net/user/Profile?token=";
+    String url = "https://apitims.azurewebsites.net/user/Profile?token=";
 
     SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;

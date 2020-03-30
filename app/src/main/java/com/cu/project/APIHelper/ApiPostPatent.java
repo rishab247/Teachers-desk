@@ -67,7 +67,7 @@ public class ApiPostPatent extends AsyncTask<String , Void , String> {
             Log.e(TAG, "gettoken: token doesnot exists or expired " );
         }
 
-        String urlpost = "https://apitims1.azurewebsites.net/user/upload/Patent?token=";
+        String urlpost = "https://apitims.azurewebsites.net/user/upload/Patent?token=";
         urlpost = urlpost + token;
 
         OkHttpClient client = new OkHttpClient();

@@ -51,7 +51,7 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
         contextRef =new WeakReference<> (context);
     }
 
-    String urls = "https://apitims1.azurewebsites.net/user/Profile?token=";
+    String urls = "https://apitims.azurewebsites.net/user/Profile?token=";
     String jsonData = null;
 
     String ecode="";

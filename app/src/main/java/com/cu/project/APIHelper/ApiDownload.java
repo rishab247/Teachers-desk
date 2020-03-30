@@ -72,7 +72,7 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
     private WeakReference<Context> contextRef;
     ProgressDialog dialog;
 
-    String url = "https://apitims1.azurewebsites.net/report/download?token=";
+    String url = "https://apitims.azurewebsites.net/report/download?token=";
 
     public ApiDownload(Context context) {
         contextRef = new WeakReference<>(context);

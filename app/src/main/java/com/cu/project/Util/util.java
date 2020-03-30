@@ -5,7 +5,7 @@ public class util {
 
         public static String keyarr[] = {"Euid" , "Name" , "Email" , "Password" , "Phone_No" , "Department_Name" , "DOJ" , "Qualifications" , "University" ,
             "DOB" , "Hod_Department"};
-        public static String url = "https://apitims1.azurewebsites.net";
+        public static String url = "https://apitims.azurewebsites.net/";
 
 
         public static String[] honor_key = {"Title" , "type" , "Issuer" , "Date" , "Description"};

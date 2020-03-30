@@ -23,7 +23,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ApiPassword extends AsyncTask<String , Void , String> {
-    String url = "https://apitims1.azurewebsites.net/Verify/password?token=";
+    String url = "https://apitims.azurewebsites.net/Verify/password?token=";
 //    String token = loginActivity.gettoken();
 
     String oldpass = null;

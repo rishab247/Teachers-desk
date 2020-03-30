@@ -120,7 +120,7 @@ public class ApiLogin  extends AsyncTask<Void, Void ,String> {
     }
 
     private String testFetchOK() throws Exception {
-        String url = "https://apitims1.azurewebsites.net/login";
+        String url = "https://apitims.azurewebsites.net/login";
 
         Log.e("Printhelper",username + password);
 

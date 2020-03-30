@@ -32,7 +32,7 @@ public class ApiHodData extends AsyncTask<Void, Void , ArrayList> {
 
     ArrayList<SubjectDataHod> listitem = new ArrayList<>();
 
-    private String urls = "https://apitims1.azurewebsites.net//facultylist?token=";
+    private String urls = "https://apitims.azurewebsites.net//facultylist?token=";
     ProgressDialog dialog;
     private WeakReference<Context> contextRef;
 

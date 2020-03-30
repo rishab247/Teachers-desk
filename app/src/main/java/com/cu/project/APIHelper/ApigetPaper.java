@@ -37,7 +37,7 @@ public class ApigetPaper extends AsyncTask<String , Void , HashMap<String,ArrayL
     public static int countpub = 0 ;
     public static int countproject = 0;
     public Asyncresponsegetpaper asyncresponsegetpaper=null;
-    private String urls = "https://apitims1.azurewebsites.net/user/Accomplishment?token=";
+    private String urls = "https://apitims.azurewebsites.net/user/Accomplishment?token=";
 
 
 

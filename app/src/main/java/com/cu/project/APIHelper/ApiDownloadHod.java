@@ -38,7 +38,7 @@ public class ApiDownloadHod extends AsyncTask<Void, Void, Void> {
     ProgressDialog dialog;
 
 
-    String url = "https://apitims1.azurewebsites.net/faculty/download?token=";
+    String url = "https://apitims.azurewebsites.net/faculty/download?token=";
 
     public ApiDownloadHod(Context context, String[] eid, String start, String end, String type) {
 

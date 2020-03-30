@@ -42,7 +42,7 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
 //    String token = loginActivity.gettoken();
 
 
-    String url = "https://apitims1.azurewebsites.net/user/Accomplishmen/Details?token=";
+    String url = "https://apitims.azurewebsites.net/user/Accomplishmen/Details?token=";
     private   SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
 

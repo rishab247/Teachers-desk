@@ -74,7 +74,7 @@ private SharedPreferences sharedpreferences;
         if(token.equals("")){
             Log.e(TAG, "gettoken: token doesnot exists or expired " );
         }
-        String urlpost = "https://apitims1.azurewebsites.net/user/upload/Publication?token=";
+        String urlpost = "https://apitims.azurewebsites.net/user/upload/Publication?token=";
         urlpost = urlpost + token;
 
         Log.e("URL PUBLICATION", urlpost);

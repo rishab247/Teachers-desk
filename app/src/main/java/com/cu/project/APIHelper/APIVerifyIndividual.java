@@ -24,7 +24,7 @@ import okhttp3.Response;
 public class APIVerifyIndividual extends AsyncTask<Void, Void, String> {
 
 
-    String url = "https://apitims1.azurewebsites.net/facultyverify?token=";
+    String url = "https://apitims.azurewebsites.net/vfacultyverify?token=";
     String[] eid = null;
     WeakReference<Context> contextRef;
     int reference;

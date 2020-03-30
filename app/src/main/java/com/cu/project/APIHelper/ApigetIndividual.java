@@ -34,7 +34,7 @@ public class ApigetIndividual extends AsyncTask<Void, Void, String[]> {
     private SharedPreferences sharedpreferences;
     private SharedPreferences.Editor editor;
 
-    String url = "https://apitims1.azurewebsites.net/faculty/Profile?token=";
+    String url = "https://apitims.azurewebsites.net/faculty/Profile?token=";
 
     public ApigetIndividual(Context context, String eid , boolean vereify) {
         contextRef =new WeakReference<> (context);
