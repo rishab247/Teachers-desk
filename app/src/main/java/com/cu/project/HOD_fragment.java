@@ -313,8 +313,10 @@ public class HOD_fragment extends Fragment implements AsynHodResponse , AdapterV
                         Dfull.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                ApiDownloadHod apiDownloadHod = new ApiDownloadHod(getContext(), eid, "0000000000000","9999999999999", "all");
+                                apiDownloadHod.execute();
 
-
+                                alertDialog.cancel();
 
                             }
                         });

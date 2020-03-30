@@ -51,21 +51,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/verifyregisterbutton"
-                style="@style/TextAppearance.AppCompat.Button"
-                android:layout_width="85dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/transparentbutton"
-                android:fontFamily="@font/roboto"
-                android:padding="5dp"
-                android:text="Verify"
-                android:textAllCaps="false"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/textInputLayout7"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textInputLayout7" />
+<!--            <Button-->
+<!--                android:id="@+id/verifyregisterbutton"-->
+<!--                style="@style/TextAppearance.AppCompat.Button"-->
+<!--                android:layout_width="85dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_marginEnd="16dp"-->
+<!--                android:background="@drawable/transparentbutton"-->
+<!--                android:fontFamily="@font/roboto"-->
+<!--                android:padding="5dp"-->
+<!--                android:text="Verify"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/textInputLayout7"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/textInputLayout7" />-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout3"
@@ -200,7 +200,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toStartOf="@+id/verifyregisterbutton"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout0">
@@ -212,6 +212,7 @@
                     android:hint="Phone No."
                     android:inputType="numberSigned"
                     android:maxLength="10"
+                    android:enabled="false"
                     android:text="8426988382" />
 
             </com.google.android.material.textfield.TextInputLayout>

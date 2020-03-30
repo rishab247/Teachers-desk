@@ -8,10 +8,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.LoginFilter;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
+import com.cu.project.Excel_download;
+import com.cu.project.PDFdownload;
 import com.cu.project.Util.JsonEncoder;
+import com.cu.project.ui.DownloadReport;
 import com.cu.project.ui.Profiile.Author;
 import com.cu.project.ui.Profiile.Pdfmaterial;
 import com.cu.project.ui.Profiile.SubjectData;
@@ -20,6 +24,7 @@ import com.cu.project.ui.Profiile.patentpdf;
 import com.cu.project.ui.Profiile.projectpdf;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfPTable;
 
 import org.json.JSONArray;
@@ -27,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -146,7 +152,7 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
             JSONArray honorarray = null;
 
 
-            if (type.equals("Publication")) {
+            if(type.equals("Publication")) {
                 pubarray = jsonObject.getJSONArray("Publication");
 
 
@@ -542,9 +548,22 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
         }
 
         if(voids[3].equals("pdf")){
+            try {
+                PDFdownload pdFdownload = new PDFdownload(map,scontext);
+                pdFdownload.downloadfile();
 
+              //Toast.makeText(scontext, "File Saved",Toast.LENGTH_SHORT).show();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         else{
+            // paste your code here for downloading excel file
 
         }
 
@@ -559,6 +578,8 @@ public class ApiDownload extends AsyncTask<String , Void , HashMap<String , Arra
         if (dialog.isShowing()) {
             dialog.cancel();
         }
+
+        Toast.makeText(contextRef.get(), "File Saved", Toast.LENGTH_SHORT).show();
 
     }
 

@@ -159,9 +159,11 @@ public class detailclass  extends AppCompatActivity {
             tohidepublisher.setText("Publication or Publisher");
 
 
-            tohideapp.setVisibility(View.GONE);
+            tohideapp.setVisibility(View.VISIBLE);
+            tohideapp.setText("Type");
 
-            appnumber.setVisibility(View.GONE);
+            appnumber.setVisibility(View.VISIBLE);
+            appnumber.setText(details.get(5));
 
             authname.setText(authdetails);
 
@@ -264,6 +266,8 @@ public class detailclass  extends AppCompatActivity {
 
         downloadfbtn = findViewById(R.id.floatingActionButton1);
 
+
+
         downloadfbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -316,7 +320,7 @@ public class detailclass  extends AppCompatActivity {
         });
     }
 
-    private void savePdfhonor() {
+    private String savePdfhonor() {
 
         Document mDoc = new Document();
 
@@ -401,12 +405,13 @@ public class detailclass  extends AppCompatActivity {
             Toast.makeText(this  ,   e.getMessage() , Toast.LENGTH_SHORT).show();
         }
 
+        return mFilePath;
 
     }
 
 
 
-    private void savePdfpub() {
+    private String savePdfpub() {
 
         Document mDoc = new Document(PageSize.A4);
 
@@ -574,6 +579,8 @@ public class detailclass  extends AppCompatActivity {
             Toast.makeText(this  ,   e.getMessage() , Toast.LENGTH_SHORT).show();
         }
 
+        return mFilePath;
+
 
     }
     private void insertCell(PdfPTable table, String text, int align, int colspan, Font font){
@@ -595,7 +602,7 @@ public class detailclass  extends AppCompatActivity {
 
 
 
-    private void savePdfpatent() {
+    private String savePdfpatent() {
 
         Document mDoc = new Document(PageSize.A4);
 
@@ -786,12 +793,12 @@ public class detailclass  extends AppCompatActivity {
         {
             Toast.makeText(this  ,   e.getMessage() , Toast.LENGTH_SHORT).show();
         }
-
+        return mFilePath;
     }
 
 
 
-    private void savePdf() {
+    private String savePdf() {
 
             Document mDoc = new Document(PageSize.A4);
 
@@ -938,6 +945,7 @@ public class detailclass  extends AppCompatActivity {
             {
                 Toast.makeText(this  ,   e.getMessage() , Toast.LENGTH_SHORT).show();
             }
+        return mFilePath;
 
     }
 

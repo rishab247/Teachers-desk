@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -63,6 +64,8 @@ public class AddPublication extends AppCompatActivity {
     List<String> emails = new ArrayList<>();
     List<String> pnos = new ArrayList<>();
 
+    EditText type_pub;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,12 +77,19 @@ public class AddPublication extends AppCompatActivity {
         pubdate = findViewById(R.id.Publicationdate_id);
         puburl = findViewById(R.id.Publicationurl_id);
         pubdes = findViewById(R.id.Description_id);
+        type_pub = findViewById(R.id.type_of_pub_id);
 
         listView = findViewById(R.id.authorslist1_id);
 
         final ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, names);
         listView.setAdapter(adapter1);
+
+//
+//        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_publications, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        type_pub.setAdapter(adapter);
+
 
 
         pubdate.setOnClickListener(new View.OnClickListener() {
@@ -108,12 +118,12 @@ public class AddPublication extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String title = pubtitle.getText().toString();
-                String publishertext = publisher.getText().toString();
-                String date = pubdate.getText().toString();
-                String url = puburl.getText().toString();
-                String des = pubdes.getText().toString();
-
+                String title = pubtitle.getText().toString().trim();
+                String publishertext = publisher.getText().toString().trim();
+                String date = pubdate.getText().toString().trim();
+                String url = puburl.getText().toString().trim();
+                String des = pubdes.getText().toString().trim();
+                String type = type_pub.getText().toString().trim();
 
                 int flag = 0;
 
@@ -139,6 +149,11 @@ public class AddPublication extends AppCompatActivity {
 
                 if (publishertext.equals("")) {
                     publisher.setError("Field cannot be empty");
+                    flag = 1;
+                }
+
+                if(type.equals("")){
+                    type_pub.setError("Field cannot be empty");
                     flag = 1;
                 }
                 if(flag == 0) {
@@ -174,7 +189,7 @@ public class AddPublication extends AppCompatActivity {
 
 
 
-                    String[] info = {title, publishertext, url, dateofpub, des};
+                    String[] info = {title, publishertext, url, dateofpub, des, type};
                     JsonEncoder jsonEncoder = new JsonEncoder(AddPublication.this);
                     String information = jsonEncoder.jsonify_pub(info , jsonArray1 , names.size());
 

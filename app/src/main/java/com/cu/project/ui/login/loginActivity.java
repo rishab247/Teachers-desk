@@ -138,7 +138,6 @@ public class loginActivity extends Activity implements loginMvpView , AsyncLogin
             Apiget apiget = new Apiget(this);
             apiget.asyncResponse = this;
             apiget.execute(str);
-
         }
     }
 

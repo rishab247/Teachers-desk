@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -177,6 +178,8 @@ public class DownloadReport  extends AppCompatActivity {
 
                             ApiDownload apiDownload = new ApiDownload(DownloadReport.this);
                             apiDownload.execute(datestart , dateend , finaltype , "pdf");
+
+                            alertDialog.cancel();
                         }
                     });
 
@@ -209,26 +212,55 @@ public class DownloadReport  extends AppCompatActivity {
 //                alertDialog.
                 alertDialog.show();
 
+                final String type = type_spin.getSelectedItem().toString().trim();
+
+
                 pdf.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(DownloadReport.this , "PDF" , Toast.LENGTH_SHORT).show();
+                        String finaltype = null;
+                        if(type.equals("All"))
+                            finaltype = "all";
+
+                        else if(type.equals("Honors and Award")){
+                            finaltype = "HonorsandAward";
+                        }
+
+                        else
+                            finaltype = type;
+
+                        ApiDownload apiDownload = new ApiDownload(DownloadReport.this);
+                        apiDownload.execute("0000000000000" , "9999999999999" , "all" , "pdf");
+
+                        alertDialog.cancel();
+
+
                     }
                 });
 
                 excel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(DownloadReport.this , "EXCEL" , Toast.LENGTH_SHORT).show();
+                        String finaltype = null;
+                        if(type.equals("All"))
+                            finaltype = "all";
+
+                        else if(type.equals("Honors and Award")){
+                            finaltype = "HonorsandAward";
+                        }
+
+                        else
+                            finaltype = type;
+
+                        ApiDownload apiDownload = new ApiDownload(DownloadReport.this);
+                        apiDownload.execute("0000000000000" , "9999999999999" , "all" , "excel");
+
+                        alertDialog.cancel();
                     }
                 });
 
             }
         });
-
-
-
-
     }
 
     private void initPopupViewControl() {

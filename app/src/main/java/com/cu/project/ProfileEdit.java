@@ -48,6 +48,7 @@ public class ProfileEdit extends AppCompatActivity {
     Button savebtn;
     private EditText confirmpass;
     private TextView canclepass, savepass;
+    EditText confirmnewpass;
 
     String password;
     String p_no;
@@ -103,6 +104,17 @@ public class ProfileEdit extends AppCompatActivity {
                         }
                         if (newpass.equals("")) {
                             newpasswordEditText.setError("Field cannot be empty");
+                            flag = 1;
+                        }
+
+
+
+                        if(confirmnewpass.getText().toString().trim().equals("")){
+                            confirmnewpass.setError("Field cannot be empty");
+                        }
+
+                        if(!confirmnewpass.getText().toString().trim().equals(newpass)){
+                            confirmnewpass.setError("Password do not match");
                             flag = 1;
                         }
 
@@ -290,6 +302,7 @@ public class ProfileEdit extends AppCompatActivity {
 
         oldpasswordEditText = popupInputDialog.findViewById(R.id.oldpass);
         newpasswordEditText = popupInputDialog.findViewById(R.id.newpass);
+        confirmnewpass = popupInputDialog.findViewById(R.id.confirm_newpass);
         saveUserDataButton = popupInputDialog.findViewById(R.id.buttonsaveuserdata);
         cancelUserDataButton = popupInputDialog.findViewById(R.id.buttoncanceluserdata);
 

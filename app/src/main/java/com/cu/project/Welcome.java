@@ -30,8 +30,14 @@ Button signinwelcomebtn ,registerwelcomebtn;
 
 
 
+
+
         if (!isConnected(Welcome.this)) buildDialog(Welcome.this).show();
         else {
+
+//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
             Toast.makeText(Welcome.this, "Welcome", Toast.LENGTH_SHORT).show();
             setContentView(R.layout.activity_welcome);
 

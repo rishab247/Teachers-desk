@@ -141,7 +141,7 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
                 }
 
 
-                String title, issuer, date, des;
+                String title, issuer, date, des, type_pub;
                 String publisher, url;
                 String poffice, appno;
 
@@ -193,19 +193,25 @@ public class Apigetdetails extends AsyncTask<String , Void , HashMap<String , Ar
 
                     } else if (type.equals("Publication")) {
 
+                        Log.e("PUBLICATION RESPONSE", jsonArray.toString());
+
                         title = jsonArray.get(1).toString();
                         publisher = jsonArray.get(2).toString();
                         date = jsonArray.get(3).toString();
                         des = jsonArray.get(4).toString();
                         url = jsonArray.get(5).toString();
+                        type_pub = jsonArray.get(7).toString();
+
 
                         infoarray.add(title);
                         infoarray.add(publisher);
                         infoarray.add(date);
                         infoarray.add(des);
                         infoarray.add(url);
+                        infoarray.add(type_pub);
                         infoarray.add(type);
                         infoarray.add(id);
+
 
                         // authors details
 

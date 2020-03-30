@@ -77,6 +77,8 @@ private SharedPreferences sharedpreferences;
         String urlpost = "https://apitims1.azurewebsites.net/user/upload/Publication?token=";
         urlpost = urlpost + token;
 
+        Log.e("URL PUBLICATION", urlpost);
+
         OkHttpClient client = new OkHttpClient();
 
 
@@ -91,6 +93,7 @@ private SharedPreferences sharedpreferences;
         try {
             response = client.newCall(request).execute();
 
+            Log.e("PUBLICATION RESPPONSE", response.body().string());
             code = String.valueOf(response.code());
 
         } catch (IOException e) {

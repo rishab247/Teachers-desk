@@ -137,6 +137,7 @@ public class JsonEncoder {
             jsonObject.put(pub_arr[5] , str[2]);
             jsonObject.put(pub_arr[6] , str[3]);
             jsonObject.put(pub_arr[7] , str[4]);
+            jsonObject.put("type", str[5]);
             jsonObject.put(pub_arr[8] , jsonArrayofauth);
 
             information = jsonObject.toString();

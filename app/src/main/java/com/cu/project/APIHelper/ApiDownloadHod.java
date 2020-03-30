@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.cu.project.Exceldownload;
 
@@ -136,6 +137,8 @@ public class ApiDownloadHod extends AsyncTask<Void, Void, Void> {
         if(dialog.isShowing()){
             dialog.cancel();
         }
+
+        Toast.makeText(contextRef.get(), "File Saved", Toast.LENGTH_SHORT).show();
     }
 }
 

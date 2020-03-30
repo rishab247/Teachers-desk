@@ -1,5 +1,6 @@
 package com.cu.project;
 
+import android.content.Context;
 import android.drm.DrmStore;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,7 +8,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.cu.project.ui.Profiile.Author;
 import com.cu.project.ui.Profiile.PageAdapter;
@@ -49,6 +52,7 @@ public class PDFdownload {
 
 
     HashMap<String, ArrayList> mp;
+    Context context;
 
     Document mDoc;
     Font heading_font;
@@ -63,9 +67,10 @@ public class PDFdownload {
     String mFileName = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
     String mFilePath = Environment.getExternalStorageDirectory() + "/" + mFileName + ".pdf";
 
-    public PDFdownload(HashMap<String, ArrayList> mp) throws FileNotFoundException, DocumentException {
+    public PDFdownload(HashMap<String, ArrayList> mp, Context context) throws FileNotFoundException, DocumentException {
 
         this.mp = mp;
+        this.context = context;
 
         mDoc = new Document(PageSize.A4);
 
