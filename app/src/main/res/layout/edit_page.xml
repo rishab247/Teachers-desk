@@ -19,8 +19,7 @@
         android:clickable="true"
         android:elevation="4dp"
         android:src="@drawable/p_file"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:civ_border_width="4dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -74,8 +73,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toStartOf="@+id/textInputLayout4"
-                app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:errorEnabled="true">
 

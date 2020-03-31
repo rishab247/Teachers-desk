@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -163,7 +164,7 @@ public class Exceldownload {
 
         JSONObject jsonObj=null;
 
-        DateFormat simple = new SimpleDateFormat("dd/MMM/yyyy");
+        @SuppressLint("SimpleDateFormat") DateFormat simple = new SimpleDateFormat("dd/MM/yyyy");
 
         HSSFWorkbook wb = new HSSFWorkbook();
         Cell c = null;
@@ -330,8 +331,14 @@ public class Exceldownload {
                 c.setCellStyle(cellStyle1);
                 if((temp-sizeofeachuserrow)>1)
                     sheet.addMergedRegion(new CellRangeAddress(sizeofeachuserrow,temp,6, 6));
+                try{
+                    Date result = new Date(Long.parseLong(personaldata.getString(6)));
+                    date = simple.format(result);}
+                catch (Exception e){
+                    date = personaldata.getString(6);
+                }
                 c = row.createCell(7);
-                c.setCellValue(personaldata.getString(6));
+                c.setCellValue(date);
                 c.setCellStyle(cellStyle1);
                 if((temp-sizeofeachuserrow)>1)
                     sheet.addMergedRegion(new CellRangeAddress(sizeofeachuserrow,temp,7, 7));

@@ -105,11 +105,13 @@ public class ApigetPaper extends AsyncTask<String , Void , HashMap<String,ArrayL
                 long date1 = Long.parseLong(jsonObject1.get(2).toString().trim());
 
                 DateFormat simple = new SimpleDateFormat("dd MMM yyyy");
+                String hdate="";
+                try {Date result1 = new Date(date1);
 
-                Date result1 = new Date(date1);
-
-                String hdate = simple.format(result1);
-
+                  hdate = simple.format(result1);}
+                catch (Exception e){
+                    hdate = "01/01/1970";
+                }
 
                 listitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , hdate,  (Integer) jsonObject1.get(0)));
 
