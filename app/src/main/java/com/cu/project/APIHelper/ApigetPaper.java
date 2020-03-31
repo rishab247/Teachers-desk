@@ -110,7 +110,7 @@ public class ApigetPaper extends AsyncTask<String , Void , HashMap<String,ArrayL
 
                   hdate = simple.format(result1);}
                 catch (Exception e){
-                    hdate = "01/01/1970";
+                    hdate = "01 jan 1970";
                 }
 
                 listitems.add(new SubjectData(jsonObject1.get(1).toString().trim() , hdate,  (Integer) jsonObject1.get(0)));
