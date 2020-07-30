@@ -66,7 +66,7 @@ public class Apiget  extends AsyncTask<String , Void , String[]> {
     String imagestr="";
 
 
-    String verifyurl = "https://apitims1.azurewebsites.net/Verify?token=";
+    String verifyurl = "https://apitims.azurewebsites.net/Verify?token=";
 
 
     @Override

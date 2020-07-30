@@ -24,7 +24,7 @@ import okhttp3.Response;
 public class APIVerifyIndividual extends AsyncTask<Void, Void, String> {
 
 
-    String url = "https://apitims.azurewebsites.net/vfacultyverify?token=";
+    String url = "https://apitims.azurewebsites.net/facultyverify?token=";
     String[] eid = null;
     WeakReference<Context> contextRef;
     int reference;
@@ -91,6 +91,7 @@ public class APIVerifyIndividual extends AsyncTask<Void, Void, String> {
 
             mMessage = response.body().string();
 
+            Log.e("TAG", "doInBackground: "+mMessage);
             JSONObject jsonObject1 = new JSONObject(mMessage);
 
             mMessage = jsonObject1.getString("msg");
